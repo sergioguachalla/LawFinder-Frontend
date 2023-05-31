@@ -1,0 +1,78 @@
+.confirmation-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  font-family: 'San Francisco', sans-serif;
+}
+
+.card {
+  background-color: #e6e6e6;
+  padding: 2em;
+  border-radius: 8px;
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.confirmation-container h1 {
+  font-size: 3em;
+  margin-bottom: 0.5em;
+}
+
+.confirmation-container h2 {
+  font-size: 1.5em;
+  margin-bottom: 1.5em;
+}
+
+.verification-container {
+  display: flex;
+  align-items: center;
+  margin-bottom: 1em;
+}
+
+.verification-input {
+  border: 1px solid black;
+  padding: 1em;
+  font-size: 1em;
+  width: 300px;
+  margin-right: 1em;
+}
+
+.validate-button {
+  border: none;
+  background-color: black;
+  color: white;
+  padding: 1em;
+  font-size: 1em;
+  cursor: pointer;
+}
+
+.code-input {
+  display: flex;
+  margin-bottom: 1em;
+}
+
+.code-digit-input {
+  border: 1px solid black;
+  padding: 1em;
+  font-size: 1em;
+  width: 40px;
+  text-align: center;
+  margin-right: 0.5em;
+}
+
+.button-row {
+  display: flex;
+  justify-content: space-between;
+  width: 300px;
+}
+
+.continue-button,
+.cancel-button {
+  border: none;
+  background-color: black;
+  color: white;
+  padding: 1em;
+  font-size: 1em;
+  cursor: pointer;
+  margin-left: 20px;
+}

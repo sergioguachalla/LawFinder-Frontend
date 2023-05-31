@@ -1,0 +1,82 @@
+
+.login-container {
+    display: flex;
+    height: 100vh;
+    font-family: 'San Francisco', sans-serif; /* Esta es la fuente de Apple, asegúrate de importarla */
+  }
+  
+  .login-white, .login-black {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+  }
+  
+  .login-white {
+    background-color: white;
+    color: black;
+  }
+  
+  .login-black {
+    background-color: black;
+    color: white;
+  }
+  
+  .title {
+    font-size: 3em;
+    margin-bottom: 1em;
+  }
+  
+  .login-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .login-form {
+    display: flex;
+    flex-direction: column;
+    width: 300px;
+  }
+  
+  .login-input {
+    border: 1px solid black;
+    padding: 1em;
+    margin-bottom: 1em;
+    font-size: 1em;
+  }
+  
+
+.options {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1em;
+}
+
+.remember-me {
+  display: flex;
+  align-items: center;
+}
+
+.remember-me label {
+  font-size: 0.9em;  /* disminuir el tamaño de fuente */
+}
+
+.forgot-password {
+  color: black;
+  font-size: 0.9em;  /* disminuir el tamaño de fuente */
+}
+
+
+  
+  .login-button {
+    border: none;
+    background-color: black;
+    color: white;
+    padding: 1em;
+    font-size: 1em;
+    cursor: pointer;
+  }
+  

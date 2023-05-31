@@ -1,0 +1,15 @@
+.drop-area {
+    height: 50px;
+    padding: 10px;
+    border: 2px dashed #ccc;
+    border-radius: 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+  }
+  
+  .drop-area:hover {
+    border-color: #4caf50;
+  }
+  
