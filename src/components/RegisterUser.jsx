@@ -1,30 +1,23 @@
-import React, { useState } from 'react';
-import '../styles/RegisterUser.css';
+import React from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { updateUserField, registerUser } from '../actions/userActions';
 
 const RegisterUser = () => {
-  const [user, setUser] = useState({
-    nombres: "",
-    apellidos: "",
-    tipoDocumento: "",
-    documento: "",
-    complemento: "",
-    direccion: "",
-    celular: "",
-    correo: "",
-    contraseña: "",
-    confirmarContraseña: ""
-  });
+  const user = useSelector((state) => state.user);
+  const dispatch = useDispatch();
 
   const handleChange = (e) => {
-    setUser({ ...user, [e.target.name]: e.target.value });
+    const { name, value } = e.target;
+    dispatch(updateUserField(name, value));
   }
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // Aquí puedes manejar la lógica de registro.
+    dispatch(registerUser(user));
   }
 
   return (
+    
     <div className="form-container">
       <h2 className="form-title">Registro de nuevo usuario</h2>
       <div className="form-card">
@@ -83,6 +76,8 @@ const RegisterUser = () => {
       </div>
     </div>
   );
+   
+  
 }
 
 export default RegisterUser;
