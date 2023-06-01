@@ -5,7 +5,6 @@ import Role from "./components/Role";
 import Confirmation from "./components/Confirmation";
 import RegisterUser from "./components/RegisterUser";
 import "@fortawesome/fontawesome-free/css/all.min.css";
-import Hola from "./components/Hola";
 
 import {
   createBrowserRouter,
@@ -30,10 +29,7 @@ const router = createBrowserRouter([
     path: "RegisterUser/",
     element: <RegisterUser/>,
   },
-  {
-    path: "Hola/",
-    element: <Hola/>,
-  }
+
 ]);
 
 ReactDOM.createRoot(document.getElementById("root")).render(

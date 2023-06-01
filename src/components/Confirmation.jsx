@@ -1,9 +1,12 @@
 import React, { useState } from 'react';
-import '../styles/Confirmation.css'; // Archivo CSS para los estilos
+import axios from 'axios';
+import '../styles/Confirmation.css';
 import { Link } from 'react-router-dom';
 
 const ConfirmationCode = () => {
   const [code, setCode] = useState(['', '', '', '', '', '']);
+  const [email, setEmail] = useState('');
+  const [verificationError, setVerificationError] = useState(false);
 
   const handleChange = (event, index) => {
     const { value } = event.target;
@@ -12,6 +15,42 @@ const ConfirmationCode = () => {
       newCode[index] = value;
       return newCode;
     });
+  };
+
+  const handleValidation = async () => {
+    try {
+      const response = await axios.post('http://localhost:8080/api/v1/sendmail', {
+        mail: email,
+      });
+
+      // Hacer algo con la respuesta si es necesario
+
+    } catch (error) {
+      console.error(error);
+      // Manejar el error de la solicitud
+    }
+  };
+
+  const handleVerification = async () => {
+    const token = code.join('');
+    try {
+      const response = await axios.post('http://localhost:8080/api/v1/verify', {
+        mail: email,
+        token: token,
+        
+      });
+      console.log(response.data);
+
+      if (response.data.code !== '0000') {
+        alert('Código inválido');
+      } else {
+        // Redirigir a la siguiente ruta
+        window.location.href = '/RegisterUser';
+      }
+    } catch (error) {
+      console.error(error);
+      // Manejar el error de la solicitud
+    }
   };
 
   return (
@@ -24,9 +63,14 @@ const ConfirmationCode = () => {
             type="text"
             placeholder="Verificación de correo"
             className="verification-input"
+            value={email}
+            onChange={(event) => setEmail(event.target.value)}
           />
-          <button className="validate-button">Validar</button>
+          <button className="validate-button" onClick={handleValidation}>
+            Validar
+          </button>
         </div>
+        {verificationError && <p>Error en la validación del correo electrónico</p>}
         <div className="code-input">
           {code.map((digit, index) => (
             <input
@@ -40,12 +84,10 @@ const ConfirmationCode = () => {
           ))}
         </div>
         <div className="button-row">
-
           <button className="cancel-button">Cancelar</button>
-          {/* Redirecciona a RegisterUser */}
-          <Link to="/RegisterUser">
-            <button className="continue-button">Continuar</button>
-          </Link>
+          <button className="continue-button" onClick={handleVerification}>
+            Continuar
+          </button>
         </div>
       </div>
     </div>
