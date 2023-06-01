@@ -13,7 +13,7 @@ const RegisterUser = () => {
   
    
   return (
-    <form onSubmit={handleSubmit}>
+    <form className="form-container" onSubmit={handleSubmit}>
       <div className="form-row">
         <label>Nombres *</label>
         <input name="nombres" type="text" onChange={(event) => handleChange('nombres', event)} required />

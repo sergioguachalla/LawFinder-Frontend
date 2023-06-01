@@ -1,7 +1,6 @@
 .form-container {
   display: flex;
   flex-direction: column;
-  justify-content: center;
   align-items: center;
   height: 100vh;
   padding-top: 100px;
@@ -11,7 +10,6 @@
 .form-title {
   font-size: 2.5em;
   margin-bottom: 1em;
-  width: 100%;
   text-align: center;
 }
 
@@ -19,10 +17,9 @@
   background-color: #e6e6e6;
   padding: 50px;
   border-radius: 5px;
-  box-shadow: 0px 0px 5px rgba(0,0,0,0.2);
-  width: 100%;
+  box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.2);
   max-width: 400px;
-  box-sizing: border-box; /* Nueva línea */
+  box-sizing: border-box;
 }
 
 .form-row {
@@ -36,17 +33,17 @@ label {
 
 input,
 select {
-  width: calc(100% - 1.6em); /* Modificado */
+  width: 100%;
   padding: 0.8em;
   font-size: 1em;
-  box-sizing: border-box; /* Nueva línea */
+  box-sizing: border-box;
 }
 
 .half-input {
-  width: calc(50% - 1.6em); /* Modificado */
+  width: 50%;
   display: inline-block;
   vertical-align: top;
-  box-sizing: border-box; /* Nueva línea */
+  box-sizing: border-box;
 }
 
 .half-input:first-child {
@@ -59,13 +56,3 @@ select {
   margin-top: 1em;
 }
 
-.cancel-button,
-.register-button {
-  border: none;
-  background-color: black;
-  color: white;
-  padding: 0.8em 1em;
-  font-size: 1em;
-  cursor: pointer;
-  margin-left: 10px;
-}
