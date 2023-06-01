@@ -1,9 +1,10 @@
 import { useRegisterUserStore } from '../store/userRegistrationStore';
 import '../styles/RegisterUser.css';
+import { Link, Navigate, useNavigate } from 'react-router-dom';
 
 const RegisterUser = () => {
   //const { handleSubmit, handleChange } = useRegisterUserStore();
-  
+    const history = useNavigate();
     const {
      
       handleChange,
@@ -61,7 +62,8 @@ const RegisterUser = () => {
         <input name="secretConfirm" type="password" onChange={(event) => handleChange('secretConfirm',event)}  required />
       </div>
       <div className="button-row">
-        <button type="submit" className="register-button">Registrar</button>
+          <button type="submit" className="register-button">Registrar</button> 
+        
       </div>
     </form>
   );

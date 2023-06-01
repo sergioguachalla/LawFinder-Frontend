@@ -2,6 +2,8 @@ import { create } from 'zustand';
 import axios from 'axios';
 
 export const useRegisterUserStore = create((set) => ({
+ 
+
   nombres: '',
   apellidos: '',
   tipoDocumento: '',
@@ -13,28 +15,23 @@ export const useRegisterUserStore = create((set) => ({
   username: '',
   secret: '',
   secretConfirm: '',
+  statusState: '',
 
   handleChange: (fieldName, event) => {
     const { value } = event.target;
-    console.log('Cambio en el campo ' + fieldName + ' con valor ' + value);
+    //console.log('Cambio en el campo ' + fieldName + ' con valor ' + value);
     set({ [fieldName]: value });
   },
 
-   registerPerson: async (data) => {
-    const requestBody = {
-      name: data.nombres,
-      lastname: data.apellidos,
-      ci: data.documento,
-      complement: data.complemento,
-      address: data.direccion,
-      number: data.celular,
-      email: data.correo,
-    };
-    const response = await axios.post('http://localhost:8080/api/person', requestBody);
-    console.log(response);
-  },
+ 
 
   handleSubmit: (event) => {
+  
+
+    // Expresión regular para validar formato de correo electrónico
+    const correoRegex = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i;
+    const passwordRegex = /^(?=.*\d).{6,}$/;
+
     event.preventDefault();
     const usernameAux = event.target.nombres.value.split(' ');
     const lastnameAux = event.target.apellidos.value.split(' ');
@@ -54,6 +51,20 @@ export const useRegisterUserStore = create((set) => ({
       secret: event.target.secret.value,
       secretConfirm: event.target.secretConfirm.value,
     };
+    if (formData.secret !== formData.secretConfirm) {
+      alert('Las contraseñas no coinciden');
+      return;
+    }
+    if (!correoRegex.test(formData.correo)) {
+      alert('El correo electrónico no tiene un formato válido');
+      return;
+    }
+    if (!passwordRegex.test(formData.secret)) {
+      alert('La contraseña debe tener al menos 6 caracteres y un número');
+      return;
+    }
+    set({ statusState: 'loading' });
+    
     const requestBody = {
       "username": formData.username,
       "secret": formData.secret,
@@ -70,13 +81,16 @@ export const useRegisterUserStore = create((set) => ({
       };
 
 
-    console.log('Formulario enviado:', formData);
-    set({ nombres: '', apellidos: '', /* ... */ });
+    set({ nombres: '', apellidos: '', tipoDocumento: '', documento: '', complemento: '', direccion: '', celular: '', correo: '', username: '', secret: '', secretConfirm: ''});
     const registerUser = async () => {
       const response = await axios.post('http://localhost:8080/api/v1/user', requestBody);
       console.log(response);
     }
       registerUser();
+      set({ statusState: 'success' });
+      alert('Usuario registrado correctamente');
+    
+      
   },
 
   setUserName: (username) => set({ username: username }),
