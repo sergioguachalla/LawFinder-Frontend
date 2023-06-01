@@ -5,7 +5,6 @@ import Role from "./components/Role";
 import Confirmation from "./components/Confirmation";
 import RegisterUser from "./components/RegisterUser";
 import "@fortawesome/fontawesome-free/css/all.min.css";
-
 import {
   createBrowserRouter,
   RouterProvider,
