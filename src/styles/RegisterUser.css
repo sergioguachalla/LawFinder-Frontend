@@ -1,58 +1,76 @@
+/* RegisterUser.css */
+
+@font-face {
+  font-family: 'AppleFont';
+  src: url('../fonts/AppleFont-Regular.ttf') format('truetype');
+  /* Agrega aquí otros formatos de fuente si los tienes, como woff o woff2 */
+  /* Ajusta la ruta del archivo de fuente según dónde hayas guardado los archivos en tu proyecto */
+}
+
+/* Luego, aplica la fuente a los elementos que deseas en tu formulario */
+.form-row label,
+.form-row input,
+.form-row select,
+.button-row button {
+  font-family: 'AppleFont', Arial, sans-serif;
+  /* Asegúrate de tener Arial o una fuente de respaldo para los casos en que la fuente de Apple no esté disponible */
+}
+
 .form-container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  height: 100vh;
-  padding-top: 100px;
-  font-family: 'San Francisco', sans-serif;
-}
-
-.form-title {
-  font-size: 2.5em;
-  margin-bottom: 1em;
-  text-align: center;
-}
-
-.form-card {
-  background-color: #e6e6e6;
-  padding: 50px;
+  width: 400px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: #f5f5f5;
   border-radius: 5px;
-  box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.2);
-  max-width: 400px;
-  box-sizing: border-box;
 }
 
 .form-row {
-  margin-bottom: 1.5em;
+  margin-bottom: 20px;
 }
 
-label {
-  font-size: 1em;
-  margin-bottom: 0.5em;
+.form-row label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: bold;
 }
 
-input,
-select {
+.form-row input,
+.form-row select {
   width: 100%;
-  padding: 0.8em;
-  font-size: 1em;
-  box-sizing: border-box;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 3px;
 }
 
 .half-input {
-  width: 50%;
   display: inline-block;
-  vertical-align: top;
-  box-sizing: border-box;
-}
-
-.half-input:first-child {
-  margin-right: 30px;
+  width: calc(50% - 5px);
+  margin-right: 10px;
 }
 
 .button-row {
-  display: flex;
+  text-align: center;
   justify-content: center;
-  margin-top: 1em;
 }
 
+.register-button {
+  padding: 10px 20px;
+  background-color: black;
+  color: #fff;
+  border: none;
+  border-radius: 3px;
+  cursor: pointer;
+}
+
+.register-button:hover {
+  background-color: #0069d9;
+}
+
+.register-button:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+.centered-apple-font {
+  text-align: center;
+  font-family: 'AppleFont', Arial, sans-serif;
+}

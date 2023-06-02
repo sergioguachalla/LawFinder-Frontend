@@ -9,6 +9,7 @@ import {
   createBrowserRouter,
   RouterProvider,
 } from "react-router-dom";
+import RegisterCase from "./components/RegisterCase";
 
 
 const router = createBrowserRouter([
@@ -27,6 +28,10 @@ const router = createBrowserRouter([
   {
     path: "RegisterUser/",
     element: <RegisterUser/>,
+  },
+  {
+    path: "RegisterCase/",
+    element: <RegisterCase/>,
   },
 
 ]);
