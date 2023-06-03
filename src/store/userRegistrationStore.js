@@ -2,8 +2,7 @@ import { create } from 'zustand';
 import axios from 'axios';
 
 export const useRegisterUserStore = create((set) => ({
- 
-
+  deviceId: localStorage.getItem('device-id') || generateUUID(),
   nombres: '',
   apellidos: '',
   tipoDocumento: '',
@@ -22,12 +21,32 @@ export const useRegisterUserStore = create((set) => ({
     //console.log('Cambio en el campo ' + fieldName + ' con valor ' + value);
     set({ [fieldName]: value });
   },
+  generateNewUUID: () => {
+    const newUUID = generateUUID();
+    set({ uuid: newUUID });
+    localStorage.setItem('device-id', newUUID);
+    console.log('Nuevo UUID generado: ' + newUUID);
+  },
 
- 
+  setEmail: (email) => set({ correo: email }),
+  
+  setFormData: (formData) => {
+    set({ nombres: formData.nombres });
+    set({ apellidos: formData.apellidos });
+    set({ tipoDocumento: formData.tipoDocumento });
+    set({ documento: formData.documento });
+    set({ complemento: formData.complemento });
+    set({ direccion: formData.direccion });
+    set({ celular: formData.celular });
+    set({ correo: formData.correo });
+    set({ username: formData.username });
+    set({ secret: formData.secret });
+    set({ secretConfirm: formData.secretConfirm });
+  },
+
 
   handleSubmit: (event) => {
   
-
     // Expresión regular para validar formato de correo electrónico
     const correoRegex = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i;
     const passwordRegex = /^(?=.*\d).{6,}$/;
@@ -51,6 +70,9 @@ export const useRegisterUserStore = create((set) => ({
       secret: event.target.secret.value,
       secretConfirm: event.target.secretConfirm.value,
     };
+    set({correo: formData.correo});
+    localStorage.setItem('correo', formData.correo);
+
     if (formData.secret !== formData.secretConfirm) {
       alert('Las contraseñas no coinciden');
       return;
@@ -65,35 +87,37 @@ export const useRegisterUserStore = create((set) => ({
     }
     set({ statusState: 'loading' });
     
-    const requestBody = {
-      "username": formData.username,
-      "secret": formData.secret,
-      "personId": {
-         "name": formData.nombres,
-         "lastname": formData.apellidos,
-         "ci": formData.documento,
-         "number": formData.celular,   
-         "complement": formData.complemento,
-         "email": formData.correo,
-         "address": formData.direccion,
-      },
-      
-      };
+    
+
+    const verificationBody = {
+      "deviceId": localStorage.getItem('device-id'),
+      "type": "email",
+      "email": formData.correo,
+    }
+
 
 
     set({ nombres: '', apellidos: '', tipoDocumento: '', documento: '', complemento: '', direccion: '', celular: '', correo: '', username: '', secret: '', secretConfirm: ''});
     const registerUser = async () => {
-      const response = await axios.post('http://localhost:8080/api/v1/user', requestBody);
+      const response = await axios.post('http://localhost:8080/api/v1/verify', verificationBody);
       console.log(response);
     }
-      registerUser();
-      set({ statusState: 'success' });
-      alert('Usuario registrado correctamente');
+    registerUser();
+    set({ statusState: 'success' });
+    alert('Usuario registrado correctamente');
+    
     
       
   },
 
   setUserName: (username) => set({ username: username }),
 }));
+function generateUUID() {
+  return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
+    var r = (Math.random() * 16) | 0,
+      v = c === 'x' ? r : (r & 0x3) | 0x8;
+    return v.toString(16);
+  });
+}
 
 export default useRegisterUserStore;

@@ -1,23 +1,34 @@
+import { useEffect } from 'react';
 import { useRegisterUserStore } from '../store/userRegistrationStore';
 import '../styles/RegisterUser.css';
-import { Link, Navigate, useNavigate } from 'react-router-dom';
+import {useNavigate} from 'react-router-dom';
 
 const RegisterUser = () => {
   //const { handleSubmit, handleChange } = useRegisterUserStore();
-    const history = useNavigate();
+    const navigate = useNavigate();
     const {
-     
       handleChange,
       handleSubmit,
-     
+      generateNewUUID,
+      statusState,
+      
     } = useRegisterUserStore();
+
+    useEffect(() => {
+      generateNewUUID();
+    }, [generateNewUUID]);
   
+    
+    const handleSubmitForm =  (event)  => {
+      event.preventDefault();
+      handleSubmit(event);
+      navigate('/Confirmation');
+    }
    
   return (
     <>
-      <h1 className='centered-apple-font
-      ' > REGISTRO DE USUARIO</h1>
-      <form className="form-container" onSubmit={handleSubmit}>
+      <h1 className='centered-apple-font'> REGISTRO DE USUARIO</h1>
+      <form className="form-container" onSubmit={(event) => handleSubmitForm(event)}>
         <div className="form-row">
           <label>Nombres *</label>
           <input name="nombres" type="text" onChange={(event) => handleChange('nombres', event)} required />
@@ -55,6 +66,7 @@ const RegisterUser = () => {
         <div className="form-row">
           <label>Correo electrónico*</label>
           <input name="correo" type="email" onChange={(event) => handleChange('correo',event)}  required />
+          
         </div>
         <div className="form-row">
           <label>Contraseña*</label>
@@ -66,7 +78,7 @@ const RegisterUser = () => {
         </div>
         <div className="button-row">
             <button type="submit" className="register-button">Registrar</button> 
-          
+           
         </div>
       </form>
     </>
