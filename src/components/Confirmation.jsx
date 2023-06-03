@@ -1,35 +1,15 @@
-import React, { useState } from 'react';
 import axios from 'axios';
 import '../styles/Confirmation.css';
 import {useRegisterUserStore} from '../store/userRegistrationStore';
+import {useConfirmationStore} from '../store/confirmationStore';
 const ConfirmationCode = () => {
   
  
   const userEmail = localStorage.getItem('correo');
-  const [code, setCode] = useState(['', '', '', '']);
+  const { code, handleChange, handleRequest } = useConfirmationStore();
+
+
   
-  const handleChange = (event, index) => {
-    const { value } = event.target;
-    setCode((prevCode) => {
-      const newCode = [...prevCode];
-      newCode[index] = value;
-      return newCode;
-    });
-  };
-
-  const handleValidation = async () => {
-    try {
-      const response = await axios.post('http://localhost:8080/api/v1/sendmail', {
-        mail: email,
-      });
-
-      // Hacer algo con la respuesta si es necesario
-
-    } catch (error) {
-      console.error(error);
-      // Manejar el error de la solicitud
-    }
-  };
 
   const handleVerification = async () => {
     const token = code.join('');
@@ -77,7 +57,7 @@ const ConfirmationCode = () => {
         </div>
         <div className="button-row">
           <button className="cancel-button">Cancelar</button>
-          <button className="continue-button" onClick={handleVerification}>
+          <button className="continue-button" onClick={handleRequest}>
             Continuar
           </button>
         </div>

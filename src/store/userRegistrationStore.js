@@ -29,11 +29,24 @@ export const useRegisterUserStore = create((set) => ({
   },
 
   setEmail: (email) => set({ correo: email }),
- 
+  
+  setFormData: (formData) => {
+    set({ nombres: formData.nombres });
+    set({ apellidos: formData.apellidos });
+    set({ tipoDocumento: formData.tipoDocumento });
+    set({ documento: formData.documento });
+    set({ complemento: formData.complemento });
+    set({ direccion: formData.direccion });
+    set({ celular: formData.celular });
+    set({ correo: formData.correo });
+    set({ username: formData.username });
+    set({ secret: formData.secret });
+    set({ secretConfirm: formData.secretConfirm });
+  },
+
 
   handleSubmit: (event) => {
   
-
     // Expresión regular para validar formato de correo electrónico
     const correoRegex = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i;
     const passwordRegex = /^(?=.*\d).{6,}$/;
@@ -74,30 +87,25 @@ export const useRegisterUserStore = create((set) => ({
     }
     set({ statusState: 'loading' });
     
-    const requestBody = {
-      "username": formData.username,
-      "secret": formData.secret,
-      "personId": {
-         "name": formData.nombres,
-         "lastname": formData.apellidos,
-         "ci": formData.documento,
-         "number": formData.celular,   
-         "complement": formData.complemento,
-         "email": formData.correo,
-         "address": formData.direccion,
-      },
-      
-      };
+    
+
+    const verificationBody = {
+      "deviceId": localStorage.getItem('device-id'),
+      "type": "email",
+      "email": formData.correo,
+    }
+
 
 
     set({ nombres: '', apellidos: '', tipoDocumento: '', documento: '', complemento: '', direccion: '', celular: '', correo: '', username: '', secret: '', secretConfirm: ''});
-    /*const registerUser = async () => {
-      const response = await axios.post('http://localhost:8080/api/v1/user', requestBody);
+    const registerUser = async () => {
+      const response = await axios.post('http://localhost:8080/api/v1/verify', verificationBody);
       console.log(response);
-    }*/
-   // registerUser();
+    }
+    registerUser();
     set({ statusState: 'success' });
     alert('Usuario registrado correctamente');
+    
     
       
   },

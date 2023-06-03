@@ -27,8 +27,7 @@ const RegisterUser = () => {
    
   return (
     <>
-      <h1 className='centered-apple-font
-      ' > REGISTRO DE USUARIO</h1>
+      <h1 className='centered-apple-font'> REGISTRO DE USUARIO</h1>
       <form className="form-container" onSubmit={(event) => handleSubmitForm(event)}>
         <div className="form-row">
           <label>Nombres *</label>
