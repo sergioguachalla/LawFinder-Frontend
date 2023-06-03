@@ -7,12 +7,14 @@ const ConfirmationCode = () => {
  
   const userEmail = localStorage.getItem('correo');
   const { code, handleChange, handleRequest } = useConfirmationStore();
-  const formData = useRegisterUserStore((state) => state.correo);
+  const username = useRegisterUserStore((state) => state.username);
+  const status = useConfirmationStore((state) => state.status);
   const handleRequestForm = async (event)  => {
     event.preventDefault();
     await handleRequest(event);
-    console.log(formData);
+    //console.log(username);
   }
+  
 
   
 
@@ -21,7 +23,7 @@ const ConfirmationCode = () => {
   return (
     <div className="confirmation-container">
       <div className="card">
-        <h1 className="title">Law Finder</h1>
+        <h1 className="title">Law Finder {username}</h1>
         <h2 className="subtitle">Se ha enviado un correo con el código de confirmación a: {userEmail} </h2>
         <div className="verification-container">
           
@@ -46,6 +48,9 @@ const ConfirmationCode = () => {
             Continuar
           </button>
         </div>
+      </div>
+      <div>
+        { status === 'success' ? <p>Success</p> : status === 'error' ? <p>Error</p> : <></>}
       </div>
     </div>
   );

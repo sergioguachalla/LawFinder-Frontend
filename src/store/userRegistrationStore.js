@@ -18,7 +18,7 @@ export const useRegisterUserStore = create((set) => ({
 
   handleChange: (fieldName, event) => {
     const { value } = event.target;
-    //console.log('Cambio en el campo ' + fieldName + ' con valor ' + value);
+    console.log('Cambio en el campo ' + fieldName + ' con valor ' + value);
     set({ [fieldName]: value });
   },
   generateNewUUID: () => {
@@ -27,10 +27,6 @@ export const useRegisterUserStore = create((set) => ({
     localStorage.setItem('device-id', newUUID);
     console.log('Nuevo UUID generado: ' + newUUID);
   },
-
-  setEmail: (email) => set({ correo: email }),
-  
-  
 
 
   handleSubmit: (event) => {
@@ -58,7 +54,7 @@ export const useRegisterUserStore = create((set) => ({
       secret: event.target.secret.value,
       secretConfirm: event.target.secretConfirm.value,
     };
-    (formData) => {
+    
       set({ nombres: formData.nombres });
       set({ apellidos: formData.apellidos });
       set({ tipoDocumento: formData.tipoDocumento });
@@ -70,9 +66,8 @@ export const useRegisterUserStore = create((set) => ({
       set({ username: formData.username });
       set({ secret: formData.secret });
       set({ secretConfirm: formData.secretConfirm });
-    };
     
-    console.log(formData.correo);
+    console.log(formData.secret); 
     //set({formData: formData});
     localStorage.setItem('correo', formData.correo);
 
@@ -100,7 +95,7 @@ export const useRegisterUserStore = create((set) => ({
 
 
 
-    set({ nombres: '', apellidos: '', tipoDocumento: '', documento: '', complemento: '', direccion: '', celular: '', correo: '', username: '', secret: '', secretConfirm: ''});
+    //set({ nombres: '', apellidos: '', tipoDocumento: '', documento: '', complemento: '', direccion: '', celular: '', correo: '', username: '', secret: '', secretConfirm: ''});
     const registerUser = async () => {
       set({ statusState: 'loading' });
       const response = await axios.post('http://localhost:8080/api/v1/verify', verificationBody);
@@ -109,15 +104,16 @@ export const useRegisterUserStore = create((set) => ({
       //set({ statusState: 'success' });
       if(response.status == 200){    
         set({ statusState: 'success' });
+        
       }
       else if(response.status === 400){
         set({ statusState: 'error' });
       }
-        
-       
-     
+
       
     }
+   
+
     
     registerUser();
     

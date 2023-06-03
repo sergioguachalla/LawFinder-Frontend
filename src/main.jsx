@@ -10,7 +10,6 @@ import {
   RouterProvider,
 } from "react-router-dom";
 import RegisterCase from "./components/RegisterCase";
-import Prueba from "./components/Prueba";
 
 
 const router = createBrowserRouter([
@@ -33,11 +32,8 @@ const router = createBrowserRouter([
   {
     path: "RegisterCase/",
     element: <RegisterCase/>,
-  },
-  {
-    path: "Prueba/",
-    element: <Prueba/>,
   }
+
 
 ]);
 
