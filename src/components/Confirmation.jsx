@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import '../styles/Confirmation.css';
-import { Link } from 'react-router-dom';
-
+import {useRegisterUserStore} from '../store/userRegistrationStore';
 const ConfirmationCode = () => {
-  const [code, setCode] = useState(['', '', '', '', '', '']);
-  const [email, setEmail] = useState('');
-  const [verificationError, setVerificationError] = useState(false);
-
+  
+ 
+  const userEmail = localStorage.getItem('correo');
+  const [code, setCode] = useState(['', '', '', '']);
+  
   const handleChange = (event, index) => {
     const { value } = event.target;
     setCode((prevCode) => {
@@ -57,20 +57,12 @@ const ConfirmationCode = () => {
     <div className="confirmation-container">
       <div className="card">
         <h1 className="title">Law Finder</h1>
-        <h2 className="subtitle">Registro de nuevo usuario</h2>
+        <h2 className="subtitle">Se ha enviado un correo con el código de confirmación a: {userEmail} </h2>
         <div className="verification-container">
-          <input
-            type="text"
-            placeholder="Verificación de correo"
-            className="verification-input"
-            value={email}
-            onChange={(event) => setEmail(event.target.value)}
-          />
-          <button className="validate-button" onClick={handleValidation}>
-            Validar
-          </button>
+          
+
         </div>
-        {verificationError && <p>Error en la validación del correo electrónico</p>}
+        {/* {verificationError && <p>Error en la validación del correo electrónico</p>} */}
         <div className="code-input">
           {code.map((digit, index) => (
             <input
@@ -93,5 +85,6 @@ const ConfirmationCode = () => {
     </div>
   );
 };
+  
 
 export default ConfirmationCode;

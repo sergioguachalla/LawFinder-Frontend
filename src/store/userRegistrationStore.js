@@ -2,8 +2,7 @@ import { create } from 'zustand';
 import axios from 'axios';
 
 export const useRegisterUserStore = create((set) => ({
- 
-
+  deviceId: localStorage.getItem('device-id') || generateUUID(),
   nombres: '',
   apellidos: '',
   tipoDocumento: '',
@@ -22,7 +21,14 @@ export const useRegisterUserStore = create((set) => ({
     //console.log('Cambio en el campo ' + fieldName + ' con valor ' + value);
     set({ [fieldName]: value });
   },
+  generateNewUUID: () => {
+    const newUUID = generateUUID();
+    set({ uuid: newUUID });
+    localStorage.setItem('device-id', newUUID);
+    console.log('Nuevo UUID generado: ' + newUUID);
+  },
 
+  setEmail: (email) => set({ correo: email }),
  
 
   handleSubmit: (event) => {
@@ -51,6 +57,9 @@ export const useRegisterUserStore = create((set) => ({
       secret: event.target.secret.value,
       secretConfirm: event.target.secretConfirm.value,
     };
+    set({correo: formData.correo});
+    localStorage.setItem('correo', formData.correo);
+
     if (formData.secret !== formData.secretConfirm) {
       alert('Las contraseñas no coinciden');
       return;
@@ -82,18 +91,25 @@ export const useRegisterUserStore = create((set) => ({
 
 
     set({ nombres: '', apellidos: '', tipoDocumento: '', documento: '', complemento: '', direccion: '', celular: '', correo: '', username: '', secret: '', secretConfirm: ''});
-    const registerUser = async () => {
+    /*const registerUser = async () => {
       const response = await axios.post('http://localhost:8080/api/v1/user', requestBody);
       console.log(response);
-    }
-      registerUser();
-      set({ statusState: 'success' });
-      alert('Usuario registrado correctamente');
+    }*/
+   // registerUser();
+    set({ statusState: 'success' });
+    alert('Usuario registrado correctamente');
     
       
   },
 
   setUserName: (username) => set({ username: username }),
 }));
+function generateUUID() {
+  return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
+    var r = (Math.random() * 16) | 0,
+      v = c === 'x' ? r : (r & 0x3) | 0x8;
+    return v.toString(16);
+  });
+}
 
 export default useRegisterUserStore;
