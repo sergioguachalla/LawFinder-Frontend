@@ -1,9 +1,9 @@
 import {create} from 'zustand';
 import axios from 'axios';
-import {useRegisterUserStore} from './userRegistrationStore';
 export const useConfirmationStore = create((set) => ({
   code: ['', '', '', '', '', ''],
-  formData: useRegisterUserStore.getState().formData,
+  isVerified: false,
+  
 
   handleChange: (event, index) => {
     const { value } = event.target;
@@ -23,9 +23,29 @@ export const useConfirmationStore = create((set) => ({
     const verifyUser = async () => {
       const response = await axios.put('http://localhost:8080/api/v1/verify', body);
       console.log(response);
+      if(response.status == 200){
+        set({isVerified: true});
+      }
     }
+
     verifyUser();
     
+  },
+  handleRegister: () => {
+    const formData = useConfirmationStore.getState().formData;
+    const body = {
+      "deviceId": localStorage.getItem('device-id'),
+      "type": "email",
+      "email": formData.correo,
+    }
+    const registerUser = async () => {
+      const response = await axios.post('http://localhost:8080/api/v1/verify', body);
+      console.log(response);
+      if(response.status == 200){
+        set({isVerified: true});
+      }
+    }
+    registerUser();
   }
 }));
 

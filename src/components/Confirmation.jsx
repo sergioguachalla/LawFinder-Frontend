@@ -1,11 +1,18 @@
 import '../styles/Confirmation.css';
 import {useConfirmationStore} from '../store/confirmationStore';
+import {useRegisterUserStore} from '../store/userRegistrationStore';
+
 const ConfirmationCode = () => {
   
  
   const userEmail = localStorage.getItem('correo');
   const { code, handleChange, handleRequest } = useConfirmationStore();
-
+  const formData = useRegisterUserStore((state) => state.correo);
+  const handleRequestForm = async (event)  => {
+    event.preventDefault();
+    await handleRequest(event);
+    console.log(formData);
+  }
 
   
 
@@ -35,7 +42,7 @@ const ConfirmationCode = () => {
         </div>
         <div className="button-row">
           <button className="cancel-button">Cancelar</button>
-          <button className="continue-button" onClick={handleRequest}>
+          <button className="continue-button" onClick={handleRequestForm}>
             Continuar
           </button>
         </div>

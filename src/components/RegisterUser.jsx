@@ -30,7 +30,7 @@ const RegisterUser = () => {
       if (status === 'success') {
         const timeoutId = setTimeout(() => {
           navigate('/confirmation');
-        }, 2000); // Esperar 2 segundos (2000 milisegundos) antes de navegar
+        }, 1000); // Esperar 2 segundos (2000 milisegundos) antes de navegar
     
         return () => clearTimeout(timeoutId); // Limpiar el timeout si el componente se desmonta antes de que se complete
     

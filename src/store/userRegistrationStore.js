@@ -30,19 +30,7 @@ export const useRegisterUserStore = create((set) => ({
 
   setEmail: (email) => set({ correo: email }),
   
-  setFormData: (formData) => {
-    set({ nombres: formData.nombres });
-    set({ apellidos: formData.apellidos });
-    set({ tipoDocumento: formData.tipoDocumento });
-    set({ documento: formData.documento });
-    set({ complemento: formData.complemento });
-    set({ direccion: formData.direccion });
-    set({ celular: formData.celular });
-    set({ correo: formData.correo });
-    set({ username: formData.username });
-    set({ secret: formData.secret });
-    set({ secretConfirm: formData.secretConfirm });
-  },
+  
 
 
   handleSubmit: (event) => {
@@ -70,7 +58,22 @@ export const useRegisterUserStore = create((set) => ({
       secret: event.target.secret.value,
       secretConfirm: event.target.secretConfirm.value,
     };
-    set({correo: formData.correo});
+    (formData) => {
+      set({ nombres: formData.nombres });
+      set({ apellidos: formData.apellidos });
+      set({ tipoDocumento: formData.tipoDocumento });
+      set({ documento: formData.documento });
+      set({ complemento: formData.complemento });
+      set({ direccion: formData.direccion });
+      set({ celular: formData.celular });
+      set({ correo: formData.correo });
+      set({ username: formData.username });
+      set({ secret: formData.secret });
+      set({ secretConfirm: formData.secretConfirm });
+    };
+    
+    console.log(formData.correo);
+    //set({formData: formData});
     localStorage.setItem('correo', formData.correo);
 
     if (formData.secret !== formData.secretConfirm) {
