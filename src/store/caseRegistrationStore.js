@@ -1,8 +1,7 @@
-import { useNavigate } from 'react-router-dom';
 import { create } from 'zustand';
 import axios from 'axios';
 
-const useCaseStore = create((set) => ({
+export const useCaseStore = create((set, get) => ({
   formData: {
     titulo: '',
     contraparte: '',
@@ -26,7 +25,7 @@ const useCaseStore = create((set) => ({
   handleSubmit: async (event) => {
     event.preventDefault();
 
-    const { formData } = useCaseStore.getState();
+    const { formData } = get();
 
     try {
       const response = await axios.post('api/endpoint', formData);
@@ -39,6 +38,12 @@ const useCaseStore = create((set) => ({
     try {
       const response = await axios.get('http://localhost:8080/api/v1/department');
       set((state) => ({ departamentos: response.data.response }));
+
+      // Después de cargar los departamentos, obtenemos el id del primer departamento y cargamos sus provincias
+      const firstDepartmentId = response.data.response[0].idDepartment;
+      if (firstDepartmentId) {
+        get().loadProvincias(firstDepartmentId);
+      }
     } catch (error) {
       // Manejar el error
     }
@@ -52,3 +57,6 @@ const useCaseStore = create((set) => ({
     }
   },
 }));
+
+export default useCaseStore;
+  
