@@ -1,6 +1,4 @@
-import axios from 'axios';
 import '../styles/Confirmation.css';
-import {useRegisterUserStore} from '../store/userRegistrationStore';
 import {useConfirmationStore} from '../store/confirmationStore';
 const ConfirmationCode = () => {
   
@@ -11,27 +9,7 @@ const ConfirmationCode = () => {
 
   
 
-  const handleVerification = async () => {
-    const token = code.join('');
-    try {
-      const response = await axios.post('http://localhost:8080/api/v1/verify', {
-        mail: email,
-        token: token,
-        
-      });
-      console.log(response.data);
-
-      if (response.data.code !== '0000') {
-        alert('Código inválido');
-      } else {
-        // Redirigir a la siguiente ruta
-        window.location.href = '/RegisterUser';
-      }
-    } catch (error) {
-      console.error(error);
-      // Manejar el error de la solicitud
-    }
-  };
+  
 
   return (
     <div className="confirmation-container">

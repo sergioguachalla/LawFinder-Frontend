@@ -1,6 +1,7 @@
 import { useEffect } from 'react';
 import { useRegisterUserStore } from '../store/userRegistrationStore';
 import '../styles/RegisterUser.css';
+import Spinner from './Spinner';
 import {useNavigate} from 'react-router-dom';
 
 const RegisterUser = () => {
@@ -10,19 +11,27 @@ const RegisterUser = () => {
       handleChange,
       handleSubmit,
       generateNewUUID,
-      statusState,
+      
       
     } = useRegisterUserStore();
-
+    const status = useRegisterUserStore((state) => state.statusState);
+    const email = useRegisterUserStore((state) => state.correo);
     useEffect(() => {
       generateNewUUID();
     }, [generateNewUUID]);
   
     
-    const handleSubmitForm =  (event)  => {
+    const handleSubmitForm =  async (event)  => {
       event.preventDefault();
-      handleSubmit(event);
-      navigate('/Confirmation');
+      await handleSubmit(event);
+      
+      if(status == 'success'){
+        //put a timer of 2 seconds
+        
+        
+      
+        navigate('/Confirmation');
+      }
     }
    
   return (
@@ -80,7 +89,16 @@ const RegisterUser = () => {
             <button type="submit" className="register-button">Registrar</button> 
            
         </div>
+        <div>
+          {status === 'loading' && <Spinner />}
+          {status === 'sucess' && <p>Usuario registrado con éxito</p>}
+          <p>{status}</p>
+          <p>{email}</p>
+    
+</div>
       </form>
+
+      
     </>
   );
 }

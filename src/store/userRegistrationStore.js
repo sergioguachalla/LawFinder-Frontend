@@ -14,7 +14,7 @@ export const useRegisterUserStore = create((set) => ({
   username: '',
   secret: '',
   secretConfirm: '',
-  statusState: '',
+  statusState: 'init',
 
   handleChange: (fieldName, event) => {
     const { value } = event.target;
@@ -99,11 +99,25 @@ export const useRegisterUserStore = create((set) => ({
 
     set({ nombres: '', apellidos: '', tipoDocumento: '', documento: '', complemento: '', direccion: '', celular: '', correo: '', username: '', secret: '', secretConfirm: ''});
     const registerUser = async () => {
+      set({ statusState: 'loading' });
       const response = await axios.post('http://localhost:8080/api/v1/verify', verificationBody);
-      console.log(response);
+      //console.log(response);
+     
+      //set({ statusState: 'success' });
+      if(response.status === 200){
+        set({ statusState: 'success' });
+      }
+      else if(response.code === 'ERR_NETWORK'){
+        set({ statusState: 'error' });
+      }
+        
+       
+     
+      
     }
+    
     registerUser();
-    set({ statusState: 'success' });
+    
     alert('Usuario registrado correctamente');
     
     
