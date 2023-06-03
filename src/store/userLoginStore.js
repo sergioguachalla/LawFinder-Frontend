@@ -4,6 +4,7 @@ import axios from 'axios';
 export const useLoginUserStore = create((set) => ({
    username: '',
    secret: '',
+   status: 'init',
    handleChange: (fieldName, event) => {
       const {value} = event.target;
       console.log('Cambio en el campo ' + fieldName + ' con valor ' + value);
