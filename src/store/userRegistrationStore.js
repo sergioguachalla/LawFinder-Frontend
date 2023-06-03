@@ -101,13 +101,13 @@ export const useRegisterUserStore = create((set) => ({
     const registerUser = async () => {
       set({ statusState: 'loading' });
       const response = await axios.post('http://localhost:8080/api/v1/verify', verificationBody);
-      //console.log(response);
+      console.log(response);
      
       //set({ statusState: 'success' });
-      if(response.status === 200){
+      if(response.status == 200){    
         set({ statusState: 'success' });
       }
-      else if(response.code === 'ERR_NETWORK'){
+      else if(response.status === 400){
         set({ statusState: 'error' });
       }
         
@@ -133,5 +133,6 @@ function generateUUID() {
     return v.toString(16);
   });
 }
+
 
 export default useRegisterUserStore;

@@ -74,3 +74,13 @@
   text-align: center;
   font-family: 'AppleFont', Arial, sans-serif;
 }
+
+.success-message {
+  color: green;
+  margin-top: 10px;
+}
+
+.error-message {
+  color: red;
+  margin-top: 10px;
+}
