@@ -4,7 +4,7 @@ import { format } from 'date-fns';
 import '../styles/Home.css';
 
 const Home = () => {
-   const { getCases, cases } = useCasesStore((state) => ({
+   const { getCases, cases,status } = useCasesStore((state) => ({
       ...state,
       history: history,
     }));
@@ -21,7 +21,9 @@ const Home = () => {
   return (
     <div className="container">
       <h1>Home</h1>
-      {cases.map((legalCase) => (
+
+      {status === 'success' && 
+        cases.map((legalCase) => (
         <div key={legalCase.idLegalCase} className="card">
           <h2>{legalCase.title}</h2>
           <p className="last-modified">Última modificación: {formatDate(legalCase.lastUpdate)}</p>
@@ -29,6 +31,10 @@ const Home = () => {
           <p>{legalCase.crime}</p>
         </div>
       ))}
+      {
+        status === 'empty' && <p>Cargando...</p>
+      }
+
     </div>
   );
 };

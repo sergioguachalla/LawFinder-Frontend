@@ -5,7 +5,7 @@ import { useEffect, useState } from 'react';
 const RegisterCase = () => {
   const history = useNavigate();
   const { formData, departamentos, provincias, handleChange, handleSubmit, loadDepartamentos, loadProvincias, instancias, loadInstancias,
-  categorias, loadCategorias, loadSubCategorias, subCategorias } = 
+  categorias, loadCategorias, loadSubCategorias, subCategorias, crimes, loadCrimes } = 
   useCaseStore((state) => ({
     ...state,
     history: history,
@@ -39,6 +39,12 @@ const RegisterCase = () => {
     const idCategoria = event.target.value;
     handleChange('categoria', event);
     loadSubCategorias(idCategoria);
+  };
+
+  const handleSubCategoriaChange = (event) => {
+    const idSubCategoria = event.target.value;
+    handleChange('subCategoria', event);
+    loadCrimes(idSubCategoria);
   };
 
   return (
@@ -94,10 +100,21 @@ const RegisterCase = () => {
         </div>
         <div className="form-row">
           <label>Sub-categoría *</label>
-          <select name="subCategoria" onChange={(event) => handleChange('subCategoria', event)} required>
+          <select name="subCategoria" onChange={handleSubCategoriaChange} required>
             {subCategorias.map((subCategoria) => (
                 <option key={subCategoria.idSubCategory} value={subCategoria.idSubCategory}>
                   {decodeURIComponent(subCategoria.subCategoryName)}
+                </option>
+              ))
+            }
+          </select>
+        </div>
+        <div className="form-row">
+          <label>Delito *</label>
+          <select name="delito" onChange={(event) => handleChange('delito', event)} required>
+            {crimes.map((crime) => (
+                <option key={crime.crimeId} value={crime.crimeId}>
+                  {decodeURIComponent(crime.name)}
                 </option>
               ))
             }
