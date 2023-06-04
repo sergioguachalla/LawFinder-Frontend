@@ -16,6 +16,7 @@ export const useCasesStore = create((set, get) => ({
    },
    cases: [],
    id: '',
+   status: 'init',
    
    handleChange: (field, event) => {
       set((state) => ({
@@ -44,6 +45,11 @@ export const useCasesStore = create((set, get) => ({
       try {
          const response = await axios.get(`http://localhost:8080/api/v1/legalcase/user/${get().id}`);
          set((state) => ({ cases: response.data.response }));
+         if(response.data.response == null){
+            set({status: 'empty'});
+         }else{
+            set({status: 'success'});
+         }
          console.log(response);
       } catch (error) {
          // Manejar el error

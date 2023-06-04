@@ -17,6 +17,7 @@ export const useCaseStore = create((set, get) => ({
   instancias: [],
   categorias: [],
   subCategorias: [],
+  crimes: [],
   handleChange: (field, event) => {
     set((state) => ({
       formData: {
@@ -90,6 +91,20 @@ export const useCaseStore = create((set, get) => ({
     try{
       const response = await axios.get(`http://localhost:8080/api/v1/category/${idCategoria}/subcategory`);
       set((state) => ({ subCategorias: response.data.response }));
+      console.log(response.data.response);
+      const firsSubCategoryId = response.data.response[0].idSubCategory;
+      if (firsSubCategoryId) {
+        get().loadCrimes(firsSubCategoryId);
+      }
+    } catch (error) {
+      console.log(error);
+      // Manejar el error
+    }
+  },
+  loadCrimes: async (idSubCategoria) => {
+    try{
+      const response = await axios.get(`http://localhost:8080/api/v1/subcategory/${idSubCategoria}/crime`);
+      set((state) => ({ crimes: response.data.response }));
       console.log(response.data.response);
     } catch (error) {
       console.log(error);
