@@ -5,7 +5,7 @@ import { useEffect, useState } from 'react';
 const RegisterCase = () => {
   const history = useNavigate();
   const { formData, departamentos, provincias, handleChange, handleSubmit, loadDepartamentos, loadProvincias, instancias, loadInstancias,
-  categorias, loadCategorias } = 
+  categorias, loadCategorias, loadSubCategorias, subCategorias } = 
   useCaseStore((state) => ({
     ...state,
     history: history,
@@ -20,6 +20,7 @@ const RegisterCase = () => {
 
   useEffect(() => {
     loadDepartamentos();
+    loadCategorias();
   }, []);
 
   useEffect(() => {
@@ -32,6 +33,12 @@ const RegisterCase = () => {
     const idDepartamento = event.target.value;
     handleChange('departamento', event);
     loadProvincias(idDepartamento);
+  };
+
+  const handleCategoriaChange = (event) => {
+    const idCategoria = event.target.value;
+    handleChange('categoria', event);
+    loadSubCategorias(idCategoria);
   };
 
   return (
@@ -76,7 +83,7 @@ const RegisterCase = () => {
         </div>
         <div className="form-row">
           <label>Categoría *</label>
-          <select name="categoria" onChange={(event) => handleChange('categoria', event)} required>
+          <select name="categoria" onChange={handleCategoriaChange} required>
             {categorias.map((categoria) => (
                 <option key={categoria.categoryId} value={categoria.categoryId}>
                   {decodeURIComponent(categoria.categoryName)}
@@ -88,7 +95,12 @@ const RegisterCase = () => {
         <div className="form-row">
           <label>Sub-categoría *</label>
           <select name="subCategoria" onChange={(event) => handleChange('subCategoria', event)} required>
-            {/* Aquí deberías mapear las sub-categorías como lo haces con los departamentos y las provincias */}
+            {subCategorias.map((subCategoria) => (
+                <option key={subCategoria.idSubCategory} value={subCategoria.idSubCategory}>
+                  {decodeURIComponent(subCategoria.subCategoryName)}
+                </option>
+              ))
+            }
           </select>
         </div>
         <hr />

@@ -16,6 +16,7 @@ export const useCaseStore = create((set, get) => ({
   provincias: [],
   instancias: [],
   categorias: [],
+  subCategorias: [],
   handleChange: (field, event) => {
     set((state) => ({
       formData: {
@@ -75,6 +76,21 @@ export const useCaseStore = create((set, get) => ({
     try{
       const response = await axios.get('http://localhost:8080/api/v1/category');
       set((state) => ({ categorias: response.data.response }));
+      const firstCategoryId = response.data.response[0].categoryId;
+      if (firstCategoryId) {
+        get().loadSubCategorias(firstCategoryId);
+      }
+    } catch (error) {
+      
+      console.log(error);
+      // Manejar el error
+    }
+  },
+  loadSubCategorias: async (idCategoria) => {
+    try{
+      const response = await axios.get(`http://localhost:8080/api/v1/category/${idCategoria}/subcategory`);
+      set((state) => ({ subCategorias: response.data.response }));
+      console.log(response.data.response);
     } catch (error) {
       console.log(error);
       // Manejar el error
