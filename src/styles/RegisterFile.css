@@ -1,38 +1,29 @@
-form {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
-  
-  input[type="file"],
-  input[type="text"],
-  input[type="date"],
-  button {
-    margin-bottom: 10px;
-    padding: 10px;
-    border: none;
-    background-color: white;
-    color: black;
-    font-size: 16px;
-    font-family: Arial, sans-serif;
-  }
-  
-  button {
-    cursor: pointer;
-  }
-  
-  input:disabled,
-  button:disabled {
-    opacity: 0.6;
-    cursor: not-allowed;
-  }
-  
-  p {
-    color: black;
-  }
-  
-  .loading-message {
-    color: black;
-    font-style: italic;
-  }
-  
+.register-file-form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: 300px;
+  margin: 0 auto;
+}
+
+.register-file-form label {
+  font-weight: bold;
+}
+
+.register-file-form input, 
+.register-file-form select, 
+.register-file-form button {
+  padding: 10px;
+  font-size: 1rem;
+}
+
+.register-file-form button {
+  cursor: pointer;
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+}
+
+.register-file-form button:hover {
+  background-color: #45a049;
+}
