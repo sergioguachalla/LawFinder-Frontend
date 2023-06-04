@@ -24,9 +24,12 @@ export const useLoginUserStore = create((set) => ({
          .then((response) => {
             console.log(response);
             set({username: formData.username});
+            localStorage.setItem('token', response.data.response.authToken);
          })
          .catch((error) => {
             console.log(error);
          });
    }
+   
 }));
+

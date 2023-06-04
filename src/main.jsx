@@ -2,6 +2,7 @@ import * as React from "react";
 import * as ReactDOM from "react-dom/client";
 import Login from "./components/Login";
 import Role from "./components/Role";
+import Home from "./components/Home";
 import Confirmation from "./components/Confirmation";
 import RegisterUser from "./components/RegisterUser";
 import "@fortawesome/fontawesome-free/css/all.min.css";
@@ -32,6 +33,10 @@ const router = createBrowserRouter([
     path: "RegisterCase/",
     element: <RegisterCase/>,
   },
+  {
+    path:'Home/',
+    element: <Home/>,
+  }
 
 
 ]);

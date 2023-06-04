@@ -1,0 +1,28 @@
+.card {
+   background-color: #f0f0f0;
+   border-radius: 4px;
+   padding: 16px;
+   margin-bottom: 16px;
+ }
+ 
+ .card h2 {
+   font-size: 20px;
+   margin-bottom: 8px;
+ }
+ 
+ .card p {
+   font-size: 14px;
+   margin-bottom: 4px;
+ }
+ 
+ .card .last-modified {
+   color: gray;
+ }
+ 
+ .container{
+   display: flex;
+   flex-direction: column;
+   max-width: 900px;
+   
+ }
+ 
