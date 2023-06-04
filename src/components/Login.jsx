@@ -1,8 +1,22 @@
 import '../styles/Login.css';
 import { useLoginUserStore } from '../store/userLoginStore';
+import { useNavigate } from 'react-router-dom';
+import { useEffect } from 'react';
 const Login = () => {
+  const navigate = useNavigate();
+  const {handleChange, handleSubmit,status} = useLoginUserStore();
   
-  const {handleChange, handleSubmit} = useLoginUserStore();
+  useEffect(() => {
+    if (status === 'success') {
+      const timeoutId = setTimeout(() => {
+        navigate('/Home');
+      }, 1000);
+      return () => clearTimeout(timeoutId); // Esperar 2 segundos (2000 milisegundos) antes de navegar
+    } else {
+      console.log(status + "b");
+    }
+  }, [navigate, status]);
+
   return (
     <div className="login-container">
       <div className="login-black">

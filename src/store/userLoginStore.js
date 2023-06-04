@@ -25,6 +25,11 @@ export const useLoginUserStore = create((set) => ({
             console.log(response);
             set({username: formData.username});
             localStorage.setItem('token', response.data.response.authToken);
+            if(response.data.response != null){
+               set({status: 'success'});
+            }else{
+               set({status: 'error'});
+            }
          })
          .catch((error) => {
             console.log(error);

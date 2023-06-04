@@ -12,7 +12,7 @@ const Role = () => {
         <div className="button-wrapper">
 
           {/* Redirecciona a confirmation */}
-          <Link to="/Confirmation">
+          <Link to="/RegisterUser">
           <div className="role-button-container">
             <button className="role-button">
               <i className="fas fa-user"></i>

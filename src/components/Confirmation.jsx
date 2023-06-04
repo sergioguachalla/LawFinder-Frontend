@@ -1,9 +1,12 @@
 import '../styles/Confirmation.css';
 import {useConfirmationStore} from '../store/confirmationStore';
 import {useRegisterUserStore} from '../store/userRegistrationStore';
+import { useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 const ConfirmationCode = () => {
-  
+  const navigate = useNavigate();
+
  
   const userEmail = localStorage.getItem('correo');
   const { code, handleChange, handleRequest } = useConfirmationStore();
@@ -13,10 +16,21 @@ const ConfirmationCode = () => {
     event.preventDefault();
     await handleRequest(event);
     //console.log(username);
-  }
+  };
+  useEffect(() => {
+    if (status === 'success') {
+      const timeoutId = setTimeout(() => {
+        navigate('/');
+      }, 1000); // Esperar 2 segundos (2000 milisegundos) antes de navegar
+  
+      return () => clearTimeout(timeoutId); // Limpiar el timeout si el componente se desmonta antes de que se complete
+  
+    } else {
+      console.log(status + "b");
+    }
+  }, [navigate, status]);
   
 
-  
 
   
 
