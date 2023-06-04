@@ -4,7 +4,8 @@ import { useEffect, useState } from 'react';
 
 const RegisterCase = () => {
   const history = useNavigate();
-  const { formData, departamentos, provincias, handleChange, handleSubmit, loadDepartamentos, loadProvincias } = 
+  const { formData, departamentos, provincias, handleChange, handleSubmit, loadDepartamentos, loadProvincias, instancias, loadInstancias,
+  categorias, loadCategorias } = 
   useCaseStore((state) => ({
     ...state,
     history: history,
@@ -20,6 +21,12 @@ const RegisterCase = () => {
   useEffect(() => {
     loadDepartamentos();
   }, []);
+
+  useEffect(() => {
+    loadInstancias();
+    loadCategorias();
+  }, []);
+
 
   const handleDepartamentoChange = (event) => {
     const idDepartamento = event.target.value;
@@ -70,7 +77,12 @@ const RegisterCase = () => {
         <div className="form-row">
           <label>Categoría *</label>
           <select name="categoria" onChange={(event) => handleChange('categoria', event)} required>
-            {/* Aquí deberías mapear las categorías como lo haces con los departamentos y las provincias */}
+            {categorias.map((categoria) => (
+                <option key={categoria.categoryId} value={categoria.categoryId}>
+                  {decodeURIComponent(categoria.categoryName)}
+                </option>
+              ))
+            }
           </select>
         </div>
         <div className="form-row">
@@ -104,7 +116,12 @@ const RegisterCase = () => {
         <div className="form-row">
           <label>Instancia *</label>
           <select name="instancia" onChange={(event) => handleChange('instancia', event)} required>
-            {/* Aquí deberías mapear las instancias como lo haces con los departamentos y las provincias */}
+            {instancias.map((instancia) => (
+                <option key={instancia.instanceId} value={instancia.instanceId}>
+                  {decodeURIComponent(instancia.instanceName)}
+                </option>
+              ))
+            }
           </select>
         </div>
         <div className="form-row">

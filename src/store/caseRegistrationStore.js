@@ -14,6 +14,8 @@ export const useCaseStore = create((set, get) => ({
   },
   departamentos: [],
   provincias: [],
+  instancias: [],
+  categorias: [],
   handleChange: (field, event) => {
     set((state) => ({
       formData: {
@@ -56,6 +58,28 @@ export const useCaseStore = create((set, get) => ({
       // Manejar el error
     }
   },
+  loadInstancias: async () => {
+    try{
+      const responseInstancias = await axios.get('http://localhost:8080/api/v1/legalcase/instance');
+      set((state) => ({ instancias: responseInstancias.data.response }));
+      console.log(responseInstancias.data.response);
+      //console.log(get().state.instancias + " sssdasdasasdsa");
+
+    } catch (error) {
+      console.log(error);
+      // Manejar el error
+    }
+
+  },
+  loadCategorias: async () => {
+    try{
+      const response = await axios.get('http://localhost:8080/api/v1/category');
+      set((state) => ({ categorias: response.data.response }));
+    } catch (error) {
+      console.log(error);
+      // Manejar el error
+    }
+  }
 }));
 
 export default useCaseStore;
