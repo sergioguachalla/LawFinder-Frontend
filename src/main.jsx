@@ -10,6 +10,7 @@ import {
   RouterProvider,
 } from "react-router-dom";
 import RegisterCase from "./components/RegisterCase";
+import UploadForm from "./components/UploadForm";
 
 const router = createBrowserRouter([
   {
@@ -31,6 +32,10 @@ const router = createBrowserRouter([
   {
     path: "RegisterCase/",
     element: <RegisterCase/>,
+  },
+  {
+    path: "UploadForm/",
+    element: <UploadForm/>,
   },
 
 
