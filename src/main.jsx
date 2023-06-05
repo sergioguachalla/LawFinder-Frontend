@@ -13,6 +13,7 @@ import {
 import RegisterCase from "./components/RegisterCase";
 import RegisterFile from "./components/RegisterFile";
 import CaseInformation from "./components/CaseInformation";
+import Invitation from "./components/Invitation";
 
 const router = createBrowserRouter([
   {
@@ -46,8 +47,11 @@ const router = createBrowserRouter([
   {
     path: "CaseDetails/:id",
     element: <CaseInformation/>,
+  },
+  {
+    path: "Invitation/",
+    element: <Invitation/>,
   }
-
 
 ]);
 
