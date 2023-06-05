@@ -1,4 +1,4 @@
-export function getIdFromToken() {
+export const getIdFromToken= () => {
    const token = localStorage.getItem('token');
    if (token) {
       const payload = token.split('.')[1];

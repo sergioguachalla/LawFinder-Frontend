@@ -35,7 +35,8 @@ export const useCasesStore = create((set, get) => ({
          const payload = token.split('.')[1];
          const decodedPayload = atob(payload);
          //console.log(decodedPayload.split(',')[4].split(':')[1].split('}')[0]);
-         const id = decodedPayload.split(',')[4].split(':')[1].split('}')[0];
+         const id = decodedPayload.split(',')[5].split(':')[1].split('}')[0];
+         console.log(id);
          return id;
       }
       return '';
@@ -47,7 +48,7 @@ export const useCasesStore = create((set, get) => ({
          const urlPage = new URLSearchParams(location.search);
          //set(() => ({ currentPage: Number(urlPage.get("page")) }));
         const page = get().currentPage;
-        console.log(page);
+        //console.log(page);
 
        set(() => ({ currentPage: page}) );
     
@@ -57,6 +58,7 @@ export const useCasesStore = create((set, get) => ({
             size: 2, // Tamaño de página
           },
         });
+        console.log(response);
         const casesPage = response.data.response;
         set(() => ({ cases: casesPage.content }));
         set(() => ({
@@ -100,13 +102,3 @@ export const useCasesStore = create((set, get) => ({
     },
     
 }));
-
-
-export default useCasesStore;
-
-
-
-
-
-
-

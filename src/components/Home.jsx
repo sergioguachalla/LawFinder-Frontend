@@ -1,8 +1,9 @@
 import { useEffect } from "react";
-import useCasesStore from "../store/casesStore";
+import {useCasesStore} from "../store/casesStore";
 import { format } from 'date-fns';
-import { useNavigate, useLocation  } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import '../styles/Home.css';
+import Navbar from "./Navbar";
 
 const Home = () => {
   const navigate = useNavigate();
@@ -29,9 +30,12 @@ const Home = () => {
   }
   
   return (
+    <>
+    {status === 'loading' && <p>Cargando...</p>}
+    <Navbar></Navbar>
     <div className="container">
       <h1>Home</h1>
-      {status === 'loading' && <p>Cargando...</p>}
+      
 
       {status === 'success' && cases.map((legalCase) => (
         <div key={legalCase.idLegalCase} className="card">
@@ -57,6 +61,7 @@ const Home = () => {
         </div>
       )}
     </div>
+    </>
   );
 };
 

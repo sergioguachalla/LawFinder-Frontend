@@ -1,8 +1,11 @@
 import React from 'react';
 import '../styles/Role.css';
 import { Link } from 'react-router-dom';
+import Navbar from './Navbar';
 const Role = () => {
   return (
+    <>
+    <Navbar></Navbar>
     
     <div className="role-selection">
       <h1 className="role-title">Law Finder</h1>
@@ -42,6 +45,7 @@ const Role = () => {
         </div>
       </div>
     </div>
+    </>
   );
 };
 
