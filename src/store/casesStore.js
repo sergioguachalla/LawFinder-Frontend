@@ -33,8 +33,8 @@ export const useCasesStore = create((set, get) => ({
          const decodedPayload = atob(payload);
          
          //console.log(decodedPayload.split(',')[4].split(':')[1].split('}')[0]);
-         const id = decodedPayload.split(',')[4].split(':')[1].split('}')[0];
-         //console.log(id);
+         const id = decodedPayload.split(',')[5].split(':')[1].split('}')[0];
+         console.log(id);
          return id;
       }
       return '';
@@ -44,6 +44,7 @@ export const useCasesStore = create((set, get) => ({
       
       try {
          const response = await axios.get(`http://localhost:8080/api/v1/legalcase/user/${get().id}`);
+         console.log(get().id)
          set((state) => ({ cases: response.data.response }));
          if(response.data.response == null){
             set({status: 'empty'});

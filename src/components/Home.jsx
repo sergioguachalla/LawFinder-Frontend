@@ -15,7 +15,7 @@ const Home = () => {
   }
   useEffect(() => {
     getCases();   
-  }, []);
+  },[]);
 
   return (
     <div className="container">
