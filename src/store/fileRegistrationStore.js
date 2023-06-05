@@ -44,7 +44,7 @@ export const useStore = create((set, get) => ({
     console.log("a");
     console.log(get().selectedCourt);
     try {
-      const response = await axios.post('http://localhost:8080/upload', formData, {
+      const response = await axios.post('http://localhost:8080/api/v1/legalfile', formData, {
         headers: {
           'Content-Type': 'multipart/form-data'
         }
