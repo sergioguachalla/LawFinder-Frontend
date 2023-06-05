@@ -4,72 +4,74 @@ import { useEffect, useState } from 'react';
 
 const RegisterCase = () => {
   const history = useNavigate();
+  
   const { formData, departamentos, provincias, handleChange, handleSubmit, loadDepartamentos, loadProvincias, instancias, loadInstancias,
-  categorias, loadCategorias, loadSubCategorias, subCategorias, crimes, loadCrimes } = 
+  categorias, loadCategorias, loadSubCategorias, subCategorias, crimes, loadCrimes, registerCase } = 
   useCaseStore((state) => ({
     ...state,
     history: history,
   }));
 
-  const [contrapartes, setContrapartes] = useState([{ id: 0 }]);
+  const [contrapartes, setContrapartes] = useState([{ id: 1 }]);
 
   const addContraparte = () => {
     const id = contrapartes[contrapartes.length - 1].id + 1;
     setContrapartes(prev => [...prev, { id }]);
+    
   }
 
   useEffect(() => {
     loadDepartamentos();
     loadCategorias();
-  }, []);
-
-  useEffect(() => {
     loadInstancias();
-    loadCategorias();
   }, []);
 
+ 
 
-  const handleDepartamentoChange = (event) => {
+
+  const handleDepartamentoChange =  (event) =>  {
     const idDepartamento = event.target.value;
-    handleChange('departamento', event);
+    handleChange('departamentId', event);
     loadProvincias(idDepartamento);
   };
 
   const handleCategoriaChange = (event) => {
     const idCategoria = event.target.value;
-    handleChange('categoria', event);
+    handleChange("categoria", event);
     loadSubCategorias(idCategoria);
   };
 
   const handleSubCategoriaChange = (event) => {
     const idSubCategoria = event.target.value;
-    handleChange('subCategoria', event);
+    handleChange('subCategoryId', event);
     loadCrimes(idSubCategoria);
   };
+  const handleSubmitForm = async (event) => {
+    event.preventDefault();
+    await registerCase();
+  };
+
+ 
 
   return (
     <>
       <h1 className='centered-apple-font'>REGISTRO DE CASO</h1>
-      <form className="form-container" onSubmit={handleSubmit}>
+      <form className="form-container" onSubmit={handleSubmitForm}>
         <div className="form-row">
           <label>Título *</label>
-          <input name="titulo" type="text" value={formData.titulo} onChange={(event) => handleChange('titulo', event)} required />
+          <input name="title" type="text" value={formData.title} onChange={(event) => handleChange('title', event)}  />
         </div>
         <div className="form-row">
           <label>Fecha de inicio *</label>
-          <input name="fechaInicio" type="date" value={formData.fechaInicio} onChange={(event) => handleChange('fechaInicio', event)} required />
+          <input name="startDate" type="date" value={formData.startDate} onChange={(event) => handleChange('startDate', event)}  />
         </div>
         <div className="form-row">
           <label>Resumen *</label>
-          <textarea name="resumen" value={formData.resumen} onChange={(event) => handleChange('resumen', event)} required />
-        </div>
-        <div className="form-row">
-          <label>Crimen *</label>
-          <textarea name="crimen" value={formData.resumen} onChange={(event) => handleChange('crimen', event)} required />
+          <textarea name="summary" value={formData.summary} onChange={(event) => handleChange('summary', event)}  />
         </div>
         <div className="form-row">
           <label>Departamento*</label>
-          <select name="departamento" onChange={handleDepartamentoChange} required>
+          <select name="departamento" onChange={(event) => handleDepartamentoChange(event)} >
             {departamentos.map((departamento) => (
               <option key={departamento.idDepartment} value={departamento.idDepartment}>
                 {decodeURIComponent(departamento.departmentName)}
@@ -79,7 +81,7 @@ const RegisterCase = () => {
         </div>
         <div className="form-row">
           <label>Provincia*</label>
-          <select name="provincia" onChange={(event) => handleChange('provincia', event)} required>
+          <select name="provincia" onChange={(event) => handleChange('provinceId', event)} >
             {provincias.map((provincia) => (
               <option key={provincia.idProvince} value={provincia.idProvince}>
                 {decodeURIComponent(provincia.provinceName)}
@@ -89,7 +91,7 @@ const RegisterCase = () => {
         </div>
         <div className="form-row">
           <label>Categoría *</label>
-          <select name="categoria" onChange={handleCategoriaChange} required>
+          <select name="categoria" onChange={(event) => handleCategoriaChange(event)}>
             {categorias.map((categoria) => (
                 <option key={categoria.categoryId} value={categoria.categoryId}>
                   {decodeURIComponent(categoria.categoryName)}
@@ -100,7 +102,7 @@ const RegisterCase = () => {
         </div>
         <div className="form-row">
           <label>Sub-categoría *</label>
-          <select name="subCategoria" onChange={handleSubCategoriaChange} required>
+          <select name="subCategoria" onChange={(event) => handleSubCategoriaChange(event)} >
             {subCategorias.map((subCategoria) => (
                 <option key={subCategoria.idSubCategory} value={subCategoria.idSubCategory}>
                   {decodeURIComponent(subCategoria.subCategoryName)}
@@ -109,9 +111,9 @@ const RegisterCase = () => {
             }
           </select>
         </div>
-        <div className="form-row">
+        {<div className="form-row">
           <label>Delito *</label>
-          <select name="delito" onChange={(event) => handleChange('delito', event)} required>
+          <select name="delito" onChange={(event) => handleChange('crimeId', event)} >
             {crimes.map((crime) => (
                 <option key={crime.crimeId} value={crime.crimeId}>
                   {decodeURIComponent(crime.name)}
@@ -119,24 +121,24 @@ const RegisterCase = () => {
               ))
             }
           </select>
-        </div>
+        </div> }
         <hr />
         <h2>Actores</h2>
         <div className="form-row">
           <label>Invitar abogado *</label>
-          <input name="invitarAbogado" type="text" onChange={(event) => handleChange('invitarAbogado', event)} required />
+          <input name="invitarAbogado" type="text" />
           <button type="button" onClick={() => {/* Aquí deberías llamar a la función para enviar la invitación */}}>Enviar invitación</button>
         </div>
         <div className="form-row">
           <label>Invitar cliente *</label>
-          <input name="invitarCliente" type="text" onChange={(event) => handleChange('invitarCliente', event)} required />
+          <input name="invitarCliente" type="text" />
           <button type="button" onClick={() => {/* Aquí deberías llamar a la función para enviar la invitación */}}>Enviar invitación</button>
         </div>
         {contrapartes.map((contraparte, index) => (
           <div key={contraparte.id} className="form-row">
             <label>Contraparte {index + 1} *</label>
         
-            <input name={`contraparte${index}`} type="text" onChange={(event) => handleChange(`contraparte${index}`, event)} required />
+            <input name={`contraparte${index}`} type="text" onChange={(event) => handleChange(`contraparte`, event)}  />
           </div>
         ))}
         <button type="button" onClick={addContraparte}>+</button>
@@ -144,7 +146,7 @@ const RegisterCase = () => {
         <h2>Etapa actual del proceso</h2>
         <div className="form-row">
           <label>Instancia *</label>
-          <select name="instancia" onChange={(event) => handleChange('instancia', event)} required>
+          <select name="instancia" onChange={(event) => handleChange('idInstance', event)} >
             {instancias.map((instancia) => (
                 <option key={instancia.instanceId} value={instancia.instanceId}>
                   {decodeURIComponent(instancia.instanceName)}
@@ -155,11 +157,11 @@ const RegisterCase = () => {
         </div>
         <div className="form-row">
           <label>Fecha de inicio de la instancia *</label>
-          <input name="fechaInicioInstancia" type="date" onChange={(event) => handleChange('fechaInicioInstancia', event)} required />
+          <input name="fechaInicioInstancia" type="date" onChange={(event) => handleChange('startDateInstance', event)}  />
         </div>
         <div className="form-row">
           <label>Fecha final de plazo de la instancia *</label>
-          <input name="fechaFinalInstancia" type="date" onChange={(event) => handleChange('fechaFinalInstancia', event)} required />
+          <input name="fechaFinalInstancia" type="date" onChange={(event) => handleChange('endDateInstance', event)}  />
         </div>
         <div className="button-row">
           <button type="submit" className="register-button">Registrar</button>

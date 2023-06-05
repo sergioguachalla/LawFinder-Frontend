@@ -10,7 +10,7 @@ const Home = () => {
     }));
 
   const formatDate = (dateInput) => {
-    const formattedDate = format(new Date(dateInput), 'dd/MM/yyyy');
+    const formattedDate = format(new Date(dateInput), 'yyyy-MM-dd');
     return formattedDate;
   }
 
