@@ -15,11 +15,13 @@ export const useCasesStore = create((set, get) => ({
       lastUpdate:'',
    },
    cases: [],
+   caseId: '',
    id: '',
    status: 'init',
    
    handleChange: (field, event) => {
       set((state) => ({
+         
          formData: {
             ...state.formData,
             [field]: event.target.value,
@@ -41,12 +43,15 @@ export const useCasesStore = create((set, get) => ({
    },
    getCases: async () => {
      set((state) => ({ id: get().getIdFromToken() }));
-      
+     set(() => ({ status: 'loading' }));
       try {
+         
+         console.log(get().formData)
          const response = await axios.get(`http://localhost:8080/api/v1/legalcase/user/${get().id}`);
          console.log(get().id)
          set((state) => ({ cases: response.data.response }));
-         if(response.data.response == null){
+         set(() => ({ caseId: response.data.response[0].legalCaseId }));
+         if(response.data.response.length === 0){
             set({status: 'empty'});
          }else{
             set({status: 'success'});

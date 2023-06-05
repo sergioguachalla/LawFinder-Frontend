@@ -33,7 +33,7 @@ export const useStore = create((set, get) => ({
     const formData = new FormData();
     // aqui se pone el id del instance legal case
 
-    formData.append('instanceCaseId', 1);
+    formData.append('instanceCaseId', 16);
     formData.append('file', get().file);
     formData.append('summary', get().summary);
     formData.append('dueDate', get().dueDate);

@@ -18,7 +18,7 @@ const ConfirmationCode = () => {
     //console.log(username);
   };
   useEffect(() => {
-    if (status === 'success') {
+    if(status === 'success') {
       const timeoutId = setTimeout(() => {
         navigate('/');
       }, 1000); // Esperar 2 segundos (2000 milisegundos) antes de navegar

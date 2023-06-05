@@ -12,6 +12,7 @@ import {
 } from "react-router-dom";
 import RegisterCase from "./components/RegisterCase";
 import RegisterFile from "./components/RegisterFile";
+import CaseInformation from "./components/CaseInformation";
 
 const router = createBrowserRouter([
   {
@@ -42,6 +43,10 @@ const router = createBrowserRouter([
     path: "RegisterFile/",
     element: <RegisterFile/>,
   },
+  {
+    path: "CaseDetails/:id",
+    element: <CaseInformation/>,
+  }
 
 
 ]);
