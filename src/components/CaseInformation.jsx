@@ -1,5 +1,5 @@
 import { useCasesStore } from '../store/casesStore';
-import  {useParams} from 'react-router-dom';
+import  {useParams} from 'react-router-dom/';
 import {useCaseDetailsStore } from '../store/caseDetailsStore';
 import { useEffect } from 'react';
 const CaseInformation = () => {

@@ -48,7 +48,7 @@ const RegisterCase = () => {
   };
   const handleSubmitForm = async (event) => {
     event.preventDefault();
-    await registerCase();
+    await registerCase(event);
   };
 
   const handleLawyerEmail = (event) => {
