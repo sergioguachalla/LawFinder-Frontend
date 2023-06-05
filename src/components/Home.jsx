@@ -13,9 +13,8 @@ const Home = () => {
     const formattedDate = format(new Date(dateInput), 'yyyy-MM-dd');
     return formattedDate;
   }
-
   useEffect(() => {
-    getCases()   
+    getCases();   
   }, []);
 
   return (
