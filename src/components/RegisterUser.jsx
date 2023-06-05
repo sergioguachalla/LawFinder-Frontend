@@ -32,10 +32,14 @@ const RegisterUser = () => {
           navigate('/confirmation');
         }, 1000); // Esperar 2 segundos (2000 milisegundos) antes de navegar
     
-        return () => clearTimeout(timeoutId); // Limpiar el timeout si el componente se desmonta antes de que se complete
+        return () => clearTimeout(timeoutId);
+         // Limpiar el timeout si el componente se desmonta antes de que se complete
     
-      } else {
-        console.log(status + "b");
+      } else if(status === 'registered') {
+        setTimeout(() => {
+          navigate('/RegisterUser');
+        }
+        , 1000);
       }
     }, [navigate, status]);
     
@@ -98,6 +102,7 @@ const RegisterUser = () => {
             {status === 'loading' && <Spinner />}
             {status === 'success' && <p className="success-message">Usuario registrado con éxito</p>}
             {status === 'error' && <p className="error-message">Se ha producido un error</p>}
+            {status === 'registered' && <p className="error-message">El usuario ya se encuentra registrado</p>}
           </div>
         </form>
       </>

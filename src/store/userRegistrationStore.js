@@ -1,7 +1,7 @@
 import { create } from 'zustand';
 import axios from 'axios';
 
-export const useRegisterUserStore = create((set) => ({
+export const useRegisterUserStore = create((set,get) => ({
   deviceId: localStorage.getItem('device-id') || generateUUID(),
   nombres: '',
   apellidos: '',
@@ -91,7 +91,29 @@ export const useRegisterUserStore = create((set) => ({
       "deviceId": localStorage.getItem('device-id'),
       "type": "email",
       "email": formData.correo,
+    };
+    const requestVerificatioBody = {
+      "email" : formData.correo,
+    };
+
+    const userExists = async () => {
+      const response = await axios.post('http://localhost:8080/api/v1/verification', requestVerificatioBody);
+      console.log(response);
+      if(response.data.response == "User Already Exists"){
+        //alert('El correo ya se encuentra registrado');
+        set({ statusState: 'registered' });
+        set({ formData : ''});
+        set({ nombres : ''});
+        set({ correo : ''});
+      }
+      else if(response.data.response == "User Does Not Exist"){
+        registerUser();
+        set({ statusState: 'notRegistered' });
+      }
     }
+    userExists();
+
+
 
 
 
@@ -111,16 +133,12 @@ export const useRegisterUserStore = create((set) => ({
       }
 
       
-    }
+    };
+   
    
 
+    //alert('Usuario registrado correctamente');  
     
-    registerUser();
-    
-    alert('Usuario registrado correctamente');
-    
-    
-      
   },
 
   setUserName: (username) => set({ username: username }),

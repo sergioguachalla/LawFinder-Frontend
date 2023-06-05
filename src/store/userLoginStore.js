@@ -20,12 +20,13 @@ export const useLoginUserStore = create((set) => ({
          "username": formData.username,
          "password": formData.secret,
       };
+      
       axios.post('http://localhost:8080/api/v1/auth/login', requestBody)
          .then((response) => {
             console.log(response);
             set({username: formData.username});
             localStorage.setItem('token', response.data.response.authToken);
-            if(response.data.response != null){
+            if(response.data.response !== null){
                set({status: 'success'});
             }else{
                set({status: 'error'});

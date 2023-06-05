@@ -5,8 +5,8 @@ import { useEffect, useState } from 'react';
 const RegisterCase = () => {
   const history = useNavigate();
   
-  const { formData, departamentos, provincias, handleChange, handleSubmit, loadDepartamentos, loadProvincias, instancias, loadInstancias,
-  categorias, loadCategorias, loadSubCategorias, subCategorias, crimes, loadCrimes, registerCase } = 
+  const { formData, departamentos, provincias, handleChange, handleInvitation, loadDepartamentos, loadProvincias, instancias, loadInstancias,
+  categorias, loadCategorias, loadSubCategorias, subCategorias, crimes, loadCrimes, registerCase, status, lawyerEmail } = 
   useCaseStore((state) => ({
     ...state,
     history: history,
@@ -50,6 +50,14 @@ const RegisterCase = () => {
     event.preventDefault();
     await registerCase();
   };
+
+  const handleLawyerEmail = (event) => {
+    //const lawyerEmail = event.target.value;
+    handleChange('lawyerEmail', event);
+  }
+  const handleCustomerEmail = (event) => {
+    handleChange('customerEmail', event);
+  }
 
  
 
@@ -126,13 +134,17 @@ const RegisterCase = () => {
         <h2>Actores</h2>
         <div className="form-row">
           <label>Invitar abogado *</label>
-          <input name="invitarAbogado" type="text" />
-          <button type="button" onClick={() => {/* Aquí deberías llamar a la función para enviar la invitación */}}>Enviar invitación</button>
+          <input name="laywerEmail" type="text" onChange={(event) => handleLawyerEmail(event)}/>
+          <button type="button" onClick={() => handleInvitation("lawyer")}>Enviar invitación</button>
+          {status === 'lawyerNotFound' && <p>Abogado no registrado</p>}
+          {status === 'lawyerFound' && <p>Invitación enviada a {formData.lawyerEmail} </p>}
         </div>
         <div className="form-row">
           <label>Invitar cliente *</label>
-          <input name="invitarCliente" type="text" />
-          <button type="button" onClick={() => {/* Aquí deberías llamar a la función para enviar la invitación */}}>Enviar invitación</button>
+          <input name="customerEmail" type="text" onChange={(event) => handleCustomerEmail(event)} />
+          <button type="button" onClick={() => {handleInvitation("customer")}}>Enviar invitación</button>
+          {status === 'customerNotFound' && <p>Cliente no registrado</p>}
+          {status === 'customerFound' && <p>Invitación enviada a {formData.lawyerEmail} </p>}
         </div>
         {contrapartes.map((contraparte, index) => (
           <div key={contraparte.id} className="form-row">

@@ -17,12 +17,15 @@ export const useCaseStore = create((set, get) => ({
     lastUpdate: Format(Date.now(), 'dd-MM-yyyy'),
   },
   departmentId: '',
+  status: '',
   departamentos: [],
   provincias: [],
   instancias: [],
   categorias: [],
   subCategorias: [],
   crimes: [],
+  lawyerEmail: '',
+  customerEmail: '',
   getIdFromToken: () => {
     const token = localStorage.getItem('token');
     if (token) {
@@ -30,7 +33,7 @@ export const useCaseStore = create((set, get) => ({
        const decodedPayload = atob(payload);
        
        //console.log(decodedPayload.split(',')[4].split(':')[1].split('}')[0]);
-       const id = decodedPayload.split(',')[4].split(':')[1].split('}')[0];
+       const id = decodedPayload.split(',')[5].split(':')[1].split('}')[0];
        //console.log(id);
        return id;
     }
@@ -46,10 +49,30 @@ export const useCaseStore = create((set, get) => ({
         ...state.formData,
         [field]: value,
       },
-    }));
-  } else {
+    }));}
+    else if (name === 'lawyerEmail') {
+      set((state) => ({
+        ...state,
+        lawyerEmail: value,
+        formData: {
+          ...state.formData,
+          [field]: value,
+        },
+      }));
+    }
+    else if(name === 'customerEmail'){
+      set((state) => ({
+        ...state,
+        customerEmail: value,
+        formData: {
+          ...state.formData,
+          [field]: value,
+        },
+      }));
+    }else {
     set((state) => ({
       ...state,
+      status: value,
       formData: {
         ...state.formData,
         [field]: value,
@@ -201,6 +224,32 @@ export const useCaseStore = create((set, get) => ({
       // Manejar el error
     }
   },
+  handleInvitation: async (param) => {
+    try{
+      let email = "";
+      if(param == "lawyer"){
+        email = get().formData.lawyerEmail;
+      }
+      else{
+        email = get().formData.customerEmail;
+      }
+      console.log(email);
+      const response = await axios.post(`http://localhost:8080/api/v1/verification`,{"email":email});
+      console.log(response);
+      if(response.data.response == "User Does Not Exist"){
+        set(() => ({status : param+"NotFound"}));
+      }
+      else if(response.data.response == "User Already Exists"){
+        set(() => ({status : param+"Found"}));
+
+       
+      }  
+   
+    } catch (error) {
+      console.log(error);
+      // Manejar el error
+    }
+  }
   
 
 }));
