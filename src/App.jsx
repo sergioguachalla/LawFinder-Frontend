@@ -6,11 +6,12 @@ import Role from './components/Role'
 import CaseInformation from './components/CaseInformation'
 import RegisterFile from './components/RegisterFile'
 
+import { ChakraProvider } from '@chakra-ui/react'
 
 function App() {
 
   return (
-
+    <ChakraProvider>
       <BrowserRouter>
         <Routes>
           <Route path="/Login" element={<Login />} />
@@ -20,6 +21,7 @@ function App() {
 
         </Routes>
       </BrowserRouter>
+      </ChakraProvider>
 
       
   )

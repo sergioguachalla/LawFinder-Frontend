@@ -1,8 +1,8 @@
 import { useEffect } from 'react';
 import { useRegisterUserStore } from '../store/userRegistrationStore';
 import '../styles/RegisterUser.css';
-import Spinner from './Spinner';
 import {useNavigate} from 'react-router-dom';
+import { Spinner } from '@chakra-ui/react'
 
 const RegisterUser = () => {
   //const { handleSubmit, handleChange } = useRegisterUserStore();
@@ -40,6 +40,12 @@ const RegisterUser = () => {
           navigate('/RegisterUser');
         }
         , 1000);
+      }
+        else if(status === 'loading') {
+          setTimeout(() => {
+            
+          }
+          , 1000);
       }
     }, [navigate, status]);
     
@@ -96,10 +102,19 @@ const RegisterUser = () => {
             <input name="secretConfirm" type="password" onChange={(event) => handleChange('secretConfirm', event)} required />
           </div>
           <div className="button-row">
-            <button type="submit" className="register-button">Registrar</button>
+            <button type="submit" className="register-button">Registrar</button> 
+           
           </div>
           <div>
-            {status === 'loading' && <Spinner />}
+            {/*TODO: el spinner está buggeado*/}
+          {status === 'init' && <Spinner
+  thickness='4px'
+  speed='0.65s'
+  emptyColor='gray.200'
+  color='blue.500'
+  size='xl'
+/>}
+           
             {status === 'success' && <p className="success-message">Usuario registrado con éxito</p>}
             {status === 'error' && <p className="error-message">Se ha producido un error</p>}
             {status === 'registered' && <p className="error-message">El usuario ya se encuentra registrado</p>}

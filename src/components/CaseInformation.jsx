@@ -3,6 +3,7 @@ import  {useParams} from 'react-router-dom/';
 import {useCaseDetailsStore } from '../store/caseDetailsStore';
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+
 const CaseInformation = () => {
   const navigate = useNavigate();
    const { id } = useParams();
@@ -32,7 +33,9 @@ const legalCase = cases.find((legalCase) => legalCase.idLegalCase == id);
       <div className="expediente">
         <h4 className="expediente-title">Expediente</h4>
         <p className="expediente-content">{caseDetails}</p>
+    
       </div>
+      
     </div>
   );
 };
