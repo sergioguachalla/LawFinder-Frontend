@@ -13,16 +13,16 @@ const Navbar = () => {
     <nav className="navbar">
       <ul className="navbar-list">
         <li className="navbar-item">
-          <Link to="/" className="navbar-link">Inicio</Link>
+          <Link to="/Home" className="navbar-link">Inicio</Link>
         </li>
         <li className="navbar-item">
-          <Link to="/casos" className="navbar-link">Casos</Link>
+          <Link to="/Home" className="navbar-link">Casos</Link>
         </li>
         <li className="navbar-item">
-          <Link to="/invitaciones" className="navbar-link">Invitaciones</Link>
+          <Link to="/Invitation" className="navbar-link">Invitaciones</Link>
         </li>
         <li className="navbar-item">
-          <Link to="/usuarios" className="navbar-link">Usuarios</Link>
+          <Link to="/" className="navbar-link">Salir</Link>
         </li>
         
         <li>
