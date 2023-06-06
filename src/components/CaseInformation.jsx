@@ -3,17 +3,18 @@ import  {useParams} from 'react-router-dom/';
 import {useCaseDetailsStore } from '../store/caseDetailsStore';
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import LoadingSpinner from './Loading';
 
 const CaseInformation = () => {
   const navigate = useNavigate();
    const { id } = useParams();
   const { cases } = useCasesStore();
-  const { getCaseDetails,caseDetails, caseId, setCaseId } = useCaseDetailsStore();
+  const { getCaseDetails,caseDetails, caseId, setCaseId,status } = useCaseDetailsStore();
 const legalCase = cases.find((legalCase) => legalCase.idLegalCase == id);
 
    useEffect(() => {
     setCaseId(id);
-    
+
        getCaseDetails(id);
        //console.log("detail case" + caseId);
    }, [caseId, getCaseDetails, id]);
@@ -24,7 +25,9 @@ const legalCase = cases.find((legalCase) => legalCase.idLegalCase == id);
   }
 
   return (
+    
     <div className="legal-case-details">
+      {status === 'loading' || status ==='init' && <LoadingSpinner/>}
       <div className="card">
         <h2 className="card-title">Caso #{id}</h2>
         <h3 className="card-subtitle">{legalCase.title}</h3>
