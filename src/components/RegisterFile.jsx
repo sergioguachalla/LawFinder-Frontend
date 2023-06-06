@@ -5,6 +5,7 @@ import '../styles/RegisterFile.css';
 import { useCaseDetailsStore } from '../store/caseDetailsStore';
 
 const RegisterFile = () => {
+  const {caseIdParams} = useParams();
   const { 
     uploadFile, 
     loading, 
@@ -22,14 +23,18 @@ const RegisterFile = () => {
     setSelectedCourt, 
     selectedDocumentType, 
     setSelectedDocumentType,
-    getInstanceId 
+    getInstanceId ,
+    setCaseId
   } = useStore();
   const { caseId } = useCaseDetailsStore();
   useEffect(() => {
     getCourts();
     getDocumentTypes();
+    setCaseId(caseIdParams);
+
     getInstanceId();
-  }, [getCourts, getDocumentTypes, getInstanceId]);
+    console.log("register" + caseIdParams);
+  }, [caseIdParams, getCourts, getDocumentTypes, getInstanceId, setCaseId]);
 
   const onFileChange = (event) => {
     const file = event.target.files[0];

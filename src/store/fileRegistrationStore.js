@@ -12,16 +12,18 @@ export const useStore = create((set, get) => ({
   documentTypes: [],
   selectedCourt: '',
   selectedDocumentType: '',
-  caseId: useCaseDetailsStore.getState().caseId,
+  caseId: localStorage.getItem('caseId'),
   instanceId: '',
   setSummary: (summary) => set({ summary }),
   setDueDate: (dueDate) => set({ dueDate }),
   setFile: (file) => set({ file }),
+  setCaseId: (caseId) => set({ caseId }),
   setSelectedCourt: (court) => set({ selectedCourt: court }),
   setSelectedDocumentType: (type) => set({ selectedDocumentType: type }),
   getCourts: async () => {
     const response = await axios.get('http://localhost:8080/api/v1/Court');
     set({ courts: response.data.response });
+    console.log("caseid" + get().caseId);
   },
   getDocumentTypes: async () => {
     const response = await axios.get('http://localhost:8080/api/v1/LegalType');
@@ -36,7 +38,7 @@ export const useStore = create((set, get) => ({
     const formData = new FormData();
     // aqui se pone el id del instance legal case
 
-    formData.append('instanceCaseId', 1);
+    formData.append('instanceCaseId', get().instanceId);
     formData.append('file', get().file);
     formData.append('summary', get().summary);
     formData.append('dueDate', get().dueDate);
@@ -60,9 +62,9 @@ export const useStore = create((set, get) => ({
     }
   },
   getInstanceId: async () => {
-    const response = await axios.get(`http://localhost:8080/api/v1/instanceLegal/${8}`);
+    const response = await axios.get(`http://localhost:8080/api/v1/instanceLegal/${localStorage.getItem('caseId')}`);
     console.log(response.data.response.instanceId);
-    set({ instanceId: response.data.response.instanceId });
+    set({ instanceId: response.data.response.instanceLegalCaseId });
   }
 }));
 
