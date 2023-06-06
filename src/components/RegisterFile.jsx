@@ -1,6 +1,8 @@
 import React, { useEffect } from 'react';
 import useStore from '../store/fileRegistrationStore';
+import { useParams } from 'react-router-dom';
 import '../styles/RegisterFile.css'; 
+import { useCaseDetailsStore } from '../store/caseDetailsStore';
 
 const RegisterFile = () => {
   const { 
@@ -19,13 +21,15 @@ const RegisterFile = () => {
     selectedCourt, 
     setSelectedCourt, 
     selectedDocumentType, 
-    setSelectedDocumentType 
+    setSelectedDocumentType,
+    getInstanceId 
   } = useStore();
-
+  const { caseId } = useCaseDetailsStore();
   useEffect(() => {
     getCourts();
     getDocumentTypes();
-  }, [getCourts, getDocumentTypes]);
+    getInstanceId();
+  }, [getCourts, getDocumentTypes, getInstanceId]);
 
   const onFileChange = (event) => {
     const file = event.target.files[0];
@@ -39,6 +43,7 @@ const RegisterFile = () => {
 
   return (
     <form onSubmit={onSubmit} className='register-file-form'>
+      <h1>Usted está editando el caso : {caseId}</h1>
       <label>Corte:</label>
       <select onChange={(e) => setSelectedCourt(parseInt(e.target.value))} disabled={loading} value={selectedCourt}>
         {courts.map(court => <option key={court.idCourt} value={court.idCourt}>{court.courtName}</option>)}

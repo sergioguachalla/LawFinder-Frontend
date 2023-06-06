@@ -41,7 +41,7 @@ const router = createBrowserRouter([
     element: <Home/>,
   },
   {
-    path: "RegisterFile/",
+    path: "RegisterFile/:id",
     element: <RegisterFile/>,
   },
   {

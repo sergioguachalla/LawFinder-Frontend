@@ -2,21 +2,26 @@ import React, { useEffect } from 'react';
 import axios from 'axios';
 import invitationStore from '../store/invitationStore';
 import '../styles/Invitation.css';
-
+import {  } from '../utils/getIdFromToken';
 const Invitation = () => {
     const invitations = invitationStore(state => state.invitations);
     const loading = invitationStore(state => state.loading);
     const setInvitations = invitationStore(state => state.setInvitations);
     const setLoading = invitationStore(state => state.setLoading);
+    let userId = invitationStore(state => state.userId);
+    const getId = invitationStore(state => state.getIdFromToken);
   
     useEffect(() => {
-      axios.get('http://localhost:8080/api/v1/invitation/17')
+      userId = getId();
+      axios.get(`http://localhost:8080/api/v1/invitation/${userId}`)
         .then((response) => {
           setInvitations(response.data.response);
         })
         .catch((error) => {
           console.error('Error fetching data: ', error);
-        })
+        });
+
+        
     }, [setInvitations]);
   
     const acceptInvitation = (actorId) => {

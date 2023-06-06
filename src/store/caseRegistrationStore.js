@@ -15,6 +15,7 @@ export const useCaseStore = create((set, get) => ({
     startDateInstance: '',
     endDateInstance: '',
     lastUpdate: Format(Date.now(), 'dd-MM-yyyy'),
+    complainant: true,
   },
   departmentId: '',
   status: '',
@@ -110,6 +111,7 @@ export const useCaseStore = create((set, get) => ({
       "idInstance": get().formData.idInstance,
       "startDateInstance": get().formData.startDateInstance,
       "endDateInstance": get().formData.endDateInstance,
+      "complainant": true
     };
     try{
       const response = axios.post('http://localhost:8080/api/v1/legalcase', body);
@@ -234,7 +236,7 @@ export const useCaseStore = create((set, get) => ({
         email = get().formData.customerEmail;
       }
       console.log(email);
-      const response = await axios.post(`http://localhost:8080/api/v1/verification`,{"email":email});
+      const response = await axios.post(`http://localhost:8080/api/v1/userverification`,{"email":email});
       console.log(response);
       if(response.data.response == "User Does Not Exist"){
         set(() => ({status : param+"NotFound"}));

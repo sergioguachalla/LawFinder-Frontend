@@ -58,6 +58,9 @@ const RegisterCase = () => {
   const handleCustomerEmail = (event) => {
     handleChange('customerEmail', event);
   }
+  const handleIsComplainant = (event) => {
+    handleChange('complainant', event);
+  }
 
  
 
@@ -89,7 +92,7 @@ const RegisterCase = () => {
         </div>
         <div className="form-row">
           <label>Provincia*</label>
-          <select name="provincia" onChange={(event) => handleChange('provinceId', event)} >
+          <select name="provincia" onChange={(event) => handleIsComplainant(event)} >
             {provincias.map((provincia) => (
               <option key={provincia.idProvince} value={provincia.idProvince}>
                 {decodeURIComponent(provincia.provinceName)}
@@ -130,6 +133,10 @@ const RegisterCase = () => {
             }
           </select>
         </div> }
+        <div className="form-row">
+          <label>Demandante (Si está marcado es demandante, caso contrario es demandado)</label>
+          <input name="complainant" type="checkbox" onChange={(event) => handleChange('complainant', event)}  />
+        </div>
         <hr />
         <h2>Actores</h2>
         <div className="form-row">

@@ -35,7 +35,7 @@ export const useConfirmationStore = create((set) => ({
       const body = {
         "username": useRegisterUserStore.getState().username,
         "secret": useRegisterUserStore.getState().secret,
-        "status": 1,
+        "status": true,
         "personId":{
           "name": useRegisterUserStore.getState().nombres,
           "lastname": useRegisterUserStore.getState().apellidos,
@@ -46,7 +46,6 @@ export const useConfirmationStore = create((set) => ({
           "address": useRegisterUserStore.getState().direccion,
 
         },
-        "ImageId": 0
       }
       const response = await axios.post('http://localhost:8080/api/v1/user', body);
       console.log(response);

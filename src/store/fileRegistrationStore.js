@@ -1,5 +1,6 @@
 import axios from 'axios';
-import create from 'zustand';
+import {create} from 'zustand';
+import { useCaseDetailsStore } from './caseDetailsStore';
 
 export const useStore = create((set, get) => ({
   loading: false,
@@ -11,6 +12,8 @@ export const useStore = create((set, get) => ({
   documentTypes: [],
   selectedCourt: '',
   selectedDocumentType: '',
+  caseId: useCaseDetailsStore.getState().caseId,
+  instanceId: '',
   setSummary: (summary) => set({ summary }),
   setDueDate: (dueDate) => set({ dueDate }),
   setFile: (file) => set({ file }),
@@ -33,7 +36,7 @@ export const useStore = create((set, get) => ({
     const formData = new FormData();
     // aqui se pone el id del instance legal case
 
-    formData.append('instanceCaseId', 16);
+    formData.append('instanceCaseId', 1);
     formData.append('file', get().file);
     formData.append('summary', get().summary);
     formData.append('dueDate', get().dueDate);
@@ -43,6 +46,8 @@ export const useStore = create((set, get) => ({
     //formData.append('documentTypeId', get().selectedDocumentType); // Agregamos documentTypeId a la FormData
     console.log("a");
     console.log(get().selectedCourt);
+    console.log(formData);
+
     try {
       const response = await axios.post('http://localhost:8080/api/v1/legalfile', formData, {
         headers: {
@@ -53,6 +58,11 @@ export const useStore = create((set, get) => ({
     } catch (error) {
       set({ loading: false, message: 'Error al cargar el archivo: ' + error.message });
     }
+  },
+  getInstanceId: async () => {
+    const response = await axios.get(`http://localhost:8080/api/v1/instanceLegal/${8}`);
+    console.log(response.data.response.instanceId);
+    set({ instanceId: response.data.response.instanceId });
   }
 }));
 

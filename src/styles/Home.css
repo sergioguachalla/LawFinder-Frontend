@@ -1,28 +1,62 @@
+/* Import Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Oswald:wght@300;400;500&family=Raleway:ital,wght@1,100&display=swap');
+
+/* Set the default font family to Oswald */
+* {
+  font-family: 'Oswald', sans-serif;
+}
+
+/* Define the container element */
+.container {
+  margin: 0 auto;
+  max-width: 960px;
+}
+
+/* Define the card element */
 .card {
-   background-color: #f0f0f0;
-   border-radius: 4px;
-   padding: 16px;
-   margin-bottom: 16px;
- }
- 
- .card h2 {
-   font-size: 20px;
-   margin-bottom: 8px;
- }
- 
- .card p {
-   font-size: 14px;
-   margin-bottom: 4px;
- }
- 
- .card .last-modified {
-   color: gray;
- }
- 
- .container{
-   display: flex;
-   flex-direction: column;
-   max-width: 900px;
-   
- }
- 
+  margin-bottom: 10px;
+  border: 1px solid #ccc;
+  padding: 10px;
+}
+
+/* Style the h2 element in the card */
+.card h2 {
+  font-size: 18px;
+  font-weight: bold;
+  font-family: 'SF Pro', sans-serif;
+}
+
+/* Style the .last-modified class in the card */
+.card .last-modified {
+  font-size: 12px;
+  color: #999;
+}
+
+/* Style the p element in the card */
+.card p {
+  margin-bottom: 5px;
+}
+
+/* Style the .pagination element */
+.pagination {
+  text-align: center;
+}
+
+/* Style the .pagination button */
+.pagination button {
+  border: none;
+  background: none;
+  padding: 0;
+  margin: 0 5px;
+  cursor: pointer;
+}
+
+/* Style the .pagination button when hovered over */
+.pagination button:hover {
+  background-color: #ccc;
+}
+
+/* Style the .pagination button when disabled */
+.pagination button:disabled {
+  opacity: 0.5;
+}
