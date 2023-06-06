@@ -4,6 +4,7 @@ import { format } from 'date-fns';
 import { useNavigate } from "react-router-dom";
 import '../styles/Home.css';
 import Navbar from "./Navbar";
+import LoadingSpinner from "./Loading";
 
 const Home = () => {
   const navigate = useNavigate();
@@ -31,7 +32,8 @@ const Home = () => {
   
   return (
     <>
-      {status === 'loading' && <p>Cargando...</p>}
+          {status === 'loading' || status ==='init' && <LoadingSpinner/>}
+
       <Navbar></Navbar>
       
       <div className="cases-container">

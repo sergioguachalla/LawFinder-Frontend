@@ -1,6 +1,8 @@
 import { useParams } from 'react-router-dom/';
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+
+import LoadingSpinner from './Loading';
 import '../styles/CaseInformation.css';
 import Navbar from './Navbar';
 import { useCasesStore } from '../store/casesStore';
@@ -10,13 +12,16 @@ const CaseInformation = () => {
   const navigate = useNavigate();
   const { id } = useParams();
   const { cases } = useCasesStore();
-  const { getCaseDetails, caseDetails, caseId, setCaseId } = useCaseDetailsStore();
-  const legalCase = cases.find((legalCase) => legalCase.idLegalCase == id);
+  const { getCaseDetails,caseDetails, caseId, setCaseId,status } = useCaseDetailsStore();
+const legalCase = cases.find((legalCase) => legalCase.idLegalCase == id);
 
   useEffect(() => {
     setCaseId(id);
-    getCaseDetails(id);
-  }, [caseId, getCaseDetails, id]);
+
+       getCaseDetails(id);
+       //console.log("detail case" + caseId);
+   }, [caseId, getCaseDetails, id]);
+
 
   if (!legalCase) {
     return <p>Caso no encontrado {id}</p>;
@@ -24,6 +29,9 @@ const CaseInformation = () => {
 
   return (
     <>
+     {status === 'loading' || status ==='init' && <LoadingSpinner/>}
+    <div className="legal-case-details">
+     
       <Navbar></Navbar>
       <div className="legal-case-details container">
         <div className="card">
