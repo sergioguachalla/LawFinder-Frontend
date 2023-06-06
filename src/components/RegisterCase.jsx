@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 
 const RegisterCase = () => {
   const history = useNavigate();
+  const navigate = useNavigate();
   
   const { formData, departamentos, provincias, handleChange, handleInvitation, loadDepartamentos, loadProvincias, instancias, loadInstancias,
   categorias, loadCategorias, loadSubCategorias, subCategorias, crimes, loadCrimes, registerCase, status, lawyerEmail } = 
@@ -183,7 +184,9 @@ const RegisterCase = () => {
           <input name="fechaFinalInstancia" type="date" onChange={(event) => handleChange('endDateInstance', event)}  />
         </div>
         <div className="button-row">
+          <button className="register-button" onClick={()=> {navigate("/Home")}}>Cancelar</button>
           <button type="submit" className="register-button">Registrar</button>
+          
         </div>
       </form>
     </>
