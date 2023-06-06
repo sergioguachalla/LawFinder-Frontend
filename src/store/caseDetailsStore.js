@@ -13,4 +13,6 @@ export const useCaseDetailsStore = create((set) => ({
       set({caseDetails: response.data.response});
    }
 
+   
+
 }));
