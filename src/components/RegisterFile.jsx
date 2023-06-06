@@ -8,6 +8,7 @@ import {useNavigate} from 'react-router-dom';
 
 const RegisterFile = () => {
   const navigate = useNavigate();
+  const {caseIdParams} = useParams();
   const { 
     uploadFile, 
     loading, 
@@ -25,7 +26,8 @@ const RegisterFile = () => {
     setSelectedCourt, 
     selectedDocumentType, 
     setSelectedDocumentType,
-    getInstanceId 
+    getInstanceId ,
+    setCaseId
   } = useStore();
   const { caseId } = useCaseDetailsStore();
   const [fileName, setFileName] = useState('');
@@ -33,6 +35,8 @@ const RegisterFile = () => {
   useEffect(() => {
     getCourts();
     getDocumentTypes();
+    setCaseId(caseIdParams);
+
     getInstanceId();
   }, [getCourts, getDocumentTypes, getInstanceId]);
 

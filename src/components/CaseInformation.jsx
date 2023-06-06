@@ -12,9 +12,10 @@ const CaseInformation = () => {
 const legalCase = cases.find((legalCase) => legalCase.idLegalCase == id);
 
    useEffect(() => {
+    setCaseId(id);
+    
        getCaseDetails(id);
-       setCaseId(id);
-       console.log("case" + caseId);
+       //console.log("detail case" + caseId);
    }, [caseId, getCaseDetails, id]);
 
 
