@@ -30,7 +30,7 @@ const CaseInformation = () => {
           <h2 className="card-title">Caso #{id}</h2>
           <h3 className="card-subtitle">{legalCase.title}</h3>
           <p className="card-description">{legalCase.summary}</p>
-          <button className="card-button" onClick={() => navigate(`/RegisterFile/${caseId}`)}>Editar Expediente del Caso {caseId}</button>
+          <button className="card-button" onClick={() => navigate(`/RegisterFile/${caseId}`)}>Añadir al expediente del caso {caseId}</button>
         </div>
         <div className="expediente">
           <h4 className="expediente-title">Expediente</h4>

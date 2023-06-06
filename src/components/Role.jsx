@@ -34,6 +34,7 @@ const Role = () => {
           <p className="role-label">Abogado</p>
           <p className="role-description">Profesional legal que ofrece servicios de asesoramiento y representación.</p>
         </div>
+        {/* 
         <div className="button-wrapper">
           <div className="role-button-container">
             <button className="role-button">
@@ -43,6 +44,7 @@ const Role = () => {
           <p className="role-label">Autoridad Judicial</p>
           <p className="role-description">Persona encargada de administrar justicia en un tribunal o juzgado.</p>
         </div>
+        */}
       </div>
     </div>
     </>
