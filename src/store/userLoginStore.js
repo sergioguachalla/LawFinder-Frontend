@@ -24,12 +24,12 @@ export const useLoginUserStore = create((set) => ({
       axios.post('http://localhost:8080/api/v1/auth/login', requestBody)
          .then((response) => {
             console.log(response);
-            set({username: formData.username});
-            localStorage.setItem('token', response.data.response.authToken);
+            set({username: formData.username});     
             if(response.data.response !== null){
+               localStorage.setItem('token', response.data.response.authToken);
                set({status: 'success'});
-            }else{
-               set({status: 'error'});
+            }else if(response.data.code == '0001'){
+               set({status: 'invalid'});
             }
          })
          .catch((error) => {

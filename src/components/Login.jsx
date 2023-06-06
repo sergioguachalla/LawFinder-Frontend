@@ -52,6 +52,7 @@ const Login = () => {
             </div>
             
               <button type="submit" className="login-button">Iniciar sesión</button>
+              <p className="error-message">{status === 'invalid' && 'Usuario o contraseña incorrectos'}</p>
             
             <a href="/Role" className="register-link">¿No tienes una cuenta? Regístrate</a>
           </form>

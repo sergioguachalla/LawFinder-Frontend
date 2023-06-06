@@ -59,6 +59,7 @@ export const useCasesStore = create((set, get) => ({
           },
         });
         console.log(response);
+        if(response.data.response.content.length > 0){
         const casesPage = response.data.response;
         set(() => ({ cases: casesPage.content }));
         set(() => ({
@@ -66,8 +67,9 @@ export const useCasesStore = create((set, get) => ({
           currentPage: casesPage.number,
           totalPages: casesPage.totalPages,
         }));
+      }
     
-        if (casesPage.content.length === 0) {
+        if (response.data.response.content.length === 0) {
           set({ status: 'empty' });
         } else {
           set({ status: 'success' });
