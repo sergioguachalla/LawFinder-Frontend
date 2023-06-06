@@ -96,3 +96,23 @@ body {
 .pagination button:disabled {
   color: #ccc;
 }
+.floating-button-right {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  width: 50px;
+  height: 50px;
+  background-color: #333;
+  color: white;
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+  z-index: 999;
+  /* Agrega sombra si deseas un efecto de elevación */
+  box-shadow: 0px 1px 5px rgba(0, 0, 0, 0.1);
+  transition: background-color 0.3s ease-in-out;
+}
+
+.floating-button-right:hover {
+  background-color: #555;
+}

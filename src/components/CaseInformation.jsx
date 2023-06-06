@@ -52,7 +52,8 @@ const legalCase = cases.find((legalCase) => legalCase.idLegalCase == id);
           ))}
         </div>
       </div>
-    </div>
+
+      </div>
     </>
   );
 };

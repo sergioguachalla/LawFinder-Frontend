@@ -64,6 +64,9 @@ const Home = () => {
           </div>
         )}
       </div>
+      <button className="floating-button-right" onClick={() => navigate('/RegisterCase')}>
+        +
+      </button>
     </>
   );
 };
