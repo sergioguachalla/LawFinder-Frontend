@@ -2,8 +2,8 @@ import { useEffect } from 'react';
 import { useRegisterUserStore } from '../store/userRegistrationStore';
 import '../styles/RegisterUser.css';
 import {useNavigate} from 'react-router-dom';
-import { Spinner } from '@chakra-ui/react'
 
+import Spinner from '../components/Spinner';
 const RegisterUser = () => {
   //const { handleSubmit, handleChange } = useRegisterUserStore();
     const navigate = useNavigate();
@@ -103,11 +103,12 @@ const RegisterUser = () => {
           </div>
           <div className="button-row">
             <button type="submit" className="register-button">Registrar</button> 
+            {status === 'loading' && <Spinner></Spinner>}
            
           </div>
           <div>
             {/*TODO: el spinner está buggeado*/}
-          {status === 'init' && <Spinner
+          {status === 'asd' && <Spinner
   thickness='4px'
   speed='0.65s'
   emptyColor='gray.200'

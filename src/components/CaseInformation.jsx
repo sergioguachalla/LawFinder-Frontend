@@ -22,20 +22,19 @@ const legalCase = cases.find((legalCase) => legalCase.idLegalCase == id);
        //console.log("detail case" + caseId);
    }, [caseId, getCaseDetails, id]);
 
-
+  
   if (!legalCase) {
-    return <p>Caso no encontrado {id}</p>;
+    return <p>Caso no encontrado {id} </p>;
   }
 
   return (
     <>
      {status === 'loading' || status ==='init' && <LoadingSpinner/>}
     <div className="legal-case-details">
-     
       <Navbar></Navbar>
       <div className="legal-case-details container">
         <div className="card">
-          <h2 className="card-title">Caso #{id}</h2>
+          <h2 className="card-title">Caso # {status}{id}</h2>
           <h3 className="card-subtitle">{legalCase.title}</h3>
           <p className="card-description">{legalCase.summary}</p>
           <button className="card-button" onClick={() => navigate(`/RegisterFile/${caseId}`)}>Añadir al expediente del caso {caseId}</button>
@@ -48,6 +47,16 @@ const legalCase = cases.find((legalCase) => legalCase.idLegalCase == id);
                 <img src="https://img.freepik.com/iconos-gratis/pdf_318-187733.jpg" className="link-card-icon" alt="pdf icon"/>
                 Documento #{index + 1}
               </a>
+              <div>
+              <label>
+                {link.split(',')[1].trim()}
+              </label>
+              </div>
+              <div>
+              <label>
+                {link.split(',')[2].trim()}
+              </label>
+              </div>
             </div>
           ))}
         </div>

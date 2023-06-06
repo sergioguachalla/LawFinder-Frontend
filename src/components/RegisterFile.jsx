@@ -1,11 +1,10 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import  { useState, useEffect, useCallback } from 'react';
 import { useDropzone } from 'react-dropzone';
 import useStore from '../store/fileRegistrationStore';
 import { useParams } from 'react-router-dom';
 import '../styles/RegisterFile.css'; 
 import { useCaseDetailsStore } from '../store/caseDetailsStore';
 import {useNavigate} from 'react-router-dom';
-
 const RegisterFile = () => {
   const navigate = useNavigate();
   const {caseIdParams} = useParams();
@@ -77,7 +76,7 @@ const RegisterFile = () => {
         {/* cuando se le de click a cancelar, vuelve a /home */}
         <button type="button" onClick={() => navigate('/Home')} disabled={loading} >Cancelar</button>
 
-        {loading ? <p>Cargando...</p> : <p>{message}</p>}
+        {loading ? <p>Cargando... </p> : <p>{message}</p>}
       </form>
     </div>
   );
