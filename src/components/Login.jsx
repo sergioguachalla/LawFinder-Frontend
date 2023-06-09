@@ -2,6 +2,7 @@ import '../styles/Login.css';
 import { useLoginUserStore } from '../store/userLoginStore';
 import { useNavigate } from 'react-router-dom';
 import { useEffect } from 'react';
+import { Spinner } from '@chakra-ui/react';
 const Login = () => {
   const navigate = useNavigate();
   const {handleChange, handleSubmit,status} = useLoginUserStore();
@@ -51,7 +52,7 @@ const Login = () => {
               <a href="/forgot" className="forgot-password">¿Olvidaste tu contraseña?</a>
             </div>
             
-              <button type="submit" className="login-button">Iniciar sesión</button>
+              <button type="submit" className="login-button">Iniciar sesión {status === 'loading' && <Spinner></Spinner>}</button>
               <p className="error-message">{status === 'invalid' && 'Usuario o contraseña incorrectos'}</p>
             
             <a href="/Role" className="register-link">¿No tienes una cuenta? Regístrate</a>

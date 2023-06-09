@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import { Spinner } from '@chakra-ui/react';
 import Navbar from './Navbar';
 
+import Spinner from '../components/Spinner';
 const RegisterUser = () => {
   const navigate = useNavigate();
   const {

@@ -11,6 +11,9 @@ export const useLoginUserStore = create((set) => ({
       set({[fieldName]: value});
    },
    handleSubmit: (event) => {
+      set({status: 'loading'});
+     
+
       event.preventDefault();
       const formData = {
          username: event.target.username.value,
