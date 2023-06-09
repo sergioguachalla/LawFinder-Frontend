@@ -1,86 +1,81 @@
-/* RegisterUser.css */
-
-@font-face {
-  font-family: 'AppleFont';
-  src: url('../fonts/AppleFont-Regular.ttf') format('truetype');
-  /* Agrega aquí otros formatos de fuente si los tienes, como woff o woff2 */
-  /* Ajusta la ruta del archivo de fuente según dónde hayas guardado los archivos en tu proyecto */
-}
-
-/* Luego, aplica la fuente a los elementos que deseas en tu formulario */
-.form-row label,
-.form-row input,
-.form-row select,
-.button-row button {
-  font-family: 'AppleFont', Arial, sans-serif;
-  /* Asegúrate de tener Arial o una fuente de respaldo para los casos en que la fuente de Apple no esté disponible */
+h1 {
+  font-family: 'San Francisco', sans-serif;
+  text-align: center;
 }
 
 .form-container {
-  width: 400px;
-  margin: 0 auto;
-  padding: 20px;
-  background-color: #f5f5f5;
-  border-radius: 5px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 1em;
+  background-color: white;
+  color: black;
+  width: 70%; /* Ampliando el contenedor para aprovechar más el ancho de la pantalla */
+  margin: 0 auto; /* Centrar el contenedor */
+  max-width: 600px;
+}
+
+.centered-apple-font {
+  text-align: center;
+  font-size: 3em;
+  margin-bottom: 1em;
 }
 
 .form-row {
-  margin-bottom: 20px;
-}
-
-.form-row label {
-  display: block;
-  margin-bottom: 5px;
-  font-weight: bold;
-}
-
-.form-row input,
-.form-row select {
+  display: grid; /* Cambiando a grid para mayor flexibilidad */
+  grid-template-columns: 1fr 1fr; /* Dividiendo la fila en dos columnas de igual ancho */
+  gap: 1em; /* Espaciado entre elementos de la cuadrícula */
+  margin-bottom: 1em;
   width: 100%;
-  padding: 8px;
-  border: 1px solid #ccc;
-  border-radius: 3px;
 }
 
-.half-input {
-  display: inline-block;
-  width: calc(50% - 5px);
-  margin-right: 10px;
+/* Cuando sólo hay un elemento en la fila (una columna completa) */
+.form-row > label, .form-row > input, .form-row > select {
+  grid-column: span 2; /* Abarcando ambas columnas */
+}
+
+.input-group {
+  display: flex;
+  flex-direction: column;
+}
+
+label {
+  font-size: 1em;
+  margin-bottom: 0.5em;
+}
+
+input,
+select {
+  border: 1px solid black;
+  padding: 0.6em; 
+  font-size: 1em;
 }
 
 .button-row {
-  text-align: center;
-  justify-content: center;
+  display: flex;
+  justify-content: space-between;
+  margin-top: 1em;
 }
 
-.register-button {
-  padding: 10px 20px;
-  background-color: black;
-  color: #fff;
+button {
   border: none;
-  border-radius: 3px;
+  background-color: black;
+  color: white;
+  padding: 1em;
+  font-size: 1em;
   cursor: pointer;
 }
 
-.register-button:hover {
-  background-color: #0069d9;
-}
-
-.register-button:disabled {
-  background-color: #ccc;
-  cursor: not-allowed;
-}
-.centered-apple-font {
+.success-message,
+.error-message {
   text-align: center;
-  font-family: 'AppleFont', Arial, sans-serif;
+  margin-top: 1em;
 }
 
 .success-message {
   color: green;
-  margin-top: 10px;
 }
 
 .error-message {
   color: red;
-  margin-top: 10px;
 }
