@@ -3,6 +3,7 @@ import axios from 'axios';
 import invitationStore from '../store/invitationStore';
 import '../styles/Invitation.css';
 import {  } from '../utils/getIdFromToken';
+import Navbar from './Navbar';
 const Invitation = () => {
     const invitations = invitationStore(state => state.invitations);
     const loading = invitationStore(state => state.loading);
@@ -40,17 +41,20 @@ const Invitation = () => {
     }
   
     return (
-      <div className="invitation-container">
-        {invitations.map((invitation, index) => (
-          <div className="card" key={index}>
-            <h2>Título: Invitación {index + 1}</h2>
-            <p>Número de caso: {invitation.legalCaseId}</p>
-            <button onClick={() => acceptInvitation(invitation.actorId)} disabled={loading}>
-              {loading ? 'Procesando...' : 'Aceptar invitación'}
-            </button>
-          </div>
-        ))}
-      </div>
+      <>
+        <Navbar></Navbar>
+        <div className="invitation-container">
+          {invitations.map((invitation, index) => (
+            <div className="card" key={index}>
+              <h2>Título: Invitación {index + 1}</h2>
+              <p>Número de caso: {invitation.legalCaseId}</p>
+              <button onClick={() => acceptInvitation(invitation.actorId)} disabled={loading}>
+                {loading ? 'Procesando...' : 'Aceptar invitación'}
+              </button>
+            </div>
+          ))}
+        </div>
+      </>
     );
   };
   

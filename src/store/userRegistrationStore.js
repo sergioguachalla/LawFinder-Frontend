@@ -108,7 +108,7 @@ export const useRegisterUserStore = create((set,get) => ({
       }
       else if(response.data.response == "User Does Not Exist"){
         registerUser();
-        set({ statusState: 'notRegistered' });
+        set({ statusState: 'loading' });
       }
     }
     userExists();
@@ -120,6 +120,7 @@ export const useRegisterUserStore = create((set,get) => ({
     //set({ nombres: '', apellidos: '', tipoDocumento: '', documento: '', complemento: '', direccion: '', celular: '', correo: '', username: '', secret: '', secretConfirm: ''});
     const registerUser = async () => {
       set({ statusState: 'loading' });
+      
       const response = await axios.post('http://localhost:8080/api/v1/verify', verificationBody);
       console.log(response);
      
@@ -135,9 +136,6 @@ export const useRegisterUserStore = create((set,get) => ({
       
     };
    
-   
-
-    //alert('Usuario registrado correctamente');  
     
   },
 
