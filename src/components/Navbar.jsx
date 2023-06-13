@@ -4,9 +4,12 @@ import '../styles/Navbar.css';
 import { useNavbarStore } from '../store/navbarStore';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faHome, faBriefcase, faEnvelopeOpenText, faSignOutAlt, faUser } from '@fortawesome/free-solid-svg-icons';
+import useAuthStore from '../store/authStore';
+
 
 const Navbar = () => {
    const {username,setUsername,getUserNameFromToken} = useNavbarStore();
+   const {logout} = useAuthStore();
    
    useEffect(() => {
        setUsername();
@@ -32,7 +35,7 @@ const Navbar = () => {
             </Link>
           </li>
           <li className="navbar-item">
-            <Link to="/" className="navbar-link">
+            <Link to="/" className="navbar-link" onClick={logout}>
               <FontAwesomeIcon icon={faSignOutAlt} /> Salir
             </Link>
           </li>

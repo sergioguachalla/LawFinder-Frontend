@@ -5,7 +5,8 @@ import { useNavigate } from "react-router-dom";
 import '../styles/Home.css';
 import Navbar from "./Navbar";
 import LoadingSpinner from "./Loading";
-
+import { Link } from "react-router-dom";
+import Card from "./Card";
 const Home = () => {
   const navigate = useNavigate();
   const { getCases, cases, status, currentPage, totalPages, nextPage, previousPage } = useCasesStore();
@@ -41,14 +42,17 @@ const Home = () => {
         
 
         {status === 'success' && cases.map((legalCase) => (
+          
           <div key={legalCase.idLegalCase} className="card">
             <h2>{legalCase.title}</h2>
             <p className="last-modified">Última modificación: {formatDate(legalCase.lastUpdate)}</p>
             <p>{legalCase.summary}</p>
             <p>{legalCase.crime}</p>
-            <button onClick={() => handleCaseClick(legalCase.idLegalCase)}>Ver Más</button>
+            {/*  TODO: Modularizar el componente Card *
+            <Card id={legalCase.idLegalCase} title={legalCase.title}></Card> */}
+            <Link to={`/CaseDetails/${legalCase.idLegalCase}`}><button>Ver Más</button></Link>
           </div>
-        ))}
+          ))}
 
         {status === 'empty' && <p>No tienes casos registrados</p>}
         {/* Controles de navegación */}
@@ -62,6 +66,7 @@ const Home = () => {
               Siguiente
             </button>
           </div>
+          
         )}
       </div>
       <button className="floating-button-right" onClick={() => navigate('/RegisterCase')}>

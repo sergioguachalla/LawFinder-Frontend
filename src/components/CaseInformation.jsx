@@ -7,20 +7,19 @@ import '../styles/CaseInformation.css';
 import Navbar from './Navbar';
 import { useCasesStore } from '../store/casesStore';
 import { useCaseDetailsStore } from '../store/caseDetailsStore';
-
 const CaseInformation = () => {
   const navigate = useNavigate();
   const { id } = useParams();
-  const { cases } = useCasesStore();
+  let { cases,getCases } = useCasesStore();
   const { getCaseDetails,caseDetails, caseId, setCaseId,status } = useCaseDetailsStore();
-const legalCase = cases.find((legalCase) => legalCase.idLegalCase == id);
-
+  const legalCase = cases.find((legalCase) => legalCase.idLegalCase == id);
   useEffect(() => {
     setCaseId(id);
+    cases = getCases();
 
        getCaseDetails(id);
        //console.log("detail case" + caseId);
-   }, [caseId, getCaseDetails, id]);
+   }, [caseId, getCaseDetails, id, setCaseId]);
 
   
   if (!legalCase) {

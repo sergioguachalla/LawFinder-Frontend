@@ -45,7 +45,7 @@ export const useCasesStore = create((set, get) => ({
       set(() => ({ id: get().getIdFromToken() }));
       try {
         set(() => ({ status: 'loading' }));
-         const urlPage = new URLSearchParams(location.search);
+         //const urlPage = new URLSearchParams(location.search);
          //set(() => ({ currentPage: Number(urlPage.get("page")) }));
         const page = get().currentPage;
         //console.log(page);
@@ -58,7 +58,6 @@ export const useCasesStore = create((set, get) => ({
             size: 2, // Tamaño de página
           },
         });
-        console.log(response);
         if(response.data.response.content.length > 0){
         const casesPage = response.data.response;
         set(() => ({ cases: casesPage.content }));

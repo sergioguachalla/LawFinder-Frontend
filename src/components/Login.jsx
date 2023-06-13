@@ -3,9 +3,11 @@ import { useLoginUserStore } from '../store/userLoginStore';
 import { useNavigate } from 'react-router-dom';
 import { useEffect } from 'react';
 import { Spinner } from '@chakra-ui/react';
+import useAuthStore from '../store/authStore';
 const Login = () => {
   const navigate = useNavigate();
   const {handleChange, handleSubmit,status} = useLoginUserStore();
+  const {login} = useAuthStore();
   
   useEffect(() => {
     if (status === 'success') {
@@ -18,6 +20,23 @@ const Login = () => {
     }
   }, [navigate, status]);
 
+  const handleLoginFormSubmit = async (e) => {
+    e.preventDefault();
+
+    // Lógica de autenticación
+    const loginSuccess = await handleSubmit();
+
+    if (loginSuccess) {
+      // Obtener el token del authStore
+      const token = useAuthStore.getState().token;
+
+      // Redireccionar a la página de inicio
+      navigate('/Home');
+    } else {
+      console.log('Error de autenticación');
+    }
+  };
+
   return (
     <div className="login-container">
       <div className="login-black">
@@ -26,7 +45,7 @@ const Login = () => {
       <div className="login-white">
         <div className="login-content">
           <h1 className="title">Law Finder</h1>
-          <form onSubmit={handleSubmit} className="login-form">
+          <form onSubmit={handleLoginFormSubmit} className="login-form">
             <input
               placeholder="Nombre de Usuario "
               name='username'

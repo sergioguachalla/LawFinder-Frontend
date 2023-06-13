@@ -46,8 +46,7 @@ export const useStore = create((set, get) => ({
     formData.append('documentTypeId', get().selectedDocumentType ? get().selectedDocumentType : '1');
     //formData.append('courtId', get().selectedCourt); // Agregamos courtId a la FormData
     //formData.append('documentTypeId', get().selectedDocumentType); // Agregamos documentTypeId a la FormData
-    console.log("a");
-    console.log(get().selectedCourt);
+   
     console.log(formData);
 
     try {

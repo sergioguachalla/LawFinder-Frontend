@@ -2,10 +2,9 @@ import { useEffect } from 'react';
 import { useRegisterUserStore } from '../store/userRegistrationStore';
 import '../styles/RegisterUser.css';
 import { useNavigate } from 'react-router-dom';
-import { Spinner } from '@chakra-ui/react';
 import Navbar from './Navbar';
 
-import Spinner from '../components/Spinner';
+import Spinner from './Spinner';
 const RegisterUser = () => {
   const navigate = useNavigate();
   const {
