@@ -14,10 +14,14 @@ const CaseInformation = () => {
   const { getCaseDetails,caseDetails, caseId, setCaseId,status } = useCaseDetailsStore();
   const legalCase = cases.find((legalCase) => legalCase.idLegalCase == id);
   useEffect(() => {
+    const token = localStorage.getItem('token');
+    if(token){
     setCaseId(id);
     cases = getCases();
-
-       getCaseDetails(id);
+    getCaseDetails(id);
+    }else{
+      navigate('/');
+    }
        //console.log("detail case" + caseId);
    }, [caseId, getCaseDetails, id, setCaseId]);
 

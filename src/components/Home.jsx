@@ -17,12 +17,18 @@ const Home = () => {
   }
   
   useEffect(() => {
+    const token = localStorage.getItem('token');
+    if(token){
+    console.log(token);
     const timeoutId = setTimeout(() => {
       getCases();
 
     }, 1000);
   
     return () => clearTimeout(timeoutId);
+  }else{
+    navigate('/');
+  } 
   }, [getCases,currentPage]);
   
 

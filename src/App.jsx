@@ -1,17 +1,13 @@
-import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, Navigate, Redirect} from 'react-router-dom';
 import { ChakraProvider } from '@chakra-ui/react';
 import Login from './components/Login';
 import Role from './components/Role';
 import CaseInformation from './components/CaseInformation';
 import RegisterFile from './components/RegisterFile';
-import useAuthStore from './store/authStore';
+import PrivateRoute from './utils/PrivateRoute';
+import Home from './components/Home';
 
-// Componente de ruta privada que verifica si el usuario está autenticado
-const PrivateRoute = ({ element: Component, ...rest }) => {
-  const isAuthenticated = useAuthStore(state => state.isAuthenticated);
 
-  return isAuthenticated ? <Component {...rest} /> : <Navigate to="/Login" />;
-};
 
 function App() {
   return (
@@ -20,8 +16,14 @@ function App() {
         <Routes>
           <Route path="/Login" element={<Login />} />
           <Route path="/Role" element={<Role />} />
-          <PrivateRoute path="/CaseDetails/:id" element={<CaseInformation />} />
-          <PrivateRoute path="/RegisterFile/:id" element={<RegisterFile />} />
+          <Route path="/Home" element={<Home/>} />
+          <Route path="/CaseDetails/:id" element={<CaseInformation />} />
+
+          {/* <Route element={<PrivateRoute/>}>
+            <Route path="/Home" element={<Home/>} />
+          </Route> */}
+          
+          
         </Routes>
       </ChakraProvider>
     </BrowserRouter>

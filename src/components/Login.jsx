@@ -24,17 +24,8 @@ const Login = () => {
     e.preventDefault();
 
     // Lógica de autenticación
-    const loginSuccess = await handleSubmit();
+    const loginSuccess = await handleSubmit(e);
 
-    if (loginSuccess) {
-      // Obtener el token del authStore
-      const token = useAuthStore.getState().token;
-
-      // Redireccionar a la página de inicio
-      navigate('/Home');
-    } else {
-      console.log('Error de autenticación');
-    }
   };
 
   return (
@@ -45,7 +36,7 @@ const Login = () => {
       <div className="login-white">
         <div className="login-content">
           <h1 className="title">Law Finder</h1>
-          <form onSubmit={handleLoginFormSubmit} className="login-form">
+          <form onSubmit={(e) => {handleLoginFormSubmit(e)}} className="login-form">
             <input
               placeholder="Nombre de Usuario "
               name='username'

@@ -1,10 +1,11 @@
 import {create} from 'zustand';
 import axios from 'axios';
 
-export const useLoginUserStore = create((set) => ({
+export const useLoginUserStore = create((set,get) => ({
    username: '',
    secret: '',
    status: 'init',
+   setStatus: (status) => set({status: status}),
    handleChange: (fieldName, event) => {
       const {value} = event.target;
       console.log('Cambio en el campo ' + fieldName + ' con valor ' + value);
@@ -12,8 +13,6 @@ export const useLoginUserStore = create((set) => ({
    },
    handleSubmit: (event) => {
       set({status: 'loading'});
-     
-
       event.preventDefault();
       const formData = {
          username: event.target.username.value,
@@ -31,13 +30,14 @@ export const useLoginUserStore = create((set) => ({
             if(response.data.response !== null){
                localStorage.setItem('token', response.data.response.authToken);
                set({status: 'success'});
-            }else if(response.data.code == '0001'){
+            }else if(response.data.response === null){
                set({status: 'invalid'});
             }
          })
          .catch((error) => {
             console.log(error);
          });
+         console.log('El estado es: ' + get().status);
    }
    
 }));

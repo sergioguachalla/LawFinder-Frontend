@@ -5,16 +5,21 @@ import { useNavbarStore } from '../store/navbarStore';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faHome, faBriefcase, faEnvelopeOpenText, faSignOutAlt, faUser } from '@fortawesome/free-solid-svg-icons';
 import useAuthStore from '../store/authStore';
+import { useLoginUserStore } from '../store/userLoginStore';
 
 
 const Navbar = () => {
-   const {username,setUsername,getUserNameFromToken} = useNavbarStore();
+   const {username,setUsername} = useNavbarStore();
+   const {setStatus} = useLoginUserStore();
    const {logout} = useAuthStore();
    
    useEffect(() => {
        setUsername();
    }, [setUsername, username]);
-
+  const handleLogout = () => {
+    setStatus('init');
+    logout();
+  }
   return (
     <nav className="navbar">
       <div className="links-container">
@@ -35,7 +40,7 @@ const Navbar = () => {
             </Link>
           </li>
           <li className="navbar-item">
-            <Link to="/" className="navbar-link" onClick={logout}>
+            <Link to="/" className="navbar-link" onClick={handleLogout}>
               <FontAwesomeIcon icon={faSignOutAlt} /> Salir
             </Link>
           </li>
