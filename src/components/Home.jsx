@@ -6,22 +6,26 @@ import '../styles/Home.css';
 import Navbar from "./Navbar";
 import LoadingSpinner from "./Loading";
 import { Link } from "react-router-dom";
+import {  } from "react-jwt";
 import Card from "./Card";
-import { getRoleFromToken } from "../utils/getIdFromToken"; 
+import { getRoleFromToken, test} from "../utils/getIdFromToken"; 
 const Home = () => {
   const navigate = useNavigate();
   const { getCases, cases, status, currentPage, totalPages, nextPage, previousPage, fromDate, toDate, setFromDate, setToDate, clearFilters } = useCasesStore();
-
   const formatDate = (dateInput) => {
     const formattedDate = format(new Date(dateInput), 'yyyy-MM-dd');
     return formattedDate;
   }
+  const currentDate = new Date().toISOString().split('T')[0];
+
 
 
   
   useEffect(() => {
     
     const token = localStorage.getItem('token');
+    const decodedToken = test(token);
+    console.log(decodedToken.roles);
 
     if(token){
       const role = getRoleFromToken(token);
@@ -51,7 +55,7 @@ const Home = () => {
         <h1>Casos</h1>
         <div>
           <label htmlFor="fromDate">Desde: </label>
-          <input type="date" id="fromDate" value={fromDate} onChange={e => setFromDate(e.target.value)} />
+          <input type="date" id="fromDate" value={fromDate} onChange={e => setFromDate(e.target.value)} max={currentDate}  />
 
           <label htmlFor="toDate">Hasta: </label>
           <input type="date" id="toDate" value={toDate} onChange={e => setToDate(e.target.value)} />

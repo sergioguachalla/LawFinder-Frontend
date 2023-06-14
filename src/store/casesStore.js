@@ -1,6 +1,6 @@
 import { create } from 'zustand';
 import axios from 'axios';
-
+import jwt_decode from "jwt-decode";
 export const useCasesStore = create((set, get) => ({
   formData: {
     legalCaseId: '',
@@ -36,14 +36,9 @@ export const useCasesStore = create((set, get) => ({
 
   getIdFromToken: () => {
     const token = localStorage.getItem('token');
-    if(token) {
-      const payload = token.split('.')[1];
-      const decodedPayload = atob(payload);
-      const id = decodedPayload.split(',')[5].split(':')[1].split('}')[0];
-      console.log(id);
-      return id;
-    }
-    return '';
+    const decoded = jwt_decode(token);
+    return decoded.userId;
+   
   },
   
   getCases: async () => {
