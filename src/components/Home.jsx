@@ -10,12 +10,14 @@ import Card from "./Card";
 import { getRoleFromToken } from "../utils/getIdFromToken"; 
 const Home = () => {
   const navigate = useNavigate();
-  const { getCases, cases, status, currentPage, totalPages, nextPage, previousPage } = useCasesStore();
+  const { getCases, cases, status, currentPage, totalPages, nextPage, previousPage, fromDate, toDate, setFromDate, setToDate, clearFilters } = useCasesStore();
 
   const formatDate = (dateInput) => {
     const formattedDate = format(new Date(dateInput), 'yyyy-MM-dd');
     return formattedDate;
   }
+
+
   
   useEffect(() => {
     
@@ -27,43 +29,48 @@ const Home = () => {
       const timeoutId = setTimeout(() => {
         getCases();}, 1000);
   
-    return () => clearTimeout(timeoutId);
-  }else{
-    navigate('/');
-  } 
-  }, [getCases,currentPage]);
+      return () => clearTimeout(timeoutId);
+    } else {
+      navigate('/');
+    } 
+  }, [getCases, currentPage, fromDate, toDate]); // Se añaden fromDate y toDate como dependencias
   
-
   const handleCaseClick = (id) => {
     console.log(id);
     navigate(`/CaseDetails/${id}`);
   }
+
   
   return (
     <>
-          {status === 'loading' || status ==='init' && <LoadingSpinner/>}
+      {status === 'loading' || status ==='init' && <LoadingSpinner/>}
 
       <Navbar></Navbar>
       
       <div className="cases-container">
         <h1>Casos</h1>
-        
+        <div>
+          <label htmlFor="fromDate">Desde: </label>
+          <input type="date" id="fromDate" value={fromDate} onChange={e => setFromDate(e.target.value)} />
+
+          <label htmlFor="toDate">Hasta: </label>
+          <input type="date" id="toDate" value={toDate} onChange={e => setToDate(e.target.value)} />
+
+          <button onClick={clearFilters}>Vaciar Filtros</button>
+        </div>
 
         {status === 'success' && cases.map((legalCase) => (
-          
           <div key={legalCase.idLegalCase} className="card">
             <h2>{legalCase.title}</h2>
             <p className="last-modified">Última modificación: {formatDate(legalCase.lastUpdate)}</p>
             <p>{legalCase.summary}</p>
             <p>{legalCase.crime}</p>
-            {/*  TODO: Modularizar el componente Card *
-            <Card id={legalCase.idLegalCase} title={legalCase.title}></Card> */}
             <Link to={`/CaseDetails/${legalCase.idLegalCase}`}><button>Ver Más</button></Link>
           </div>
-          ))}
+        ))}
 
         {status === 'empty' && <p>No tienes casos registrados</p>}
-        {/* Controles de navegación */}
+
         {status === 'success' && (
           <div className="pagination">
             <button onClick={previousPage} disabled={currentPage === 0}>
@@ -74,7 +81,6 @@ const Home = () => {
               Siguiente
             </button>
           </div>
-          
         )}
       </div>
       <button className="floating-button-right" onClick={() => navigate('/RegisterCase')}>
