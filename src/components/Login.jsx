@@ -24,7 +24,7 @@ const Login = () => {
     e.preventDefault();
 
     // Lógica de autenticación
-    const loginSuccess = await handleSubmit();
+    const loginSuccess = await handleSubmit(e);
 
     if (loginSuccess) {
       // Obtener el token del authStore
