@@ -1,11 +1,10 @@
-import { BrowserRouter, Routes, Route, Navigate, Redirect} from 'react-router-dom';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { ChakraProvider } from '@chakra-ui/react';
 import Login from './components/Login';
 import Role from './components/Role';
 import CaseInformation from './components/CaseInformation';
-import RegisterFile from './components/RegisterFile';
-import PrivateRoute from './utils/PrivateRoute';
 import Home from './components/Home';
+import LaywerRegistration from './components/LawyerRegistration';
 
 
 
@@ -18,7 +17,7 @@ function App() {
           <Route path="/Role" element={<Role />} />
           <Route path="/Home" element={<Home/>} />
           <Route path="/CaseDetails/:id" element={<CaseInformation />} />
-
+          <Route path="/LawyerRegistration" element={<LaywerRegistration />} />
           {/* <Route element={<PrivateRoute/>}>
             <Route path="/Home" element={<Home/>} />
           </Route> */}

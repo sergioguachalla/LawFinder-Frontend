@@ -22,3 +22,17 @@ export const getUserNameFromToken = () =>{
 }
 return '';
 }
+
+export const getRoleFromToken = () =>{
+   const token = localStorage.getItem('token');
+   if(token) {
+   const payload = token.split('.')[1];
+   const decodedPayload = atob(payload);
+   let role = decodedPayload.split(',')[0].split(':')[1].split('}')[0];
+   //remove "" from username
+   role;
+
+   return role;
+}
+return 'error';
+}

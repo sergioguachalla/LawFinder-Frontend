@@ -1,6 +1,7 @@
 import '../styles/Confirmation.css';
 import {useConfirmationStore} from '../store/confirmationStore';
 import {useRegisterUserStore} from '../store/userRegistrationStore';
+
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
@@ -9,15 +10,16 @@ const ConfirmationCode = () => {
 
  
   const userEmail = localStorage.getItem('correo');
-  const { code, handleChange, handleRequest } = useConfirmationStore();
+  const { code, handleChange, handleRequest, role, handleLawyer } = useConfirmationStore();
   const username = useRegisterUserStore((state) => state.username);
   const status = useConfirmationStore((state) => state.status);
   const handleRequestForm = async (event)  => {
     event.preventDefault();
-    await handleRequest(event);
+    role === 'lawyer' ? await handleLawyer(event) : await handleRequest(event);
     //console.log(username);
   };
   useEffect(() => {
+    console.log(role + "rol");
     if(status === 'success') {
       const timeoutId = setTimeout(() => {
         navigate('/');
@@ -28,6 +30,7 @@ const ConfirmationCode = () => {
     } else {
       console.log(status + "b");
     }
+    console.log(role + "rol");
   }, [navigate, status]);
   
 

@@ -7,6 +7,7 @@ import Navbar from "./Navbar";
 import LoadingSpinner from "./Loading";
 import { Link } from "react-router-dom";
 import Card from "./Card";
+import { getRoleFromToken } from "../utils/getIdFromToken"; 
 const Home = () => {
   const navigate = useNavigate();
   const { getCases, cases, status, currentPage, totalPages, nextPage, previousPage } = useCasesStore();
@@ -17,13 +18,14 @@ const Home = () => {
   }
   
   useEffect(() => {
+    
     const token = localStorage.getItem('token');
-    if(token){
-    console.log(token);
-    const timeoutId = setTimeout(() => {
-      getCases();
 
-    }, 1000);
+    if(token){
+      const role = getRoleFromToken(token);
+      console.log("Roles" + role);
+      const timeoutId = setTimeout(() => {
+        getCases();}, 1000);
   
     return () => clearTimeout(timeoutId);
   }else{

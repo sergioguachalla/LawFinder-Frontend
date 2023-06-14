@@ -1,7 +1,7 @@
 import { create } from 'zustand';
 import axios from 'axios';
 
-export const useRegisterUserStore = create((set,get) => ({
+export const useLawyerStore = create((set) => ({
   deviceId: localStorage.getItem('device-id') || generateUUID(),
   nombres: '',
   apellidos: '',
@@ -151,4 +151,4 @@ function generateUUID() {
 }
 
 
-export default useRegisterUserStore;
+export default useLawyerStore;
