@@ -33,9 +33,11 @@ export const useCasesStore = create((set, get) => ({
     }));
   },
   
-  setFromDate: date => set({ fromDate: date }), 
-  setToDate: date => set({ toDate: date }), 
-  setInstanceId: id => set({ instanceId: id }), 
+  // current page lo puse ahi para que reinicie la paginacion cuando se filtra
+  // ya que si no hay tantos casos como para esa pagina, no se muestra nada
+  setFromDate: date => set({ fromDate: date, currentPage: 0 }), 
+  setToDate: date => set({ toDate: date, currentPage: 0 }), 
+  setInstanceId: id => set({ instanceId: id, currentPage: 0 }), 
 
   getInstances: async () => {
     try {
@@ -118,6 +120,7 @@ export const useCasesStore = create((set, get) => ({
       fromDate: '',
       toDate: '',
       instanceId: '', 
+      currentPage: 0,
     }));
   },
   
