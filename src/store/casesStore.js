@@ -19,8 +19,10 @@ export const useCasesStore = create((set, get) => ({
   status: 'init',
   currentPage: 0,
   totalPages: 0,
-  fromDate: '', // Agregado
-  toDate: '', // Agregado
+  fromDate: '', 
+  toDate: '',
+  instances: [], 
+  instanceId: '', 
 
   handleChange: (field, event) => {
     set((state) => ({
@@ -31,8 +33,20 @@ export const useCasesStore = create((set, get) => ({
     }));
   },
   
-  setFromDate: date => set({ fromDate: date }), // Agregado
-  setToDate: date => set({ toDate: date }), // Agregado
+  setFromDate: date => set({ fromDate: date }), 
+  setToDate: date => set({ toDate: date }), 
+  setInstanceId: id => set({ instanceId: id }), 
+
+  getInstances: async () => {
+    try {
+      const response = await axios.get('http://localhost:8080/api/v1/legalcase/instance');
+      if (response.data.code === '0000') {
+        set({ instances: response.data.response });
+      }
+    } catch (error) {
+      console.error('Error fetching instances', error);
+    }
+  },
 
   getIdFromToken: () => {
     const token = localStorage.getItem('token');
@@ -58,7 +72,8 @@ export const useCasesStore = create((set, get) => ({
           page: get().currentPage,
           size: 2, // Tamaño de página
           from: get().fromDate,
-          to: get().toDate
+          to: get().toDate,
+          instanceId: get().instanceId,
         },
       });
 
@@ -102,6 +117,7 @@ export const useCasesStore = create((set, get) => ({
     set(() => ({
       fromDate: '',
       toDate: '',
+      instanceId: '', 
     }));
   },
   
