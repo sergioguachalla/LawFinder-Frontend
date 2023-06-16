@@ -11,7 +11,8 @@
   const Home = () => {
     const navigate = useNavigate();
     const { getCases, cases, status, currentPage, totalPages, nextPage, previousPage, fromDate, toDate, setFromDate, 
-      setToDate, clearFilters, getInstances, instances, setInstanceId, instanceId, archiveCase,  inProgress, setInProgress  } = useCasesStore();
+      setToDate, clearFilters, getInstances, instances, setInstanceId, instanceId, archiveCase,  inProgress, setInProgress,
+      searchTitle, setSearchTitle} = useCasesStore();
 
     const formatDate = (dateInput) => {
       const formattedDate = format(new Date(dateInput), 'yyyy-MM-dd');
@@ -39,7 +40,7 @@
         navigate('/');
       }
       
-    }, [getCases,getInstances , currentPage, fromDate, toDate,inProgress , instanceId]); // Se añaden fromDate y toDate como dependencias
+    }, [getCases,getInstances , currentPage, fromDate, toDate,inProgress , instanceId, searchTitle]); // Se añaden fromDate y toDate como dependencias
     
     const handleCaseClick = (id) => {
       console.log(id);
@@ -59,6 +60,10 @@
         
         <div className="cases-container">
           <h1>Casos</h1>
+          <div className="search-container">
+            <label htmlFor="searchTitle">Buscador por titulo: </label>
+            <input type="text" id="searchTitle" value={searchTitle} onChange={e => setSearchTitle(e.target.value)} />
+          </div>
           <div>
             <label htmlFor="inProgress">Estado: </label>
             <select id="inProgress" value={inProgress} onChange={e => { const value = e.target.value; setInProgress(value === 'true' ? true : value === 'false' ? false : null)}}>

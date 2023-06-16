@@ -23,7 +23,8 @@ export const useCasesStore = create((set, get) => ({
   toDate: '',
   instances: [], 
   instanceId: '',
-  inProgress: "", 
+  inProgress: '',
+  searchTitle: '', 
 
   handleChange: (field, event) => {
     set((state) => ({
@@ -39,7 +40,8 @@ export const useCasesStore = create((set, get) => ({
   setFromDate: date => set({ fromDate: date, currentPage: 0 }), 
   setToDate: date => set({ toDate: date, currentPage: 0 }), 
   setInstanceId: id => set({ instanceId: id, currentPage: 0 }), 
-  setInProgress: inProgress => set({ inProgress: inProgress, currentPage: 0 }), 
+  setInProgress: inProgress => set({ inProgress: inProgress, currentPage: 0 }),
+  setSearchTitle: title => set({ searchTitle: title, currentPage: 0 }), 
 
   getInstances: async () => {
     try {
@@ -79,6 +81,7 @@ export const useCasesStore = create((set, get) => ({
           to: get().toDate,
           instanceId: get().instanceId,
           inProgress: get().inProgress,
+          title: get().searchTitle,
         },
         
       });
@@ -126,7 +129,9 @@ export const useCasesStore = create((set, get) => ({
       toDate: '',
       instanceId: '', 
       inProgress: '',
+      searchTitle: '',
       currentPage: 0,
+      
     }));
   },
   archiveCase: async (caseId) => {
