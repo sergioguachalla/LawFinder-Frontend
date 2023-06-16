@@ -3,7 +3,6 @@ import { useRegisterUserStore } from '../store/userRegistrationStore';
 import '../styles/RegisterUser.css';
 import { useNavigate } from 'react-router-dom';
 import Navbar from './Navbar';
-
 import Spinner from './Spinner';
 const RegisterUser = () => {
   const navigate = useNavigate();

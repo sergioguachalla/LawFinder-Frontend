@@ -79,6 +79,7 @@
               <p>{legalCase.summary}</p>
               <p>{legalCase.crime}</p>
               <Link to={`/CaseDetails/${legalCase.idLegalCase}`}><button>Ver Más</button></Link>
+              <button>Archivar Caso</button>
             </div>
           ))}
 
