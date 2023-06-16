@@ -22,7 +22,8 @@ export const useCasesStore = create((set, get) => ({
   fromDate: '', 
   toDate: '',
   instances: [], 
-  instanceId: '', 
+  instanceId: '',
+  inProgress: "", 
 
   handleChange: (field, event) => {
     set((state) => ({
@@ -38,6 +39,7 @@ export const useCasesStore = create((set, get) => ({
   setFromDate: date => set({ fromDate: date, currentPage: 0 }), 
   setToDate: date => set({ toDate: date, currentPage: 0 }), 
   setInstanceId: id => set({ instanceId: id, currentPage: 0 }), 
+  setInProgress: inProgress => set({ inProgress: inProgress, currentPage: 0 }), 
 
   getInstances: async () => {
     try {
@@ -76,8 +78,11 @@ export const useCasesStore = create((set, get) => ({
           from: get().fromDate,
           to: get().toDate,
           instanceId: get().instanceId,
+          inProgress: get().inProgress,
         },
+        
       });
+      console.log(get().inProgress + "a");
 
       if(response.data.response.content.length > 0){
         const casesPage = response.data.response;
@@ -120,6 +125,7 @@ export const useCasesStore = create((set, get) => ({
       fromDate: '',
       toDate: '',
       instanceId: '', 
+      inProgress: null,
       currentPage: 0,
     }));
   },
@@ -128,7 +134,7 @@ export const useCasesStore = create((set, get) => ({
       const response = await axios.put(`http://localhost:8080/api/v1/legalcase/${caseId}`);
       if (response.status === 200) {
         console.log('Case archived');
-        //get().getCases(); 
+        //get().getCases();  Refetch cases
       }
     } catch (error) {
       console.error('Error archiving case', error);

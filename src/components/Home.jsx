@@ -11,7 +11,7 @@
   const Home = () => {
     const navigate = useNavigate();
     const { getCases, cases, status, currentPage, totalPages, nextPage, previousPage, fromDate, toDate, setFromDate, 
-      setToDate, clearFilters, getInstances, instances, setInstanceId, instanceId, archiveCase } = useCasesStore();
+      setToDate, clearFilters, getInstances, instances, setInstanceId, instanceId, archiveCase,  inProgress, setInProgress  } = useCasesStore();
 
     const formatDate = (dateInput) => {
       const formattedDate = format(new Date(dateInput), 'yyyy-MM-dd');
@@ -39,7 +39,7 @@
         navigate('/');
       }
       
-    }, [getCases,getInstances , currentPage, fromDate, toDate, , instanceId]); // Se añaden fromDate y toDate como dependencias
+    }, [getCases,getInstances , currentPage, fromDate, toDate,inProgress , instanceId]); // Se añaden fromDate y toDate como dependencias
     
     const handleCaseClick = (id) => {
       console.log(id);
@@ -60,6 +60,12 @@
         <div className="cases-container">
           <h1>Casos</h1>
           <div>
+            <label htmlFor="inProgress">Estado: </label>
+            <select id="inProgress" value={inProgress} onChange={e => { const value = e.target.value; setInProgress(value === 'null' ? null : value === 'true')}}>
+              <option value="">Todos</option>
+              <option value="true">En Curso</option>
+              <option value="false">Archivados</option>
+            </select>
             <label htmlFor="instanceId">Instancia: </label>
             <select id="instanceId" value={instanceId} onChange={e => setInstanceId(e.target.value)}>
               <option value="">Todos</option>
