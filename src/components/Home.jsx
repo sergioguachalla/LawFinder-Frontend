@@ -61,7 +61,7 @@
           <h1>Casos</h1>
           <div>
             <label htmlFor="inProgress">Estado: </label>
-            <select id="inProgress" value={inProgress} onChange={e => { const value = e.target.value; setInProgress(value === 'null' ? null : value === 'true')}}>
+            <select id="inProgress" value={inProgress} onChange={e => { const value = e.target.value; setInProgress(value === 'true' ? true : value === 'false' ? false : null)}}>
               <option value="">Todos</option>
               <option value="true">En Curso</option>
               <option value="false">Archivados</option>

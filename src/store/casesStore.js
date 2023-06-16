@@ -125,7 +125,7 @@ export const useCasesStore = create((set, get) => ({
       fromDate: '',
       toDate: '',
       instanceId: '', 
-      inProgress: null,
+      inProgress: '',
       currentPage: 0,
     }));
   },
