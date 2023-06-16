@@ -123,5 +123,16 @@ export const useCasesStore = create((set, get) => ({
       currentPage: 0,
     }));
   },
+  archiveCase: async (caseId) => {
+    try {
+      const response = await axios.put(`http://localhost:8080/api/v1/legalcase/${caseId}`);
+      if (response.status === 200) {
+        console.log('Case archived');
+        //get().getCases(); 
+      }
+    } catch (error) {
+      console.error('Error archiving case', error);
+    }
+  },
   
 }));

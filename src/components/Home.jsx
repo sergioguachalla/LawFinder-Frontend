@@ -11,7 +11,7 @@
   const Home = () => {
     const navigate = useNavigate();
     const { getCases, cases, status, currentPage, totalPages, nextPage, previousPage, fromDate, toDate, setFromDate, 
-      setToDate, clearFilters, getInstances, instances, setInstanceId, instanceId } = useCasesStore();
+      setToDate, clearFilters, getInstances, instances, setInstanceId, instanceId, archiveCase } = useCasesStore();
 
     const formatDate = (dateInput) => {
       const formattedDate = format(new Date(dateInput), 'yyyy-MM-dd');
@@ -46,6 +46,10 @@
       navigate(`/CaseDetails/${id}`);
     }
 
+    const handleArchiveCase = (id) => {
+      console.log(`Caso ${id} archivado xd`);
+      archiveCase(id);
+    }
     
     return (
       <>
@@ -79,7 +83,7 @@
               <p>{legalCase.summary}</p>
               <p>{legalCase.crime}</p>
               <Link to={`/CaseDetails/${legalCase.idLegalCase}`}><button>Ver Más</button></Link>
-              <button>Archivar Caso</button>
+              <button onClick={() => handleArchiveCase(legalCase.idLegalCase)}>Archivar Caso</button>
             </div>
           ))}
 
