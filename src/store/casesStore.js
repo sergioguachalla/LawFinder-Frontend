@@ -25,6 +25,8 @@ export const useCasesStore = create((set, get) => ({
   instanceId: '',
   inProgress: '',
   searchTitle: '', 
+  categories: [], 
+  categoryId: '',
 
   handleChange: (field, event) => {
     set((state) => ({
@@ -42,7 +44,18 @@ export const useCasesStore = create((set, get) => ({
   setInstanceId: id => set({ instanceId: id, currentPage: 0 }), 
   setInProgress: inProgress => set({ inProgress: inProgress, currentPage: 0 }),
   setSearchTitle: title => set({ searchTitle: title, currentPage: 0 }), 
+  setCategoryId: id => set({ categoryId: id, currentPage: 0 }), 
 
+  getCategories: async () => {
+    try {
+      const response = await axios.get('http://localhost:8080/api/v1/category');
+      if (response.data.code === '0000') {
+        set({ categories: response.data.response });
+      }
+    } catch (error) {
+      console.error('Error fetching categories', error);
+    }
+  },
   getInstances: async () => {
     try {
       const response = await axios.get('http://localhost:8080/api/v1/legalcase/instance');
@@ -80,6 +93,7 @@ export const useCasesStore = create((set, get) => ({
           from: get().fromDate,
           to: get().toDate,
           instanceId: get().instanceId,
+          categoryId: get().categoryId,
           inProgress: get().inProgress,
           title: get().searchTitle,
         },
@@ -130,6 +144,7 @@ export const useCasesStore = create((set, get) => ({
       instanceId: '', 
       inProgress: '',
       searchTitle: '',
+      categoryId: '',
       currentPage: 0,
       
     }));

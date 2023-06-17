@@ -12,7 +12,7 @@
     const navigate = useNavigate();
     const { getCases, cases, status, currentPage, totalPages, nextPage, previousPage, fromDate, toDate, setFromDate, 
       setToDate, clearFilters, getInstances, instances, setInstanceId, instanceId, archiveCase,  inProgress, setInProgress,
-      searchTitle, setSearchTitle} = useCasesStore();
+      searchTitle, setSearchTitle, getCategories, categories, categoryId, setCategoryId} = useCasesStore();
 
     const formatDate = (dateInput) => {
       const formattedDate = format(new Date(dateInput), 'yyyy-MM-dd');
@@ -32,6 +32,7 @@
           
           getCases();
           getInstances(); 
+          getCategories();
           
         }, 0); // quité el timeout
     
@@ -40,7 +41,7 @@
         navigate('/');
       }
       
-    }, [getCases,getInstances , currentPage, fromDate, toDate,inProgress , instanceId, searchTitle]); // Se añaden fromDate y toDate como dependencias
+    }, [getCases,getInstances, getCategories , currentPage, fromDate, toDate,inProgress , instanceId, categoryId, searchTitle]); // Se añaden fromDate y toDate como dependencias
     
     const handleCaseClick = (id) => {
       console.log(id);
@@ -64,7 +65,15 @@
             <label htmlFor="searchTitle">Buscador por titulo: </label>
             <input type="text" id="searchTitle" value={searchTitle} onChange={e => setSearchTitle(e.target.value)} />
           </div>
+            
           <div>
+            <label htmlFor="categoryId">Categoría: </label>
+            <select id="categoryId" value={categoryId} onChange={e => setCategoryId(e.target.value)}>
+              <option value="">Todos</option>
+              {categories.map(category => (
+                <option key={category.categoryId} value={category.categoryId}>{category.categoryName}</option>
+              ))}
+            </select>
             <label htmlFor="inProgress">Estado: </label>
             <select id="inProgress" value={inProgress} onChange={e => { const value = e.target.value; setInProgress(value === 'true' ? true : value === 'false' ? false : null)}}>
               <option value="">Todos</option>
