@@ -8,10 +8,9 @@ import LoadingSpinner from "./Loading";
 import { Link } from "react-router-dom";
 import {  } from "react-jwt";
 import Card from "./Card";
-import { getRoleFromToken, test} from "../utils/getIdFromToken"; 
 const Home = () => {
   const navigate = useNavigate();
-  const { getCases, cases, status, currentPage, totalPages, nextPage, previousPage, fromDate, toDate, setFromDate, setToDate, clearFilters } = useCasesStore();
+  const { getCases, cases, status, currentPage, totalPages, nextPage, previousPage, fromDate, toDate, setFromDate, setToDate, clearFilters, isClient, isLawyer } = useCasesStore();
   const formatDate = (dateInput) => {
     const formattedDate = format(new Date(dateInput), 'yyyy-MM-dd');
     return formattedDate;
@@ -24,12 +23,10 @@ const Home = () => {
   useEffect(() => {
     
     const token = localStorage.getItem('token');
-    const decodedToken = test(token);
-    console.log(decodedToken.roles);
+    
 
     if(token){
-      const role = getRoleFromToken(token);
-      console.log("Roles" + role);
+      //console.log("Roles" + role);
       const timeoutId = setTimeout(() => {
         getCases();}, 1000);
   
@@ -69,7 +66,16 @@ const Home = () => {
             <p className="last-modified">Última modificación: {formatDate(legalCase.lastUpdate)}</p>
             <p>{legalCase.summary}</p>
             <p>{legalCase.crime}</p>
-            <Link to={`/CaseDetails/${legalCase.idLegalCase}`}><button>Ver Más</button></Link>
+            {isClient || isLawyer ? (
+              <Link to={`/CaseDetails/${legalCase.idLegalCase}`}>
+                 <button>Ver Más</button>
+              </Link>
+            ) : null}
+
+             {isLawyer ? (
+              <button>Archivar Caso</button>) : null} 
+
+              {/* <Link to={`/CaseDetails/${legalCase.idLegalCase}`}><button>Ver Más</button></Link> */}
           </div>
         ))}
 
@@ -87,9 +93,10 @@ const Home = () => {
           </div>
         )}
       </div>
-      <button className="floating-button-right" onClick={() => navigate('/RegisterCase')}>
+      {isLawyer ? <button className="floating-button-right" onClick={() => navigate('/RegisterCase')}>
         +
-      </button>
+      </button> : null}
+      
     </>
   );
 };

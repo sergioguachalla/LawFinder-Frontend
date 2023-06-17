@@ -14,7 +14,8 @@ const Navbar = () => {
    const {logout} = useAuthStore();
    
    useEffect(() => {
-       setUsername();
+    
+      setUsername();
    }, [setUsername, username]);
   const handleLogout = () => {
     setStatus('init');

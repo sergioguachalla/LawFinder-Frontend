@@ -32,14 +32,10 @@ export const getUserNameFromToken = () =>{
 
 export const getRoleFromToken = () =>{
    const token = localStorage.getItem('token');
-   if(token) {
-   const payload = token.split('.')[1];
-   const decodedPayload = atob(payload);
-   let role = decodedPayload.split(',')[0].split(':')[1].split('}')[0];
-   //remove "" from username
-   role;
+   const decoded = jwt_decode(token);
+   const role = decoded.roles;
+   //console.log(role + " Roles");
 
    return role;
-}
-return 'error';
+
 }

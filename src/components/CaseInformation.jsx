@@ -1,5 +1,5 @@
-import { useParams } from 'react-router-dom/';
-import { useEffect } from 'react';
+import { Link, useParams } from 'react-router-dom/';
+import { useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import LoadingSpinner from './Loading';
@@ -10,23 +10,26 @@ import { useCaseDetailsStore } from '../store/caseDetailsStore';
 const CaseInformation = () => {
   const navigate = useNavigate();
   const { id } = useParams();
-  let { cases,getCases } = useCasesStore();
-  const { getCaseDetails,caseDetails, caseId, setCaseId,status } = useCaseDetailsStore();
-  const legalCase = cases.find((legalCase) => legalCase.idLegalCase == id);
+  let { cases,getCases, isLawyer, isClient } = useCasesStore();
+  const { getCaseDetails, caseId, setCaseId,status, getCaseInformation,caseDetails } = useCaseDetailsStore();
+  //const legalCase = cases.find((legalCase) => legalCase.idLegalCase == id);
+
+
   useEffect(() => {
     const token = localStorage.getItem('token');
     if(token){
-    setCaseId(id);
-    cases = getCases();
-    getCaseDetails(id);
+      setCaseId(id);
+      cases = getCases();
+      getCaseInformation(id);
+      
+      //getCaseDetails(id);
     }else{
       navigate('/');
     }
-       //console.log("detail case" + caseId);
    }, [caseId, getCaseDetails, id, setCaseId]);
 
   
-  if (!legalCase) {
+  if (!caseDetails) {
     return <p>Caso no encontrado {id} </p>;
   }
 
@@ -37,31 +40,23 @@ const CaseInformation = () => {
       <Navbar></Navbar>
       <div className="legal-case-details container">
         <div className="card">
-          <h2 className="card-title">Caso # {status}{id}</h2>
-          <h3 className="card-subtitle">{legalCase.title}</h3>
-          <p className="card-description">{legalCase.summary}</p>
-          <button className="card-button" onClick={() => navigate(`/RegisterFile/${caseId}`)}>Añadir al expediente del caso {caseId}</button>
+          <h2 className="card-title">Caso # {id}</h2>
+        
+          <h3 className="card-subtitle">Título del caso: {caseDetails.title}</h3>
+          <div>
+          <p className="card-description">Resumen: {caseDetails.summary}</p></div>
+          <p className="card-description">Provincia: {caseDetails.provinceName}</p>
+          <p className="card-description">Caso registrado por: {caseDetails.username}</p>
+          <p className="card-description">Última modificación: {caseDetails.txDate}</p>
+          <p className="card-description">Instancia del Caso: {caseDetails.instanceName}</p>
+          {isLawyer ? <button className="card-button" onClick={() => navigate(`/RegisterFile/${caseId}`)}>Añadir al expediente del caso {caseId}</button> : null }
+         
         </div>
         <div className="expediente">
           <h4 className="expediente-title">Expediente</h4>
-          {caseDetails && caseDetails.map((link, index) => (
-            <div className="card link-card" key={index}>
-              <a href={link} target="_blank" rel="noopener noreferrer">
-                <img src="https://img.freepik.com/iconos-gratis/pdf_318-187733.jpg" className="link-card-icon" alt="pdf icon"/>
-                Documento #{index + 1}
-              </a>
-              <div>
-              <label>
-                {link.split(',')[1].trim()}
-              </label>
-              </div>
-              <div>
-              <label>
-                {link.split(',')[2].trim()}
-              </label>
-              </div>
-            </div>
-          ))}
+          <Link to={`/CaseDetails/${caseId}/CaseFile`}>Expediente</Link>
+          
+          
         </div>
       </div>
 

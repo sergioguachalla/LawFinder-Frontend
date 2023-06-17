@@ -5,6 +5,7 @@ import Role from './components/Role';
 import CaseInformation from './components/CaseInformation';
 import Home from './components/Home';
 import LaywerRegistration from './components/LawyerRegistration';
+import CaseFile from './components/CaseFile';
 
 
 
@@ -21,7 +22,7 @@ function App() {
           {/* <Route element={<PrivateRoute/>}>
             <Route path="/Home" element={<Home/>} />
           </Route> */}
-          
+          <Route path="/CaseDetails/:id/CaseFile" element={<CaseFile />} />
           
         </Routes>
       </ChakraProvider>

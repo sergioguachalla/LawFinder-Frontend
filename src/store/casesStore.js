@@ -1,6 +1,7 @@
 import { create } from 'zustand';
 import axios from 'axios';
 import jwt_decode from "jwt-decode";
+import { getRoleFromToken } from '../utils/getIdFromToken';
 export const useCasesStore = create((set, get) => ({
   formData: {
     legalCaseId: '',
@@ -13,6 +14,8 @@ export const useCasesStore = create((set, get) => ({
     status:true,
     lastUpdate:'',
   },
+  isLawyer: false,
+  isClient: false,
   cases: [],
   caseId: '',
   id: '',
@@ -34,6 +37,17 @@ export const useCasesStore = create((set, get) => ({
   setFromDate: date => set({ fromDate: date }), // Agregado
   setToDate: date => set({ toDate: date }), // Agregado
 
+  handleRoles: () => {
+    const role = [...getRoleFromToken()];
+    if (role.includes('CREATE_CASE') || role.includes('VIEW_CASE')) {
+      set(() => ({ isLawyer: true }));
+    }
+    if (role.includes('DELETE_CASE')) {
+      set(() => ({ isLawyer: false }));
+      set(() => ({ isClient: true }));
+    }
+  },
+
   getIdFromToken: () => {
     const token = localStorage.getItem('token');
     const decoded = jwt_decode(token);
@@ -42,6 +56,7 @@ export const useCasesStore = create((set, get) => ({
   },
   
   getCases: async () => {
+    get().handleRoles();
     set(() => ({ id: get().getIdFromToken() }));
     try {
       set(() => ({ status: 'loading' }));
