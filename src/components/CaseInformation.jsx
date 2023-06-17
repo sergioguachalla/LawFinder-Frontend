@@ -43,12 +43,14 @@ const CaseInformation = () => {
           <h2 className="card-title">Caso # {id}</h2>
         
           <h3 className="card-subtitle">Título del caso: {caseDetails.title}</h3>
-          <div>
-          <p className="card-description">Resumen: {caseDetails.summary}</p></div>
+          
           <p className="card-description">Provincia: {caseDetails.provinceName}</p>
           <p className="card-description">Caso registrado por: {caseDetails.username}</p>
           <p className="card-description">Última modificación: {caseDetails.txDate}</p>
           <p className="card-description">Instancia del Caso: {caseDetails.instanceName}</p>
+          <p className="card-description">Crimen: {caseDetails.crimeName}</p>
+          <div>
+          <p className="card-description">Resumen: {caseDetails.summary}</p></div>
           {isLawyer ? <button className="card-button" onClick={() => navigate(`/RegisterFile/${caseId}`)}>Añadir al expediente del caso {caseId}</button> : null }
          
         </div>
