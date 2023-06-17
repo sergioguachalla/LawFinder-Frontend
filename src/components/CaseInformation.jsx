@@ -10,8 +10,8 @@ import { useCaseDetailsStore } from '../store/caseDetailsStore';
 const CaseInformation = () => {
   const navigate = useNavigate();
   const { id } = useParams();
-  let { cases,getCases, isLawyer, isClient } = useCasesStore();
-  const { getCaseDetails, caseId, setCaseId,status, getCaseInformation,caseDetails } = useCaseDetailsStore();
+  let { cases, getCases, isLawyer, isClient } = useCasesStore();
+  const { getCaseDetails, caseId, setCaseId,status, getCaseInformation,caseDetails, caseComments, getCaseComments } = useCaseDetailsStore();
   //const legalCase = cases.find((legalCase) => legalCase.idLegalCase == id);
 
 
@@ -21,6 +21,7 @@ const CaseInformation = () => {
       setCaseId(id);
       cases = getCases();
       getCaseInformation(id);
+      getCaseComments(id);
       
       //getCaseDetails(id);
     }else{
@@ -59,6 +60,22 @@ const CaseInformation = () => {
           <Link to={`/CaseDetails/${caseId}/CaseFile`}>Expediente</Link>
           
           
+        </div>
+
+        <div className="comment-container">
+          <h4 className="comment-title">Comentarios</h4>
+          <div className="comment">
+            {/*TODO: COMENTARIOS*/}
+            <p className="comment-user">Usuario</p>
+            {caseComments.map((comment) => (
+  <div className="comment" key={comment.commentId}>
+    <p className="comment-user">{comment.actorId}</p>
+    <p className="comment-text">{comment.commentContent}</p>
+  </div>
+))}
+
+          </div>
+          <input className="comment-input" type="text" placeholder="Escribe un comentario"></input>
         </div>
       </div>
 
