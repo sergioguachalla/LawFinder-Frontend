@@ -1,5 +1,5 @@
 import { Link, useParams } from 'react-router-dom/';
-import { useEffect, useRef } from 'react';
+import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import LoadingSpinner from './Loading';
@@ -7,11 +7,13 @@ import '../styles/CaseInformation.css';
 import Navbar from './Navbar';
 import { useCasesStore } from '../store/casesStore';
 import { useCaseDetailsStore } from '../store/caseDetailsStore';
+import { useCommentsStore } from '../store/commentsStore';
 const CaseInformation = () => {
   const navigate = useNavigate();
   const { id } = useParams();
   let { cases, getCases, isLawyer, isClient } = useCasesStore();
-  const { getCaseDetails, caseId, setCaseId,status, getCaseInformation,caseDetails, caseComments, getCaseComments } = useCaseDetailsStore();
+  const { getCaseDetails, caseId, setCaseId,status, getCaseInformation,caseDetails  } = useCaseDetailsStore();
+  const {comments,getCaseComments, handleComment, handleChange} = useCommentsStore();
   //const legalCase = cases.find((legalCase) => legalCase.idLegalCase == id);
 
 
@@ -27,8 +29,13 @@ const CaseInformation = () => {
     }else{
       navigate('/');
     }
-   }, [caseId, getCaseDetails, id, setCaseId]);
-
+   }, [caseId, getCaseDetails, id, setCaseId, handleComment]);
+  
+ 
+  const handleSubmitComment = (event) => {
+    event.preventDefault();
+    handleComment(event);
+  }
   
   if (!caseDetails) {
     return <p>Caso no encontrado {id} </p>;
@@ -67,15 +74,16 @@ const CaseInformation = () => {
           <div className="comment">
             {/*TODO: COMENTARIOS*/}
             <p className="comment-user">Usuario</p>
-            {caseComments.map((comment) => (
-  <div className="comment" key={comment.commentId}>
-    <p className="comment-user">{comment.actorId}</p>
-    <p className="comment-text">{comment.commentContent}</p>
-  </div>
-))}
+            {comments.map((comment) => (
+        <div className="comment" key={comment.commentId}>
+            <p className="comment-user">{comment.userName}</p>
+            <p className="comment-text">{comment.commentContent}</p>
+        </div>))}   
+        <button className="comment-button" onClick={handleSubmitComment} >Comentar</button>  
+
 
           </div>
-          <input className="comment-input" type="text" placeholder="Escribe un comentario"></input>
+          <input className="comment" type="text" placeholder="Escribe un comentario" onChange={(e) => handleChange("comment",e)}></input>
         </div>
       </div>
 
