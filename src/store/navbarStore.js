@@ -9,7 +9,14 @@ export const useNavbarStore = create((set,get) => ({
       set({[fieldName]: value});
       
    },
-   setUsername: () => set({username: getUserNameFromToken()}),
+   setUsername: () => {
+      if(localStorage.getItem('token') === '') {
+         set({username: ''});
+      } else {
+         set({username: getUserNameFromToken()});
+         
+      }
+   }
    /*getUserNameFromToken:() =>{
       const token = localStorage.getItem('token');
       if(token) {

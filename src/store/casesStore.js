@@ -1,6 +1,7 @@
 import { create } from 'zustand';
 import axios from 'axios';
-
+import jwt_decode from "jwt-decode";
+import { getRoleFromToken } from '../utils/getIdFromToken';
 export const useCasesStore = create((set, get) => ({
   formData: {
     legalCaseId: '',
@@ -13,6 +14,8 @@ export const useCasesStore = create((set, get) => ({
     status:true,
     lastUpdate:'',
   },
+  isLawyer: false,
+  isClient: false,
   cases: [],
   caseId: '',
   id: '',
@@ -67,19 +70,26 @@ export const useCasesStore = create((set, get) => ({
     }
   },
 
+  handleRoles: () => {
+    const role = [...getRoleFromToken()];
+    if (role.includes('CREATE_CASE') || role.includes('VIEW_CASE')) {
+      set(() => ({ isLawyer: true }));
+    }
+    if (role.includes('DELETE_CASE')) {
+      set(() => ({ isLawyer: false }));
+      set(() => ({ isClient: true }));
+    }
+  },
+
   getIdFromToken: () => {
     const token = localStorage.getItem('token');
-    if(token) {
-      const payload = token.split('.')[1];
-      const decodedPayload = atob(payload);
-      const id = decodedPayload.split(',')[5].split(':')[1].split('}')[0];
-      console.log(id);
-      return id;
-    }
-    return '';
+    const decoded = jwt_decode(token);
+    return decoded.userId;
+   
   },
   
   getCases: async () => {
+    get().handleRoles();
     set(() => ({ id: get().getIdFromToken() }));
     try {
       set(() => ({ status: 'loading' }));

@@ -1,3 +1,4 @@
+
   import { useEffect } from "react";
   import {useCasesStore} from "../store/casesStore";
   import { format } from 'date-fns';
@@ -19,11 +20,42 @@
       return formattedDate;
     }
 
-
-    
+   
     useEffect(() => {
       
       const token = localStorage.getItem('token');
+
+    const token = localStorage.getItem('token');
+    
+
+    if(token){
+      //console.log("Roles" + role);
+      const timeoutId = setTimeout(() => {
+        getCases();}, 1000);
+  
+      return () => clearTimeout(timeoutId);
+    } else {
+      navigate('/');
+    } 
+  }, [getCases, currentPage, fromDate, toDate]); // Se añaden fromDate y toDate como dependencias
+  
+  const handleCaseClick = (id) => {
+    console.log(id);
+    navigate(`/CaseDetails/${id}`);
+  }
+
+  
+  return (
+    <>
+      {status === 'loading' || status ==='init' && <LoadingSpinner/>}
+
+      <Navbar></Navbar>
+      
+      <div className="cases-container">
+        <h1>Casos</h1>
+        <div>
+          <label htmlFor="fromDate">Desde: </label>
+          <input type="date" id="fromDate" value={fromDate} onChange={e => setFromDate(e.target.value)} max={currentDate}  />
 
       if(token){
         const role = getRoleFromToken(token);
@@ -64,6 +96,22 @@
           <div className="search-container">
             <label htmlFor="searchTitle">Buscador por titulo: </label>
             <input type="text" id="searchTitle" value={searchTitle} onChange={e => setSearchTitle(e.target.value)} />
+        {status === 'success' && cases.map((legalCase) => (
+          <div key={legalCase.idLegalCase} className="card">
+            <h2>{legalCase.title}</h2>
+            <p className="last-modified">Última modificación: {formatDate(legalCase.lastUpdate)}</p>
+            <p>{legalCase.summary}</p>
+            <p>{legalCase.crime}</p>
+            {isClient || isLawyer ? (
+              <Link to={`/CaseDetails/${legalCase.idLegalCase}`}>
+                 <button>Ver Más</button>
+              </Link>
+            ) : null}
+
+             {isLawyer ? (
+              <button>Archivar Caso</button>) : null} 
+
+              {/* <Link to={`/CaseDetails/${legalCase.idLegalCase}`}><button>Ver Más</button></Link> */}
           </div>
             
           <div>
@@ -96,17 +144,12 @@
             <button onClick={clearFilters}>Vaciar Filtros</button>
           </div>
 
-          {status === 'success' && cases.map((legalCase) => (
-            <div key={legalCase.idLegalCase} className="card">
-              <h2>{legalCase.title}</h2>
-              <p className="last-modified">Última modificación: {formatDate(legalCase.lastUpdate)}</p>
-              <p>{legalCase.summary}</p>
-              <p>{legalCase.crime}</p>
-              <Link to={`/CaseDetails/${legalCase.idLegalCase}`}><button>Ver Más</button></Link>
-              <Link to={`/RegisterAudience/${legalCase.idLegalCase}`}><button>Registrar Audiencia</button></Link>
-              <button onClick={() => handleArchiveCase(legalCase.idLegalCase)}>Archivar Caso</button>
-            </div>
-          ))}
+        )}
+      </div>
+      {isLawyer ? <button className="floating-button-right" onClick={() => navigate('/RegisterCase')}>
+        +
+      </button> : null}
+      
 
           {status === 'empty' && <p>No tienes casos registrados</p>}
 
@@ -128,5 +171,6 @@
       </>
     );
   };
+   </>
 
   export default Home;

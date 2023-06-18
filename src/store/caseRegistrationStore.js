@@ -1,7 +1,9 @@
 import { create } from 'zustand';
 import axios from 'axios';
 import Format from 'date-fns/format';
+import jwt_decode from 'jwt-decode';
 export const useCaseStore = create((set, get) => ({
+ 
   formData: {
     userId: '',
     subCategoryId: '',
@@ -29,17 +31,10 @@ export const useCaseStore = create((set, get) => ({
   customerEmail: '',
   getIdFromToken: () => {
     const token = localStorage.getItem('token');
-    if (token) {
-       const payload = token.split('.')[1];
-       const decodedPayload = atob(payload);
-       
-       //console.log(decodedPayload.split(',')[4].split(':')[1].split('}')[0]);
-       const id = decodedPayload.split(',')[5].split(':')[1].split('}')[0];
-       //console.log(id);
-       return id;
-    }
-    return '';
+    const decoded = jwt_decode(token);
+    return decoded.userId;
  },
+ 
  handleChange: (field, event) => {
   const { name, value } = event.target;
   if (name === 'departmentId') {
@@ -82,7 +77,7 @@ export const useCaseStore = create((set, get) => ({
   }
 
 
-  console.log(get().formData); // Imprime el estado actualizado
+  console.log(get().formData);
 },
   
   handleSubmit: async (event) => {
@@ -100,7 +95,7 @@ export const useCaseStore = create((set, get) => ({
   registerCase: () => { 
     console.log(get().formData);
     const body = {
-      "userId": get().formData.userId,
+      "userId": get().getIdFromToken(),
       "idSubCategory": get().formData.subCategoryId,
       "idProvince": get().formData.provinceId,
       "idCrime": get().formData.crimeId,
