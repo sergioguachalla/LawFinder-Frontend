@@ -76,7 +76,7 @@ const CaseInformation = () => {
             <p className="comment-user">Usuario</p>
             {comments.map((comment) => (
         <div className="comment" key={comment.commentId}>
-            <p className="comment-user">{comment.userName}</p>
+            <p className="comment-user" key={comment.commentId}>{comment.userName}</p>
             <p className="comment-text">{comment.commentContent}</p>
         </div>))}   
         <button className="comment-button" onClick={handleSubmitComment} >Comentar</button>  
