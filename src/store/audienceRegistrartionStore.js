@@ -15,6 +15,7 @@ export const useRegisterAudienceStore = create((set, get) => ({
   setMeetingLink: (link) => set({ meetingLink: link }),
   setLocation: (location) => set({ location }),
   status: 'idle',
+  setStatus: (status) => set({ status }),
   registerAudience: async (caseId) => {
     set({ loading: true, status: 'loading' });
     try {
