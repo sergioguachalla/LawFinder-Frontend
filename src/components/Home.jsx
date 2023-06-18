@@ -63,18 +63,6 @@
   
       <div className="cases-container">
         <h1>Casos</h1>
-  
-        <div>
-          <label htmlFor="fromDate">Desde: </label>
-          <input
-            type="date"
-            id="fromDate"
-            value={fromDate}
-            onChange={(e) => setFromDate(e.target.value)}
-            max={currentDate}
-          />
-        </div>
-  
         <div className="search-container">
           <label htmlFor="searchTitle">Buscador por título: </label>
           <input
@@ -84,26 +72,6 @@
             onChange={(e) => setSearchTitle(e.target.value)}
           />
         </div>
-  
-        {status === 'success' &&
-          cases.map((legalCase) => (
-            <div key={legalCase.idLegalCase} className="card">
-              <h2>{legalCase.title}</h2>
-              <p className="last-modified">
-                Última modificación: {formatDate(legalCase.lastUpdate)}
-              </p>
-              <p>{legalCase.summary}</p>
-              <p>{legalCase.crime}</p>
-  
-              {(isClient || isLawyer) && (
-                <Link to={`/CaseDetails/${legalCase.idLegalCase}`}>
-                  <button>Ver Más</button>
-                </Link>
-              )}
-  
-              {isLawyer && <button>Archivar Caso</button>}
-            </div>
-          ))}
         <div>
           <label htmlFor="categoryId">Categoría: </label>
           <select
@@ -146,12 +114,43 @@
               </option>
             ))}
           </select>
+          <label htmlFor="fromDate">Desde: </label>
+          <input
+            type="date"
+            id="fromDate"
+            value={fromDate}
+            onChange={(e) => setFromDate(e.target.value)}
+            max={currentDate}
+          />
   
           <label htmlFor="toDate">Hasta: </label>
           <input type="date" id="toDate" value={toDate} onChange={(e) => setToDate(e.target.value)} />
   
           <button onClick={clearFilters}>Vaciar Filtros</button>
         </div>
+  
+ 
+  
+        {status === 'success' &&
+          cases.map((legalCase) => (
+            <div key={legalCase.idLegalCase} className="card">
+              <h2>{legalCase.title}</h2>
+              <p className="last-modified">
+                Última modificación: {formatDate(legalCase.lastUpdate)}
+              </p>
+              <p>{legalCase.summary}</p>
+              <p>{legalCase.crime}</p>
+  
+              {(isClient || isLawyer) && (
+                <Link to={`/CaseDetails/${legalCase.idLegalCase}`}>
+                  <button>Ver Más</button>
+                </Link>
+              )}
+  
+              {isLawyer && <button>Archivar Caso</button>}
+            </div>
+          ))}
+        
   
         {isLawyer && (
           <button className="floating-button-right" onClick={() => navigate('/RegisterCase')}>
