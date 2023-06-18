@@ -48,7 +48,7 @@
       navigate('/');
     }
     
-  }, [getCases,getInstances, getCategories , currentPage, fromDate, toDate , instanceId, categoryId, searchTitle]); // Se añaden fromDate y toDate como dependencias // Se añaden fromDate y toDate como dependencias
+  }, [getCases, getInstances, getCategories, currentPage, fromDate, toDate, instanceId, categoryId, searchTitle, navigate]); // Se añaden fromDate y toDate como dependencias // Se añaden fromDate y toDate como dependencias
   
   const handleCaseClick = (id) => {
     console.log(id);
@@ -137,11 +137,7 @@
           ))}
         
   
-        {isLawyer && (
-          <button className="floating-button-right" onClick={() => navigate('/RegisterCase')}>
-            +
-          </button>
-        )}
+       
   
         {status === 'empty' && <p>No tienes casos registrados</p>}
   
@@ -157,9 +153,11 @@
           </div>
         )}
   
-        <button className="floating-button-right" onClick={() => navigate('/RegisterCase')}>
-          +
-        </button>
+  {isLawyer === true &&  (
+          <button className="floating-button-right" onClick={() => navigate('/RegisterCase')}>
+            +
+          </button>
+        )}
       </div>
     </>
   );

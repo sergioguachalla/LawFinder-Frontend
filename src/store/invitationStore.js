@@ -1,22 +1,31 @@
 import {create} from 'zustand';
+import jwt_decode from "jwt-decode";
+import axios from 'axios';
 const invitationStore = create(set => ({
   invitations: [],
   loading: false,
   userId: '',
+  status: 'init',
   setInvitations: (invitations) => set(() => ({ invitations })),
   setLoading: (loading) => set(() => ({ loading })),
   getIdFromToken: () => {
     const token = localStorage.getItem('token');
     if (token) {
-      const payload = token.split('.')[1];
-      const decodedPayload = atob(payload);
-      //console.log(decodedPayload.split(',')[4].split(':')[1].split('}')[0]);
-      const id = decodedPayload.split(',')[5].split(':')[1].split('}')[0];
-      //console.log(id);
-      set(() => ({ userId: id }));
+      const decoded = jwt_decode(token);
+      const id = decoded.userId;
       return id;
     }
     return '';
+  },
+  getInvitations: async (userId) => {
+    set(() => ({ status: 'loading' }));
+    const response = await axios.get(`http://localhost:8080/api/v1/invitation/${userId}`)
+    
+    if (response.data.code === '0000') {
+      set(() => ({ status: 'success' }));
+      set(() => ({ invitations: response.data.response }));
+      console.log(response.data.response);
+    }
   }
   
 }));

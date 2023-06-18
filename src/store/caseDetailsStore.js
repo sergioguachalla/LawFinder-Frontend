@@ -2,6 +2,7 @@ import {create} from 'zustand';
 import axios  from 'axios';
 export const useCaseDetailsStore = create((set,get) => ({
    caseDetails: null,
+   caseFiles: null,
    caseId: localStorage.getItem('caseId') ,
    status: 'init',
    setCaseDetails: (caseDetails) => set({caseDetails}),
@@ -14,7 +15,7 @@ export const useCaseDetailsStore = create((set,get) => ({
       const response = await axios.get(`http://localhost:8080/api/v1/case/${caseId}/files`);
       if(response.data.response != null || response.data.code == '0000'){
          set({status: 'success'});
-         //set({caseDetails: response.data.response});
+         set({caseFiles: response.data.response});
 
       }
    },
