@@ -41,7 +41,7 @@
         getInstances(); 
         getCategories();
         
-      }, 1000); // quité el timeout
+      }, 0); // quité el timeout
   
       return () => clearTimeout(timeoutId);
     } else {

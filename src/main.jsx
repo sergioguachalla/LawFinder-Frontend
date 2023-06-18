@@ -15,7 +15,7 @@ import RegisterFile from "./components/RegisterFile";
 import CaseInformation from "./components/CaseInformation";
 import Invitation from "./components/Invitation";
 import LaywerRegistration from "./components/LawyerRegistration";
-
+import ArchivedCases from "./components/ArchivedCases";
 import RegisterAudience from "./components/RegisterAudience";
 
 import CaseFile from "./components/CaseFile";
@@ -50,6 +50,7 @@ const router = createBrowserRouter([
     path: "RegisterFile/:id",
     element: <RegisterFile/>,
   },
+
   {
     path: "CaseDetails/:id",
     element: <CaseInformation/>,
@@ -63,13 +64,16 @@ const router = createBrowserRouter([
     element: <LaywerRegistration/>,
   },
   {
-
     path: "RegisterAudience/:id",
     element: <RegisterAudience/>,
-
+  },
+  {
     path: "CaseDetails/:id/CaseFile",
     element: <CaseFile/>,
-
+  },
+  {
+    path: "ArchivedCases/",
+    element: <ArchivedCases/>,
   }
 
 ]);

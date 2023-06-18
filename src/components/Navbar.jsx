@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import '../styles/Navbar.css';
 import { useNavbarStore } from '../store/navbarStore';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faHome, faBriefcase, faEnvelopeOpenText, faSignOutAlt, faUser } from '@fortawesome/free-solid-svg-icons';
+import { faHome, faBriefcase, faEnvelopeOpenText, faSignOutAlt, faUser, faArchive } from '@fortawesome/free-solid-svg-icons';
 import useAuthStore from '../store/authStore';
 import { useLoginUserStore } from '../store/userLoginStore';
 
@@ -38,6 +38,11 @@ const Navbar = () => {
           <li className="navbar-item">
             <Link to="/Invitation" className="navbar-link">
               <FontAwesomeIcon icon={faEnvelopeOpenText} /> Invitaciones
+            </Link>
+          </li>
+          <li className="navbar-item">
+            <Link to="/ArchivedCases" className="navbar-link">
+              <FontAwesomeIcon icon={faArchive} /> Casos Archivados
             </Link>
           </li>
           <li className="navbar-item">
