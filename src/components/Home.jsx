@@ -103,6 +103,7 @@
               <p>{legalCase.summary}</p>
               <p>{legalCase.crime}</p>
               <Link to={`/CaseDetails/${legalCase.idLegalCase}`}><button>Ver Más</button></Link>
+              <Link to={`/RegisterAudience/${legalCase.idLegalCase}`}><button>Registrar Audiencia</button></Link>
               <button onClick={() => handleArchiveCase(legalCase.idLegalCase)}>Archivar Caso</button>
             </div>
           ))}
