@@ -94,7 +94,7 @@ export const useCasesStore = create((set, get) => ({
       set(() => ({ status: 'loading' }));
       const page = get().currentPage;
       set(() => ({ currentPage: page }) );
-      const response = await axios.get(`http://localhost:8080/api/v1/archivedcase/user/${get().id}`, {
+      const response = await axios.get(`http://localhost:8080/api/v1/legalcase/user/${get().id}`, {
         params: {
           page: get().currentPage,
           size: 2, // Tamaño de página
@@ -155,16 +155,6 @@ export const useCasesStore = create((set, get) => ({
       
     }));
   },
-  archiveCase: async (caseId) => {
-    try {
-      const response = await axios.put(`http://localhost:8080/api/v1/legalcase/${caseId}`);
-      if (response.status === 200) {
-        console.log('Case archived');
-        //get().getCases();  Refetch cases
-      }
-    } catch (error) {
-      console.error('Error archiving case', error);
-    }
-  },
+
   
 }));

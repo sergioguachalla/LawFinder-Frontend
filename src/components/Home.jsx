@@ -12,7 +12,7 @@
   const Home = () => {
     const navigate = useNavigate();
     const { getCases, cases, status, currentPage, totalPages, nextPage, previousPage, fromDate, toDate, setFromDate, 
-      setToDate, clearFilters, getInstances, instances, setInstanceId, instanceId, archiveCase,  inProgress, setInProgress,
+      setToDate, clearFilters, getInstances, instances, setInstanceId, instanceId, archiveCase,
       searchTitle, setSearchTitle, getCategories, categories, categoryId, setCategoryId, isLawyer, isClient} = useCasesStore();
    
     const formatDate = (dateInput) => {
@@ -48,7 +48,7 @@
       navigate('/');
     }
     
-  }, [getCases,getInstances, getCategories , currentPage, fromDate, toDate,inProgress , instanceId, categoryId, searchTitle]); // Se añaden fromDate y toDate como dependencias // Se añaden fromDate y toDate como dependencias
+  }, [getCases,getInstances, getCategories , currentPage, fromDate, toDate , instanceId, categoryId, searchTitle]); // Se añaden fromDate y toDate como dependencias // Se añaden fromDate y toDate como dependencias
   
   const handleCaseClick = (id) => {
     console.log(id);
@@ -86,21 +86,6 @@
               </option>
             ))}
           </select>
-  
-          <label htmlFor="inProgress">Estado: </label>
-          <select
-            id="inProgress"
-            value={inProgress}
-            onChange={(e) => {
-              const value = e.target.value;
-              setInProgress(value === 'true' ? true : value === 'false' ? false : null);
-            }}
-          >
-            <option value="">Todos</option>
-            <option value="true">En Curso</option>
-            <option value="false">Archivados</option>
-          </select>
-  
           <label htmlFor="instanceId">Instancia: </label>
           <select
             id="instanceId"

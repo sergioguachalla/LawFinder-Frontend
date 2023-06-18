@@ -26,7 +26,7 @@ export const useCasesStore = create((set, get) => ({
   toDate: '',
   instances: [], 
   instanceId: '',
-  inProgress: '',
+  inProgress: 'true',
   searchTitle: '', 
   categories: [], 
   categoryId: '',
@@ -45,7 +45,6 @@ export const useCasesStore = create((set, get) => ({
   setFromDate: date => set({ fromDate: date, currentPage: 0 }), 
   setToDate: date => set({ toDate: date, currentPage: 0 }), 
   setInstanceId: id => set({ instanceId: id, currentPage: 0 }), 
-  setInProgress: inProgress => set({ inProgress: inProgress, currentPage: 0 }),
   setSearchTitle: title => set({ searchTitle: title, currentPage: 0 }), 
   setCategoryId: id => set({ categoryId: id, currentPage: 0 }), 
 
@@ -104,12 +103,11 @@ export const useCasesStore = create((set, get) => ({
           to: get().toDate,
           instanceId: get().instanceId,
           categoryId: get().categoryId,
-          inProgress: get().inProgress,
+          inProgress: 'true',
           title: get().searchTitle,
         },
         
       });
-      console.log(get().inProgress + "a");
 
       if(response.data.response.content.length > 0){
         const casesPage = response.data.response;
@@ -152,7 +150,6 @@ export const useCasesStore = create((set, get) => ({
       fromDate: '',
       toDate: '',
       instanceId: '', 
-      inProgress: '',
       searchTitle: '',
       categoryId: '',
       currentPage: 0,
