@@ -45,23 +45,18 @@ const RegisterAudience = () => {
           </div>
         </div>
         <div className='form-row'>
+          <label>Descripción*</label>
+          <input name='direccion' type='text' onChange={(event) => handleChange('direccion', event)} required />
+        </div>
+        <div className='form-row'>
             <label>Link de la reunión (Opcional)</label>
             <input name='documento' type='text' onChange={(event) => handleChange('documento', event)} required />
         </div>
         <div className='form-row'>
-          <label>Dirección de domicilio*</label>
+          <label>Dirección de la audiencia*</label>
           <input name='direccion' type='text' onChange={(event) => handleChange('direccion', event)} required />
         </div>
-        <div className='form-row'>
-          <div className='input-group'>
-            <label>Contraseña*</label>
-            <input name='secret' type='password' onChange={(event) => handleChange('secret', event)} required />
-          </div>
-          <div className='input-group'>
-            <label>Confirmar contraseña*</label>
-            <input name='secretConfirm' type='password' onChange={(event) => handleChange('secretConfirm', event)} required />
-          </div>
-        </div>
+
         <div className='button-row'>
           <button type='button' onClick={() => navigate('/')}>Cancelar</button>
           <button type='submit' className='register-button'>Registrar</button>

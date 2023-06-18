@@ -131,7 +131,7 @@
                   <button>Ver Más</button>
                 </Link>
               )}
-  
+              <button onClick={() => handleArchiveCase(legalCase.idLegalCase)}>Archivar Caso</button>
               {isLawyer && <button>Archivar Caso</button>}
             </div>
           ))}
