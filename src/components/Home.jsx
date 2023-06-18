@@ -131,7 +131,8 @@
                   <button>Ver Más</button>
                 </Link>
               )}
-  
+              <Link to={`/CaseDetails/${legalCase.idLegalCase}`}><button>Ver Más</button></Link>
+              <Link to={`/RegisterAudience/${legalCase.idLegalCase}`}><button>Registrar Audiencia</button></Link>
               {isLawyer && <button>Archivar Caso</button>}
             </div>
           ))}
