@@ -3,19 +3,14 @@ import { useRegisterUserStore } from '../store/userRegistrationStore';
 import '../styles/RegisterUser.css';
 import { useNavigate } from 'react-router-dom';
 import Navbar from './Navbar';
-import Spinner from './Spinner';
-const RegisterUser = () => {
+const RegisterAudience = () => {
   const navigate = useNavigate();
   const {
     handleChange,
     handleSubmit,
-    generateNewUUID,
   } = useRegisterUserStore();
   const status = useRegisterUserStore((state) => state.statusState);
 
-  useEffect(() => {
-    generateNewUUID();
-  }, [generateNewUUID]);
 
   const handleSubmitForm = async (event) => {
     event.preventDefault();
@@ -25,14 +20,10 @@ const RegisterUser = () => {
   useEffect(() => {
     if (status === 'success') {
       const timeoutId = setTimeout(() => {
-        navigate('/confirmation');
+        navigate('/Home');
       }, 1000);
 
       return () => clearTimeout(timeoutId);
-    } else if (status === 'registered') {
-      setTimeout(() => {
-        navigate('/RegisterUser');
-      }, 1000);
     } else if (status === 'loading') {
       setTimeout(() => {}, 1000);
     }
@@ -41,49 +32,25 @@ const RegisterUser = () => {
   return (
     <>
       <Navbar />
-      <h1 className=''>REGISTRO DE USUARIO</h1>
+      <h1 className=''>Agendar Audiencia</h1>
       <form className='form-container' onSubmit={(event) => handleSubmitForm(event)}>
         <div className='form-row'>
           <div className='input-group'>
-            <label>Nombres *</label>
+            <label>Fecha *</label>
             <input name='nombres' type='text' onChange={(event) => handleChange('nombres', event)} required />
           </div>
           <div className='input-group'>
-            <label>Apellidos *</label>
+            <label>Hora *</label>
             <input name='apellidos' type='text' onChange={(event) => handleChange('apellidos', event)} required />
           </div>
         </div>
         <div className='form-row'>
-          <label>Tipo de documento *</label>
-          <select name='tipoDocumento' onChange={(event) => handleChange('tipoDocumento', event)} required>
-            <option value=''>Seleccione</option>
-            <option value='ci'>CI</option>
-            <option value='pasaporte'>Pasaporte</option>
-          </select>
-        </div>
-        <div className='form-row'>
-          <div className='input-group'>
-            <label>Documento*</label>
+            <label>Link de la reunión (Opcional)</label>
             <input name='documento' type='text' onChange={(event) => handleChange('documento', event)} required />
-          </div>
-          <div className='input-group'>
-            <label>Complemento*</label>
-            <input name='complemento' type='text' onChange={(event) => handleChange('complemento', event)} />
-          </div>
         </div>
         <div className='form-row'>
           <label>Dirección de domicilio*</label>
           <input name='direccion' type='text' onChange={(event) => handleChange('direccion', event)} required />
-        </div>
-        <div className='form-row'>
-          <div className='input-group'>
-            <label>Celular*</label>
-            <input name='celular' type='text' onChange={(event) => handleChange('celular', event)} required />
-          </div>
-          <div className='input-group'>
-            <label>Correo electrónico*</label>
-            <input name='correo' type='email' onChange={(event) => handleChange('correo', event)} required />
-          </div>
         </div>
         <div className='form-row'>
           <div className='input-group'>
@@ -101,13 +68,12 @@ const RegisterUser = () => {
         </div>
         <div>
 
-          {status === 'success' && <p className='success-message'>Usuario registrado con éxito</p>}
+          {status === 'success' && <p className='success-message'>Audiencia agendada con éxito</p>}
           {status === 'error' && <p className='error-message'>Se ha producido un error</p>}
-          {status === 'registered' && <p className='error-message'>El usuario ya se encuentra registrado</p>}
         </div>
       </form>
     </>
   );
 };
 
-export default RegisterUser;
+export default RegisterAudience;

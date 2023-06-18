@@ -22,8 +22,14 @@ export const useCasesStore = create((set, get) => ({
   status: 'init',
   currentPage: 0,
   totalPages: 0,
-  fromDate: '', // Agregado
-  toDate: '', // Agregado
+  fromDate: '', 
+  toDate: '',
+  instances: [], 
+  instanceId: '',
+  inProgress: '',
+  searchTitle: '', 
+  categories: [], 
+  categoryId: '',
 
   handleChange: (field, event) => {
     set((state) => ({
@@ -34,8 +40,35 @@ export const useCasesStore = create((set, get) => ({
     }));
   },
   
-  setFromDate: date => set({ fromDate: date }), // Agregado
-  setToDate: date => set({ toDate: date }), // Agregado
+  // current page lo puse ahi para que reinicie la paginacion cuando se filtra
+  // ya que si no hay tantos casos como para esa pagina, no se muestra nada
+  setFromDate: date => set({ fromDate: date, currentPage: 0 }), 
+  setToDate: date => set({ toDate: date, currentPage: 0 }), 
+  setInstanceId: id => set({ instanceId: id, currentPage: 0 }), 
+  setInProgress: inProgress => set({ inProgress: inProgress, currentPage: 0 }),
+  setSearchTitle: title => set({ searchTitle: title, currentPage: 0 }), 
+  setCategoryId: id => set({ categoryId: id, currentPage: 0 }), 
+
+  getCategories: async () => {
+    try {
+      const response = await axios.get('http://localhost:8080/api/v1/category');
+      if (response.data.code === '0000') {
+        set({ categories: response.data.response });
+      }
+    } catch (error) {
+      console.error('Error fetching categories', error);
+    }
+  },
+  getInstances: async () => {
+    try {
+      const response = await axios.get('http://localhost:8080/api/v1/legalcase/instance');
+      if (response.data.code === '0000') {
+        set({ instances: response.data.response });
+      }
+    } catch (error) {
+      console.error('Error fetching instances', error);
+    }
+  },
 
   handleRoles: () => {
     const role = [...getRoleFromToken()];
@@ -68,9 +101,15 @@ export const useCasesStore = create((set, get) => ({
           page: get().currentPage,
           size: 2, // Tamaño de página
           from: get().fromDate,
-          to: get().toDate
+          to: get().toDate,
+          instanceId: get().instanceId,
+          categoryId: get().categoryId,
+          inProgress: get().inProgress,
+          title: get().searchTitle,
         },
+        
       });
+      console.log(get().inProgress + "a");
 
       if(response.data.response.content.length > 0){
         const casesPage = response.data.response;
@@ -112,7 +151,24 @@ export const useCasesStore = create((set, get) => ({
     set(() => ({
       fromDate: '',
       toDate: '',
+      instanceId: '', 
+      inProgress: '',
+      searchTitle: '',
+      categoryId: '',
+      currentPage: 0,
+      
     }));
+  },
+  archiveCase: async (caseId) => {
+    try {
+      const response = await axios.put(`http://localhost:8080/api/v1/legalcase/${caseId}`);
+      if (response.status === 200) {
+        console.log('Case archived');
+        //get().getCases();  Refetch cases
+      }
+    } catch (error) {
+      console.error('Error archiving case', error);
+    }
   },
   
 }));
