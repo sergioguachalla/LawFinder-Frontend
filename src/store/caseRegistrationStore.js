@@ -12,7 +12,7 @@ export const useCaseStore = create((set, get) => ({
     title: '',
     startDate: '',
     summary: '',
-    contraparte: '',
+    contraparte: [],
     idInstance: '',
     startDateInstance: '',
     endDateInstance: '',
@@ -221,6 +221,23 @@ export const useCaseStore = create((set, get) => ({
       // Manejar el error
     }
   },
+
+  addCounterpart: ( event) => {
+    event.preventDefault();
+    const contentaux=event.target.value;
+    set((state) => ({
+      ...state,
+      formData: {
+        ...state.formData,
+        contraparte: [...state.formData.contraparte, contentaux],
+      },
+    }));
+  },
+
+  printCounterpart:() =>{
+    console.log(get().formData.contraparte);
+  },
+
   handleInvitation: async (param) => {
     try{
       let email = "";
