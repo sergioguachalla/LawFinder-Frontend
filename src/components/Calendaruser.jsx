@@ -4,7 +4,7 @@ import { Calendar, momentLocalizer } from 'react-big-calendar';
 import moment from 'moment';
 import useStore from '../store/calendarStore';
 import 'react-big-calendar/lib/css/react-big-calendar.css';
-
+import Navbar from "./Navbar";
 const localizer = momentLocalizer(moment);
 
 const AudienceCalendar = () => {
@@ -28,38 +28,42 @@ const AudienceCalendar = () => {
   });
 
   return (
-    <div style={{ height: 500 }}>
-      <Calendar
-        localizer={localizer}
-        events={events}
-        startAccessor="start"
-        endAccessor="end"
-        titleAccessor="title"
-        tooltipAccessor="desc"
-        eventPropGetter={(event) => {
-          const backgroundColor = '#f0f0f0';
-          const style = {
-            backgroundColor,
-            borderRadius: '0',
-            opacity: 0.8,
-            color: 'black',
-            border: '0',
-            display: 'block',
-            cursor: event.link ? 'pointer' : 'default',
-          };
-          return {
-            style,
-          };
-        }}
-        onSelectEvent={(event) => {
-          if (event.link) {
-            window.open(event.link, "_blank");
-          } else {
-            alert(`Descripción: ${event.desc}\nDirección: ${event.address}`);
-          }
-        }}
-      />
-    </div>
+    <>
+      <Navbar/>
+      <h1>Calendario de audiencias</h1>
+      <div style={{ height: 500 }}>
+        <Calendar
+          localizer={localizer}
+          events={events}
+          startAccessor="start"
+          endAccessor="end"
+          titleAccessor="title"
+          tooltipAccessor="desc"
+          eventPropGetter={(event) => {
+            const backgroundColor = '#f0f0f0';
+            const style = {
+              backgroundColor,
+              borderRadius: '0',
+              opacity: 0.8,
+              color: 'black',
+              border: '0',
+              display: 'block',
+              cursor: event.link ? 'pointer' : 'default',
+            };
+            return {
+              style,
+            };
+          }}
+          onSelectEvent={(event) => {
+            if (event.link) {
+              window.open(event.link, "_blank");
+            } else {
+              alert(`Descripción: ${event.desc}\nDirección: ${event.address}`);
+            }
+          }}
+        />
+      </div>
+    </>
   );
 };
 
