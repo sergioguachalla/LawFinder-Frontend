@@ -6,7 +6,7 @@ const RegisterCase = () => {
   const history = useNavigate();
   const navigate = useNavigate();
   
-  const { formData, departamentos, provincias, handleChange, handleInvitation, loadDepartamentos, loadProvincias, instancias, loadInstancias,
+  const { formData, departamentos, provincias, handleChange, handleInvitation, loadDepartamentos, loadProvincias,   instancias, loadInstancias,
   categorias, loadCategorias, loadSubCategorias, subCategorias, crimes, loadCrimes, registerCase, status, lawyerEmail } = 
   useCaseStore((state) => ({
     ...state,
@@ -26,9 +26,6 @@ const RegisterCase = () => {
     loadCategorias();
     loadInstancias();
   }, []);
-
- 
-
 
   const handleDepartamentoChange =  (event) =>  {
     const idDepartamento = event.target.value;
