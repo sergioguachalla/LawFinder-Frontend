@@ -1,12 +1,24 @@
 import create from 'zustand';
 import axios from 'axios';
+import jwt_decode from "jwt-decode";
 
-const useStore = create((set) => ({
+const useStore = create((set,get) => ({
   audiences: [],
+  id: '',
+
   setAudiences: (audiences) => set({ audiences }),
+
+  getIdFromToken: () => {
+    const token = localStorage.getItem('token');
+    const decoded = jwt_decode(token);
+    return decoded.userId;
+   
+  },
   fetchAudiences: async () => {
+    set(() => ({ id: get().getIdFromToken() }));
     try {
-      const res = await axios.get('http://localhost:8080/api/v1/audience/user/3');
+      const res = await axios.get(`http://localhost:8080/api/v1/audience/user/${get().id}`);
+      console.log(get().id+ "watefeeeec");
       if (res.data.code === "0000") {
         set({ audiences: res.data.response });
       }
