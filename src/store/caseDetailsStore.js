@@ -5,7 +5,9 @@ export const useCaseDetailsStore = create((set,get) => ({
    caseFiles: null,
    caseId: localStorage.getItem('caseId') ,
    status: 'init',
-   setCaseDetails: (caseDetails) => set({caseDetails}),
+   updateInstance: false,
+   setUpdateInstance: (updateInstance) => set({updateInstance}),
+   setCaseDetails: (caseDetails) => set({caseDetails}),  
    setCaseId: (caseId) => set({caseId}),
 
    getCaseDetails: async (caseId) => {

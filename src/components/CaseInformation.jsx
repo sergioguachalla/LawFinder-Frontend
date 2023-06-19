@@ -8,11 +8,13 @@ import Navbar from './Navbar';
 import { useCasesStore } from '../store/casesStore';
 import { useCaseDetailsStore } from '../store/caseDetailsStore';
 import { useCommentsStore } from '../store/commentsStore';
+import CommentSection from './CommentSection';
+import InstanceModal from './InstanceModal';
 const CaseInformation = () => {
   const navigate = useNavigate();
   const { id } = useParams();
   let { cases, getCases, isLawyer, isClient } = useCasesStore();
-  const { getCaseDetails, caseId, setCaseId,status, getCaseInformation,caseDetails  } = useCaseDetailsStore();
+  const { getCaseDetails, caseId, setCaseId,status, getCaseInformation,caseDetails, updateInstance  } = useCaseDetailsStore();
   const {comments,getCaseComments, handleComment, handleChange} = useCommentsStore();
   //const legalCase = cases.find((legalCase) => legalCase.idLegalCase == id);
 
@@ -32,10 +34,7 @@ const CaseInformation = () => {
    }, [caseId, getCaseDetails, id, setCaseId, handleComment]);
   
  
-  const handleSubmitComment = (event) => {
-    event.preventDefault();
-    handleComment(event);
-  }
+
   
   if (!caseDetails) {
     return <p>Caso no encontrado {id} </p>;
@@ -60,7 +59,8 @@ const CaseInformation = () => {
           <div>
           <p className="card-description">Resumen: {caseDetails.summary}</p></div>
           {isLawyer ? <button className="card-button" onClick={() => navigate(`/RegisterFile/${caseId}`)}>Añadir al expediente del caso {caseId}</button> : null }
-         
+          {isLawyer && <button>Archivar Caso</button>}
+          {isLawyer && <InstanceModal></InstanceModal>}
         </div>
         <div className="expediente">
           <h4 className="expediente-title">Expediente</h4>
@@ -68,24 +68,10 @@ const CaseInformation = () => {
           
           
         </div>
-
-        <div className="comment-container">
-          <h4 className="comment-title">Comentarios</h4>
-          <div className="comment">
-            {/*TODO: COMENTARIOS*/}
-            <p className="comment-user">Usuario</p>
-            {comments.map((comment) => (
-        <div className="comment" key={comment.commentId}>
-            <p className="comment-user" key={comment.commentId}>{comment.userName}</p>
-            <p className="comment-text">{comment.commentContent}</p>
-        </div>))}   
-        <button className="comment-button" onClick={handleSubmitComment} >Comentar</button>  
-
-
-          </div>
-          <input className="comment" type="text" placeholder="Escribe un comentario" onChange={(e) => handleChange("comment",e)}></input>
-        </div>
+        <CommentSection
+      comments={comments}/>
       </div>
+     
 
       </div>
     </>

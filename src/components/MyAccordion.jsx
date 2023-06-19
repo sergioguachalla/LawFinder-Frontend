@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import  { useState } from 'react';
 
 const MyAccordion = ({ title, items }) => {
@@ -35,10 +36,10 @@ const MyAccordion = ({ title, items }) => {
           data-parent="#accordionExample"
         >
           <div className="card-body">
-            content
+           {items.length === 0 && <p>No hay archivos</p>}
             {items.map((item, index) => (
               <div key={index}>
-                <a href={item} target="_blank" rel="noopener noreferrer">
+                <a href={item[0]} target="_blank" rel="noopener noreferrer">
                    <img
                      src="https://img.freepik.com/iconos-gratis/pdf_318-187733.jpg"
                      className="link-card-icon"
@@ -46,8 +47,9 @@ const MyAccordion = ({ title, items }) => {
                    />
                    Documento #{index + 1}
                  </a>
-                <h3>{item.split(',')[1].trim()}</h3>
-                <p>{item.split(',')[2].trim()}</p>
+                <h3>{item[1]}</h3>
+              <p>{item[2]}</p> 
+              <p>Fecha: {item[3]}</p>
               </div>
             ))}
           </div>

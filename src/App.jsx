@@ -6,13 +6,14 @@ import CaseInformation from './components/CaseInformation';
 import Home from './components/Home';
 import LaywerRegistration from './components/LawyerRegistration';
 import CaseFile from './components/CaseFile';
+import { Container } from 'react-bootstrap';
 
 
 
 function App() {
   return (
     <BrowserRouter>
-      <ChakraProvider>
+      <Container>
         <Routes>
           <Route path="/Login" element={<Login />} />
           <Route path="/Role" element={<Role />} />
@@ -25,7 +26,7 @@ function App() {
           <Route path="/CaseDetails/:id/CaseFile" element={<CaseFile />} />
           
         </Routes>
-      </ChakraProvider>
+      </Container>
     </BrowserRouter>
   );
 }

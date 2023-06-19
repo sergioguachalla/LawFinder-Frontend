@@ -7,7 +7,6 @@
   import Navbar from "./Navbar";
   import LoadingSpinner from "./Loading";
   import { Link } from "react-router-dom";
-  import Card from "./Card";
   import { getRoleFromToken } from "../utils/getIdFromToken"; 
   const Home = () => {
     const navigate = useNavigate();
@@ -19,7 +18,7 @@
       const formattedDate = format(new Date(dateInput), 'yyyy-MM-dd');
       return formattedDate;
     }
-   const currentDate = formatDate(new Date());
+    const currentDate = formatDate(new Date());
 
     const handleArchiveCase = (id) => {
       console.log(`Caso ${id} archivado xd`);
@@ -50,11 +49,7 @@
     
   }, [getCases, getInstances, getCategories, currentPage, fromDate, toDate, instanceId, categoryId, searchTitle, navigate]); // Se añaden fromDate y toDate como dependencias // Se añaden fromDate y toDate como dependencias
   
-  const handleCaseClick = (id) => {
-    console.log(id);
-    navigate(`/CaseDetails/${id}`);
-  }
-
+  
   
   return (
     <>
@@ -131,9 +126,8 @@
                   <button>Ver Más</button>
                 </Link>
               )}
-              <Link to={`/CaseDetails/${legalCase.idLegalCase}`}><button>Ver Más</button></Link>
               <Link to={`/RegisterAudience/${legalCase.idLegalCase}`}><button>Registrar Audiencia</button></Link>
-              {isLawyer && <button>Archivar Caso</button>}
+             
             </div>
           ))}
         
