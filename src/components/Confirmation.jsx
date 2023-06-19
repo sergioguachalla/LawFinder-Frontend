@@ -29,7 +29,7 @@ const ConfirmationCode = () => {
       console.log(status + 'b');
     }
     console.log(role + 'rol');
-  }, [navigate, status]);
+  }, [navigate, role, status]);
 
   return (
     <div className="confirmation-container-custom">

@@ -14,7 +14,7 @@ export const useRegisterUserStore = create((set,get) => ({
   username: '',
   secret: '',
   secretConfirm: '',
-  statusState: 'init',
+  status: 'init',
 
   handleChange: (fieldName, event) => {
     const { value } = event.target;
@@ -128,8 +128,8 @@ export const useRegisterUserStore = create((set,get) => ({
         set({ statusState: 'success' });
         
       }
-      else if(response.status === 400){
-        set({ statusState: 'error' });
+      else if(response.data.response === 'mail not verified'){
+        set({ status: 'error' });
       }
 
       

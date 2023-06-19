@@ -35,6 +35,27 @@ export const useCaseDetailsStore = create((set,get) => ({
       }
    },
 
+   handleUpdateCase: async (caseId) => {
+      set({status: 'loading'});
+      const token = localStorage.getItem('token');
+      //localStorage.setItem('caseId', caseId);
+      const response = await axios.put(`http://localhost:8080/api/v1/legalcase/${caseId}`,{},{
+         headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`
+         }
+
+      });
+      console.log(response);
+      if(response.data.response != null || response.data.code == '0000'){
+         set({status: 'success'});
+         alert('Case Updated Successfully');
+        // console.log(response.data.response);
+         set({caseDetails: response.data.response});
+         console.log(get().caseDetails);
+      }
+   }
+
   
 
    

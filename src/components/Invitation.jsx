@@ -4,6 +4,7 @@ import invitationStore from '../store/invitationStore';
 import '../styles/Invitation.css';
 import {  } from '../utils/getIdFromToken';
 import Navbar from './Navbar';
+import Spinner from './Spinner';
 const Invitation = () => {
     const invitations = invitationStore(state => state.invitations);
     const loading = invitationStore(state => state.loading);
@@ -11,7 +12,7 @@ const Invitation = () => {
     const setLoading = invitationStore(state => state.setLoading);
     let userId = invitationStore(state => state.userId);
     const getId = invitationStore(state => state.getIdFromToken);
-    const { getInvitations } = invitationStore();
+    const { getInvitations, status } = invitationStore();
   
     useEffect(() => {
       userId = getId();
@@ -38,6 +39,8 @@ const Invitation = () => {
       <>
         <Navbar></Navbar>
         {invitations.length === 0 && <h2>No tienes invitaciones pendientes</h2>}
+        {status === 'unauthorized' && <h2>403...</h2>}
+        {status === 'loading' && <Spinner/>}
         <div className="invitation-container">
           {invitations.map((invitation, index) => (
             <div className="card" key={index}>

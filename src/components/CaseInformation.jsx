@@ -14,7 +14,7 @@ const CaseInformation = () => {
   const navigate = useNavigate();
   const { id } = useParams();
   let { cases, getCases, isLawyer, isClient } = useCasesStore();
-  const { getCaseDetails, caseId, setCaseId,status, getCaseInformation,caseDetails, updateInstance  } = useCaseDetailsStore();
+  const { getCaseDetails, caseId, setCaseId,status, getCaseInformation,caseDetails, handleUpdateCase  } = useCaseDetailsStore();
   const {comments,getCaseComments, handleComment, handleChange} = useCommentsStore();
   //const legalCase = cases.find((legalCase) => legalCase.idLegalCase == id);
 
@@ -59,7 +59,7 @@ const CaseInformation = () => {
           <div>
           <p className="card-description">Resumen: {caseDetails.summary}</p></div>
           {isLawyer ? <button className="card-button" onClick={() => navigate(`/RegisterFile/${caseId}`)}>Añadir al expediente del caso {caseId}</button> : null }
-          {isLawyer && <button>Archivar Caso</button>}
+          {isLawyer && <button onClick={() => {handleUpdateCase(id)}}>Archivar Caso</button>}
           {isLawyer && <InstanceModal></InstanceModal>}
         </div>
         <div className="expediente">

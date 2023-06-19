@@ -93,6 +93,7 @@ export const useCaseStore = create((set, get) => ({
     }
   },
   registerCase: () => { 
+    const token = localStorage.getItem('token');
     console.log(get().formData);
     const body = {
       "userId": get().getIdFromToken(),
@@ -109,7 +110,12 @@ export const useCaseStore = create((set, get) => ({
       "complainant": true
     };
     try{
-      const response = axios.post('http://localhost:8080/api/v1/legalcase', body);
+      const response = axios.post('http://localhost:8080/api/v1/legalcase', body,{
+        headers: {
+          'Content-Type': 'application/json', 
+          'Authorization': `Bearer ${token}` 
+        }
+      });
      console.log(response);
     } catch (error) {
       console.log(error);
@@ -173,6 +179,7 @@ export const useCaseStore = create((set, get) => ({
   loadCategorias: async () => {
     try{
       const response = await axios.get('http://localhost:8080/api/v1/category');
+      // eslint-disable-next-line no-unused-vars
       set((state) => ({ categorias: response.data.response }));
       if(response.data.response[0].idCategory) {
         set((state) => ({formData: {...state.formData, categoria: response.data.response[0].idCategory}}));
@@ -189,7 +196,13 @@ export const useCaseStore = create((set, get) => ({
   },
   loadSubCategorias: async (idCategoria) => {
     try {
-      const response = await axios.get(`http://localhost:8080/api/v1/category/${idCategoria}/subcategory`);
+      const response = await axios.get(`http://localhost:8080/api/v1/category/${idCategoria}/subcategory`,{
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${localStorage.getItem('token')}`
+        }
+
+      });
       console.log(response.data.response);
       set((state) => ({
         ...state,

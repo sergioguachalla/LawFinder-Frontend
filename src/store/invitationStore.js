@@ -18,13 +18,22 @@ const invitationStore = create(set => ({
     return '';
   },
   getInvitations: async (userId) => {
-    set(() => ({ status: 'loading' }));
-    const response = await axios.get(`http://localhost:8080/api/v1/invitation/${userId}`)
+ 
+   set(() => ({ status: 'loading' }));
+    const response = await axios.get(`http://localhost:8080/api/v1/invitation/${userId}`,{
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${localStorage.getItem('token')}`
+      }
+    })
     
     if (response.data.code === '0000') {
       set(() => ({ status: 'success' }));
       set(() => ({ invitations: response.data.response }));
       console.log(response.data.response);
+    }
+    else if(response.data.errorMessage == 'Invalid token'){
+      set(() => ({ status: 'unauthorized' }));
     }
   }
   

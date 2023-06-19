@@ -1,6 +1,5 @@
 import axios from 'axios';
 import {create} from 'zustand';
-import { useParams } from 'react-router';
 export const useStore = create((set, get) => ({
   loading: false,
   message: '',
