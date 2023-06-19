@@ -7,7 +7,7 @@ const RegisterCase = () => {
   const navigate = useNavigate();
   
   const { formData, departamentos, provincias, handleChange, handleInvitation, loadDepartamentos, loadProvincias,   instancias, loadInstancias,
-  categorias, loadCategorias, loadSubCategorias, subCategorias, crimes, loadCrimes, registerCase, status, lawyerEmail } = 
+  categorias, loadCategorias, loadSubCategorias, subCategorias, crimes, loadCrimes, registerCase, status, lawyerEmail, addCounterpart, printCounterpart } = 
   useCaseStore((state) => ({
     ...state,
     history: history,
@@ -155,7 +155,7 @@ const RegisterCase = () => {
           <div key={contraparte.id} className="form-row">
             <label>Contraparte {index + 1} *</label>
         
-            <input name={`contraparte${index}`} type="text" onChange={(event) => handleChange(`contraparte`, event)}  />
+            <input name={`contraparte${index}`} type="text" onChange={(event) => addCounterpart(event)}  />
           </div>
         ))}
         <button type="button" onClick={addContraparte}>+</button>

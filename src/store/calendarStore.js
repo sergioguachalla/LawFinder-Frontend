@@ -18,7 +18,6 @@ const useStore = create((set,get) => ({
     set(() => ({ id: get().getIdFromToken() }));
     try {
       const res = await axios.get(`http://localhost:8080/api/v1/audience/user/${get().id}`);
-      console.log(get().id+ "watefeeeec");
       if (res.data.code === "0000") {
         set({ audiences: res.data.response });
       }
