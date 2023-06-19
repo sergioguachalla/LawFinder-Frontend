@@ -12,12 +12,12 @@ export const useCaseStore = create((set, get) => ({
     title: '',
     startDate: '',
     summary: '',
-    contraparte: [],
     idInstance: '',
     startDateInstance: '',
     endDateInstance: '',
     lastUpdate: Format(Date.now(), 'dd-MM-yyyy'),
     complainant: true,
+    counterpart: '',
   },
   departmentId: '',
   status: '',
@@ -102,11 +102,11 @@ export const useCaseStore = create((set, get) => ({
       "title": get().formData.title,
       "startDate": get().formData.startDate,
       "summary": get().formData.summary,
-      "contrapart": get().formData.contraparte,
       "idInstance": get().formData.idInstance,
       "startDateInstance": get().formData.startDateInstance,
       "endDateInstance": get().formData.endDateInstance,
-      "complainant": true
+      "complainant": true,
+      "counterpartName": get().formData.counterpart,
     };
     try{
       const response = axios.post('http://localhost:8080/api/v1/legalcase', body);
@@ -222,21 +222,6 @@ export const useCaseStore = create((set, get) => ({
     }
   },
 
-  addCounterpart: ( event) => {
-    event.preventDefault();
-    const contentaux=event.target.value;
-    set((state) => ({
-      ...state,
-      formData: {
-        ...state.formData,
-        contraparte: [...state.formData.contraparte, contentaux],
-      },
-    }));
-  },
-
-  printCounterpart:() =>{
-    console.log(get().formData.contraparte);
-  },
 
   handleInvitation: async (param) => {
     try{

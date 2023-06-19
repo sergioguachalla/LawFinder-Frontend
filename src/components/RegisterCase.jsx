@@ -7,19 +7,13 @@ const RegisterCase = () => {
   const navigate = useNavigate();
   
   const { formData, departamentos, provincias, handleChange, handleInvitation, loadDepartamentos, loadProvincias,   instancias, loadInstancias,
-  categorias, loadCategorias, loadSubCategorias, subCategorias, crimes, loadCrimes, registerCase, status, lawyerEmail, addCounterpart, printCounterpart } = 
+  categorias, loadCategorias, loadSubCategorias, subCategorias, crimes, loadCrimes, registerCase, status, lawyerEmail } = 
   useCaseStore((state) => ({
     ...state,
     history: history,
   }));
 
-  const [contrapartes, setContrapartes] = useState([{ id: 1 }]);
 
-  const addContraparte = () => {
-    const id = contrapartes[contrapartes.length - 1].id + 1;
-    setContrapartes(prev => [...prev, { id }]);
-    
-  }
 
   useEffect(() => {
     loadDepartamentos();
@@ -151,15 +145,13 @@ const RegisterCase = () => {
           {status === 'customerNotFound' && <p>Cliente no registrado</p>}
           {status === 'customerFound' && <p>Invitación enviada a {formData.lawyerEmail} </p>}
         </div>
-        {contrapartes.map((contraparte, index) => (
-          <div key={contraparte.id} className="form-row">
-            <label>Contraparte {index + 1} *</label>
         
-            <input name={`contraparte${index}`} type="text" onChange={(event) => addCounterpart(event)}  />
-          </div>
-        ))}
-        <button type="button" onClick={addContraparte}>+</button>
+        
         <hr />
+        <div className="form-row">
+          <label>Contraparte *</label>
+          <input name="counterpart" type="text" onChange={(event) => handleChange('counterpart', event)} />
+        </div>
         <h2>Etapa actual del proceso</h2>
         <div className="form-row">
           <label>Instancia *</label>
