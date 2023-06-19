@@ -2,6 +2,7 @@ import {create} from 'zustand';
 import axios from 'axios';
 import jwt_decode from "jwt-decode";
 
+
 export const useCaseFilesStore = create((set,get) => ({
    caseFilesInfo: [],
    status: 'init',
@@ -9,6 +10,7 @@ export const useCaseFilesStore = create((set,get) => ({
    setCaseFiles: (caseFiles) => set({caseFiles}),
    setCaseId: (caseId) => set({caseId}),
    getFilesInfo: async (caseId) => {
+      
       set({status: 'loading'});
       const response = await axios.get(`http://localhost:8080/api/v1/case/${caseId}/files`);
       if(response.data.response != null || response.data.code == '0000'){
