@@ -17,8 +17,10 @@ import Invitation from "./components/Invitation";
 import LaywerRegistration from "./components/LawyerRegistration";
 import ArchivedCases from "./components/ArchivedCases";
 import RegisterAudience from "./components/RegisterAudience";
+import Calendaruser from "./components/Calendaruser";
 
 import CaseFile from "./components/CaseFile";
+import { Calendar } from "react-big-calendar";
 
 
 const router = createBrowserRouter([
@@ -74,6 +76,10 @@ const router = createBrowserRouter([
   {
     path: "ArchivedCases/",
     element: <ArchivedCases/>,
+  },
+  {
+    path: "Calendar/",
+    element: <Calendaruser/>,
   }
 
 ]);
