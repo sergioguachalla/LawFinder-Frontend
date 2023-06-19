@@ -41,7 +41,7 @@ const Navbar = () => {
             </Link>
           </li>
           <li className="navbar-item">
-            <Link to="/Agenda" className="navbar-link">
+            <Link to="/Calendar" className="navbar-link">
               <FontAwesomeIcon icon={faCalendarAlt} /> Agenda
             </Link>
           </li>
