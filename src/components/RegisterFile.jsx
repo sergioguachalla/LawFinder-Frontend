@@ -32,12 +32,15 @@ const RegisterFile = () => {
   const [fileName, setFileName] = useState('');
 
   useEffect(() => {
+    //localStorage.setItem('caseId', caseIdParams)
+    setCaseId(caseIdParams);
+    getInstanceId();
     getCourts();
     getDocumentTypes();
-    setCaseId(caseIdParams);
-
+    
+    
     getInstanceId();
-  }, [getCourts, getDocumentTypes, getInstanceId]);
+  }, [caseId, caseIdParams, getCourts, getDocumentTypes, getInstanceId, setCaseId]);
 
   const onDrop = useCallback((acceptedFiles) => {
     setFile(acceptedFiles[0]);

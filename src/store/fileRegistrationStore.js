@@ -1,7 +1,6 @@
 import axios from 'axios';
 import {create} from 'zustand';
-import { useCaseDetailsStore } from './caseDetailsStore';
-
+import { useParams } from 'react-router';
 export const useStore = create((set, get) => ({
   loading: false,
   message: '',
@@ -21,6 +20,7 @@ export const useStore = create((set, get) => ({
   setSelectedCourt: (court) => set({ selectedCourt: court }),
   setSelectedDocumentType: (type) => set({ selectedDocumentType: type }),
   getCourts: async () => {
+    set({caseId: localStorage.getItem('caseId')})
     const response = await axios.get('http://localhost:8080/api/v1/Court');
     set({ courts: response.data.response });
     console.log("caseid" + get().caseId);
