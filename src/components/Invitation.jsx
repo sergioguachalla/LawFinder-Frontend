@@ -11,17 +11,11 @@ const Invitation = () => {
     const setLoading = invitationStore(state => state.setLoading);
     let userId = invitationStore(state => state.userId);
     const getId = invitationStore(state => state.getIdFromToken);
+    const { getInvitations } = invitationStore();
   
     useEffect(() => {
       userId = getId();
-      axios.get(`http://localhost:8080/api/v1/invitation/${userId}`)
-        .then((response) => {
-          setInvitations(response.data.response);
-        })
-        .catch((error) => {
-          console.error('Error fetching data: ', error);
-        });
-
+      getInvitations(userId);
         
     }, [setInvitations]);
   
@@ -43,6 +37,7 @@ const Invitation = () => {
     return (
       <>
         <Navbar></Navbar>
+        {invitations.length === 0 && <h2>No tienes invitaciones pendientes</h2>}
         <div className="invitation-container">
           {invitations.map((invitation, index) => (
             <div className="card" key={index}>

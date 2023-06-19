@@ -71,13 +71,16 @@ export const useCasesStore = create((set, get) => ({
 
   handleRoles: () => {
     const role = [...getRoleFromToken()];
-    if (role.includes('CREATE_CASE') || role.includes('VIEW_CASE')) {
+    if (role.includes('CREATE_CASE') && role.includes('VIEW_CASE')) {
       set(() => ({ isLawyer: true }));
+      set(() => ({ isClient: !get().isClient }));
+      
     }
-    if (role.includes('DELETE_CASE')) {
+    if (role.includes('DELETE_CASE') && !role.includes('CREATE_CASE')) {
       set(() => ({ isLawyer: false }));
       set(() => ({ isClient: true }));
     }
+    console.log('isLawyer', get().isLawyer);
   },
 
   getIdFromToken: () => {

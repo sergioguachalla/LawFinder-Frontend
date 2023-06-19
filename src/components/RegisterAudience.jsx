@@ -18,7 +18,7 @@ const RegisterAudience = () => {
 
   const handleSubmitForm = async (event) => {
     event.preventDefault();
-    const caseId = 3; // Reemplazar por el id del caso que estás usando
+    const caseId = localStorage.getItem('caseId') ; // Reemplazar por el id del caso que estás usando
     await registerAudience(caseId);
   };
 
