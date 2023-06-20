@@ -61,7 +61,7 @@ const RegisterAudience = () => {
         </div>
 
         <div className='button-row'>
-          <button type='button' onClick={() => navigate('/')}>Cancelar</button>
+          <button type='button' onClick={() => navigate('/Home')}>Cancelar</button>
           <button type='submit' className='register-button'>Registrar</button>
         </div>
         <div>

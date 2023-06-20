@@ -1,5 +1,4 @@
-
-  import { useEffect } from "react";
+import { useEffect } from "react";
   import {useCasesStore} from "../store/casesStore";
   import { format } from 'date-fns';
   import { useNavigate } from "react-router-dom";
@@ -54,55 +53,57 @@
       <Navbar />
       <div className="cases-container">
         <h1>Casos</h1>
-        <div className="search-container">
-          <label htmlFor="searchTitle">Buscador por título: </label>
-          <input
-            type="text"
-            id="searchTitle"
-            value={searchTitle}
-            onChange={(e) => setSearchTitle(e.target.value)}
-          />
-        </div>
-        <div>
-          <label htmlFor="categoryId">Categoría: </label>
-          <select
-            id="categoryId"
-            value={categoryId}
-            onChange={(e) => setCategoryId(e.target.value)}
-          >
-            <option value="">Todos</option>
-            {categories.map((category) => (
-              <option key={category.categoryId} value={category.categoryId}>
-                {category.categoryName}
-              </option>
-            ))}
-          </select>
-          <label htmlFor="instanceId">Instancia: </label>
-          <select
-            id="instanceId"
-            value={instanceId}
-            onChange={(e) => setInstanceId(e.target.value)}
-          >
-            <option value="">Todos</option>
-            {instances.map((instance) => (
-              <option key={instance.instanceId} value={instance.instanceId}>
-                {instance.instanceName}
-              </option>
-            ))}
-          </select>
-          <label htmlFor="fromDate">Desde: </label>
-          <input
-            type="date"
-            id="fromDate"
-            value={fromDate}
-            onChange={(e) => setFromDate(e.target.value)}
-            max={currentDate}
-          />
-  
-          <label htmlFor="toDate">Hasta: </label>
-          <input type="date" id="toDate" value={toDate} onChange={(e) => setToDate(e.target.value)} />
-  
-          <button onClick={clearFilters}>Vaciar Filtros</button>
+        <div className="filter-container">
+          <div className="search-container">
+            <label htmlFor="searchTitle">Buscador por título: </label>
+            <input
+              type="text"
+              id="searchTitle"
+              value={searchTitle}
+              onChange={(e) => setSearchTitle(e.target.value)}
+            />
+          </div>
+          <div>
+            <label htmlFor="categoryId" className="label-con-margin">Categoría: </label>
+            <select
+              id="categoryId"
+              value={categoryId}
+              onChange={(e) => setCategoryId(e.target.value)}
+            >
+              <option value="">Todos</option>
+              {categories.map((category) => (
+                <option key={category.categoryId} value={category.categoryId}>
+                  {category.categoryName}
+                </option>
+              ))}
+            </select>
+            <label htmlFor="instanceId" className="label-con-margin">Instancia: </label>
+            <select
+              id="instanceId"
+              value={instanceId}
+              onChange={(e) => setInstanceId(e.target.value)}
+            >
+              <option value="">Todos</option>
+              {instances.map((instance) => (
+                <option key={instance.instanceId} value={instance.instanceId}>
+                  {instance.instanceName}
+                </option>
+              ))}
+            </select>
+            <label htmlFor="fromDate" className="label-con-margin">Desde: </label>
+            <input
+              type="date"
+              id="fromDate"
+              value={fromDate}
+              onChange={(e) => setFromDate(e.target.value)}
+              max={currentDate}
+            />
+    
+            <label htmlFor="toDate" className="label-con-margin">Hasta: </label>
+            <input type="date" id="toDate" value={toDate} onChange={(e) => setToDate(e.target.value)} />
+    
+            <button onClick={clearFilters} className="button-filter" >Vaciar Filtros</button>
+          </div>
         </div>
   
  
@@ -117,11 +118,12 @@
               <p>{legalCase.summary}</p>
               <p>{legalCase.crime}</p>
   
-              {(isClient || isLawyer) && (
+             {(isClient || isLawyer) && (
                 <Link to={`/CaseDetails/${legalCase.idLegalCase}`}>
                   <button>Ver Más</button>
                 </Link>
               )}
+              
               <Link to={`/RegisterAudience/${legalCase.idLegalCase}`}><button>Registrar Audiencia</button></Link>
              
             </div>
@@ -144,7 +146,7 @@
           </div>
         )}
   
-  {isLawyer === true &&  (
+        {isLawyer === true &&  (
           <button className="floating-button-right" onClick={() => navigate('/RegisterCase')}>
             +
           </button>
