@@ -6,14 +6,20 @@ const RegisterCase = () => {
   const history = useNavigate();
   const navigate = useNavigate();
   
-  const { formData, departamentos, provincias, handleChange, handleInvitation, loadDepartamentos, loadProvincias,   instancias, loadInstancias,
-  categorias, loadCategorias, loadSubCategorias, subCategorias, crimes, loadCrimes, registerCase, status, lawyerEmail } = 
+  const 
+  { formData, departamentos,
+    provincias, handleChange,
+    handleInvitation, loadDepartamentos,
+    loadProvincias, instancias,
+    loadInstancias, categorias,
+    loadCategorias, loadSubCategorias,
+    subCategorias, crimes,
+    loadCrimes, registerCase,
+    status, lawyerEmail } =
   useCaseStore((state) => ({
     ...state,
     history: history,
   }));
-
-
 
   useEffect(() => {
     loadDepartamentos();

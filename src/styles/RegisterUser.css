@@ -1,7 +1,34 @@
-h1 {
-  font-family: 'San Francisco', sans-serif;
-  text-align: center;
+.app-container {
+  display: flex;
+  justify-content: space-between; /* Revertir a 'space-between' para mantener la imagen a la derecha */
+  align-items: center;
+  height: 100vh;
+  width: 100%;
 }
+
+.form-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 0 2em;
+  flex-grow: 1; /* Esto permitirá que la sección del formulario crezca para ocupar el espacio vacío */
+}
+
+
+.image-section {
+  display: flex;
+  justify-content: flex-end; 
+  align-items: center;
+  padding-left: 2em;
+}
+
+.image-section img {
+  height: 830px;
+  
+  width: 800px;
+}
+
+
 
 .form-container {
   display: flex;
@@ -10,33 +37,27 @@ h1 {
   padding: 1em;
   background-color: white;
   color: black;
-  width: 70%; /* Ampliando el contenedor para aprovechar más el ancho de la pantalla */
-  margin: 0 auto; /* Centrar el contenedor */
-  max-width: 600px;
-}
-
-.centered-apple-font {
-  text-align: center;
-  font-size: 3em;
-  margin-bottom: 1em;
+  width: 100%;
+  margin: 0 auto;
+  max-width: 1200px; 
 }
 
 .form-row {
-  display: grid; /* Cambiando a grid para mayor flexibilidad */
-  grid-template-columns: 1fr 1fr; /* Dividiendo la fila en dos columnas de igual ancho */
-  gap: 1em; /* Espaciado entre elementos de la cuadrícula */
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1em;
   margin-bottom: 1em;
   width: 100%;
 }
 
-/* Cuando sólo hay un elemento en la fila (una columna completa) */
 .form-row > label, .form-row > input, .form-row > select {
-  grid-column: span 2; /* Abarcando ambas columnas */
+  grid-column: span 2;
 }
 
 .input-group {
   display: flex;
   flex-direction: column;
+  width: 100%; 
 }
 
 label {
@@ -44,8 +65,7 @@ label {
   margin-bottom: 0.5em;
 }
 
-input,
-select {
+input, select {
   border: 1px solid black;
   padding: 0.6em; 
   font-size: 1em;
@@ -55,6 +75,7 @@ select {
   display: flex;
   justify-content: space-between;
   margin-top: 1em;
+  gap: 3em; /* Añade espacio entre los elementos del flexbox */
 }
 
 button {
@@ -66,8 +87,7 @@ button {
   cursor: pointer;
 }
 
-.success-message,
-.error-message {
+.success-message, .error-message {
   text-align: center;
   margin-top: 1em;
 }

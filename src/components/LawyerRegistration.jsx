@@ -2,7 +2,6 @@ import { useEffect } from 'react';
 import useLawyerStore from '../store/lawyerRegistrationStore';
 import '../styles/RegisterUser.css';
 import { useNavigate } from 'react-router-dom';
-import Navbar from './Navbar';
 
 
 const LaywerRegistration = () => {
@@ -40,74 +39,78 @@ const LaywerRegistration = () => {
   }, [navigate, status]);
 
   return (
-    <>
-      <Navbar />
-      <h1 className=''>REGISTRO DE ABOGADO</h1>
-      <form className='form-container' onSubmit={(event) => handleSubmitForm(event)}>
-        <div className='form-row'>
-          <div className='input-group'>
-            <label>Nombres *</label>
-            <input name='nombres' type='text' onChange={(event) => handleChange('nombres', event)} required />
+    <div className="app-container">
+      <div className="form-section">
+        <h1>REGISTRO DE ABOGADO</h1>
+        <form className='form-container' onSubmit={(event) => handleSubmitForm(event)}>
+          <div className='form-row'>
+            <div className='input-group'>
+              <label>Nombres *</label>
+              <input name='nombres' type='text' onChange={(event) => handleChange('nombres', event)} required />
+            </div>
+            <div className='input-group'>
+              <label>Apellidos *</label>
+              <input name='apellidos' type='text' onChange={(event) => handleChange('apellidos', event)} required />
+            </div>
           </div>
-          <div className='input-group'>
-            <label>Apellidos *</label>
-            <input name='apellidos' type='text' onChange={(event) => handleChange('apellidos', event)} required />
+          <div className='form-row'>
+            <label>Tipo de documento *</label>
+            <select name='tipoDocumento' onChange={(event) => handleChange('tipoDocumento', event)} required>
+              <option value=''>Seleccione</option>
+              <option value='ci'>CI</option>
+              <option value='pasaporte'>Pasaporte</option>
+            </select>
           </div>
-        </div>
-        <div className='form-row'>
-          <label>Tipo de documento *</label>
-          <select name='tipoDocumento' onChange={(event) => handleChange('tipoDocumento', event)} required>
-            <option value=''>Seleccione</option>
-            <option value='ci'>CI</option>
-            <option value='pasaporte'>Pasaporte</option>
-          </select>
-        </div>
-        <div className='form-row'>
-          <div className='input-group'>
-            <label>Documento*</label>
-            <input name='documento' type='text' onChange={(event) => handleChange('documento', event)} required />
+          <div className='form-row'>
+            <div className='input-group'>
+              <label>Documento*</label>
+              <input name='documento' type='text' onChange={(event) => handleChange('documento', event)} required />
+            </div>
+            <div className='input-group'>
+              <label>Complemento*</label>
+              <input name='complemento' type='text' onChange={(event) => handleChange('complemento', event)} />
+            </div>
           </div>
-          <div className='input-group'>
-            <label>Complemento*</label>
-            <input name='complemento' type='text' onChange={(event) => handleChange('complemento', event)} />
+          <div className='form-row'>
+            <label>Dirección de domicilio*</label>
+            <input name='direccion' type='text' onChange={(event) => handleChange('direccion', event)} required />
           </div>
-        </div>
-        <div className='form-row'>
-          <label>Dirección de domicilio*</label>
-          <input name='direccion' type='text' onChange={(event) => handleChange('direccion', event)} required />
-        </div>
-        <div className='form-row'>
-          <div className='input-group'>
-            <label>Celular*</label>
-            <input name='celular' type='text' onChange={(event) => handleChange('celular', event)} required />
+          <div className='form-row'>
+            <div className='input-group'>
+              <label>Celular*</label>
+              <input name='celular' type='text' onChange={(event) => handleChange('celular', event)} required />
+            </div>
+            <div className='input-group'>
+              <label>Correo electrónico*</label>
+              <input name='correo' type='email' onChange={(event) => handleChange('correo', event)} required />
+            </div>
           </div>
-          <div className='input-group'>
-            <label>Correo electrónico*</label>
-            <input name='correo' type='email' onChange={(event) => handleChange('correo', event)} required />
+          <div className='form-row'>
+            <div className='input-group'>
+              <label>Contraseña*</label>
+              <input name='secret' type='password' onChange={(event) => handleChange('secret', event)} required />
+            </div>
+            <div className='input-group'>
+              <label>Confirmar contraseña*</label>
+              <input name='secretConfirm' type='password' onChange={(event) => handleChange('secretConfirm', event)} required />
+            </div>
           </div>
-        </div>
-        <div className='form-row'>
-          <div className='input-group'>
-            <label>Contraseña*</label>
-            <input name='secret' type='password' onChange={(event) => handleChange('secret', event)} required />
+          <div className='button-row'>
+            <button type='button' onClick={() => navigate('/')}>Cancelar</button>
+            <button type='submit' className='register-button'>Registrar</button>
           </div>
-          <div className='input-group'>
-            <label>Confirmar contraseña*</label>
-            <input name='secretConfirm' type='password' onChange={(event) => handleChange('secretConfirm', event)} required />
+          <div>
+            {status === 'success' && <p className='success-message'>Usuario registrado con éxito</p>}
+            {status === 'error' && <p className='error-message'>Se ha producido un error</p>}
+            {status === 'registered' && <p className='error-message'>El usuario ya se encuentra registrado</p>}
           </div>
-        </div>
-        <div className='button-row'>
-          <button type='button' onClick={() => navigate('/')}>Cancelar</button>
-          <button type='submit' className='register-button'>Registrar</button>
-        </div>
-        <div>
+        </form>
+      </div>
+      <div className="image-section">
+        <img src="https://rainesinternational.com/wp-content/uploads/2018/01/Articles_EmploymentLawyer-e1550374232107.jpeg" alt="Empleo"/>
 
-          {status === 'success' && <p className='success-message'>Usuario registrado con éxito</p>}
-          {status === 'error' && <p className='error-message'>Se ha producido un error</p>}
-          {status === 'registered' && <p className='error-message'>El usuario ya se encuentra registrado</p>}
-        </div>
-      </form>
-    </>
+      </div>
+    </div>
   );
 };
 
