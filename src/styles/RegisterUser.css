@@ -99,3 +99,9 @@ button {
 .error-message {
   color: red;
 }
+.Audience-title {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 50px;
+}

@@ -35,7 +35,7 @@ const RegisterAudience = () => {
   return (
     <>
       <Navbar />
-      <h1 className=''>Agendar Audiencia</h1>
+      <h1 className='Audience-title'>Agendar Audiencia</h1>
       <form className='form-container' onSubmit={handleSubmitForm}>
         <div className='form-row'>
           <div className='input-group'>

@@ -5,6 +5,7 @@ import useStore from '../store/calendarStore';
 import 'react-big-calendar/lib/css/react-big-calendar.css';
 import Modal from 'react-modal';
 import Navbar from "./Navbar";
+import '../styles/Calendar.css';
 
 const localizer = momentLocalizer(moment);
 
@@ -67,7 +68,7 @@ const AudienceCalendar = () => {
   return (
     <>
       <Navbar/>
-      <h1>Calendario de audiencias</h1>
+      <h1 className='Calendar-title'>Calendario de audiencias</h1>
       <div style={{ height: 500 }}>
         <Calendar
           localizer={localizer}
