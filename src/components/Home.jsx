@@ -113,28 +113,29 @@ import { useEffect } from "react";
 
         </div>
   
- 
-  
+                
+      <div className="cases-container-final">
         {status === 'success' &&
           cases.map((legalCase) => (
-<div key={legalCase.idLegalCase} className="card" style={{ width: '100%', maxWidth: '800px' }}>
-  <h2>{legalCase.title}</h2>
-  <p>Subido por: {getUserNameFromToken(localStorage.getItem('token'))}</p>
-  <p className="last-modified">
-    Última modificación: {formatDate(legalCase.lastUpdate)}
-  </p>
-  
-      <p>{legalCase.summary}</p>
-            {(isClient || isLawyer) && (
+            <div key={legalCase.idLegalCase} className="card-item">
+              <h2>{legalCase.title}</h2>
+              <p className="last-modified">
+                Última modificación: {formatDate(legalCase.lastUpdate)}
+              </p>
+              <p>{legalCase.summary}</p>
+              <p>{legalCase.crime}</p>
+              <p>{crime(legalCase.idCrime)[0]}</p>    
+              {(isClient || isLawyer) && (
                 <Link to={`/CaseDetails/${legalCase.idLegalCase}`}>
                   <button>Ver Más</button>
                 </Link>
-              )}
-              
-              <Link to={`/RegisterAudience/${legalCase.idLegalCase}`}><button>Registrar Audiencia</button></Link>
+              )}        
+                
+                <Link to={`/RegisterAudience/${legalCase.idLegalCase}`}><button>Registrar Audiencia</button></Link>
              
             </div>
           ))}
+      </div>
         
   
        

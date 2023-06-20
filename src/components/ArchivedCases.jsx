@@ -117,19 +117,13 @@
       
             {status === 'success' &&
               cases.map((legalCase) => (
-                <div key={legalCase.idLegalCase} className="card">
+                <div key={legalCase.idLegalCase} className="card-item">
                   <h2>{legalCase.title}</h2>
                   <p className="last-modified">
                     Última modificación: {formatDate(legalCase.lastUpdate)}
                   </p>
                   <p>{legalCase.summary}</p>
                   <p>{legalCase.crime}</p>
-      
-                 {(isClient || isLawyer) && (
-                    <Link to={`/CaseDetails/${legalCase.idLegalCase}`}>
-                      <button>Ver Más</button>
-                    </Link>
-                  )}
                   
                  
                 </div>
