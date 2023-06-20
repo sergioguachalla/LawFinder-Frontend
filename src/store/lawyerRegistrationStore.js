@@ -1,7 +1,7 @@
 import { create } from 'zustand';
 import axios from 'axios';
 
-export const useLawyerStore = create((set) => ({
+export const useLawyerStore = create((set,get) => ({
   deviceId: localStorage.getItem('device-id') || generateUUID(),
   nombres: '',
   apellidos: '',
@@ -15,6 +15,9 @@ export const useLawyerStore = create((set) => ({
   secret: '',
   secretConfirm: '',
   statusState: 'init',
+  inputType: 'password',
+  userAlreadyExists: false,
+  setUserAlreadyExists: (value) => set({userAlreadyExists: value}),
 
   handleChange: (fieldName, event) => {
     const { value } = event.target;
@@ -74,6 +77,10 @@ export const useLawyerStore = create((set) => ({
       alert('Las contraseñas no coinciden');
       return;
     }
+    if(get().userAlreadyExists === true){
+      alert('El usuario ya se encuentra registrado');
+      return;
+    }
     if (!correoRegex.test(formData.correo)) {
       alert('El correo electrónico no tiene un formato válido');
       return;
@@ -112,10 +119,6 @@ export const useLawyerStore = create((set) => ({
     }
     userExists();
 
-
-
-
-
     //set({ nombres: '', apellidos: '', tipoDocumento: '', documento: '', complemento: '', direccion: '', celular: '', correo: '', username: '', secret: '', secretConfirm: ''});
     const registerUser = async () => {
       set({ statusState: 'loading' });
@@ -137,6 +140,18 @@ export const useLawyerStore = create((set) => ({
    
     
   },
+  verifyUsername: async (name,lastname) => {
+   
+    const response = await axios.get(`http://localhost:8080/api/v1/verification/user/${name}/${lastname}`);
+    console.log(name,lastname);
+    if(response.data.response === 'User Already Exists'){
+      set({ userAlreadyExists: true });
+    }
+    else if(response.data.response === 'User Does Not Exist'){
+      set({ userAlreadyExists: false });
+    }
+  },
+
 
   
 

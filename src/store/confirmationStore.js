@@ -36,6 +36,7 @@ export const useConfirmationStore = create((set) => ({
     }
     verifyUser();
     const registerUser = async () => {
+      set({status: 'loading'});
       const body = {
         "username": useRegisterUserStore.getState().username,
         "secret": useRegisterUserStore.getState().secret,
@@ -59,6 +60,7 @@ export const useConfirmationStore = create((set) => ({
   },
 
   handleLawyer: () => {
+    set({status: 'loading'});
     const body = {
       "deviceId": localStorage.getItem('device-id'),
       //email: localStorage.getItem('email'),
@@ -68,9 +70,10 @@ export const useConfirmationStore = create((set) => ({
       const response = await axios.put('http://localhost:8080/api/v1/verify', body);
       console.log(response);
       if(response.data.response == 'mail verified'){
-        set({status: 'success'});
+        set({status: 'verified'});
         registerUser();
-      }else{
+        set({status: 'success'});
+      }else if(response.data.response == 'mail not verified'){
         set({status: 'error'});
       }
     }
@@ -100,6 +103,7 @@ export const useConfirmationStore = create((set) => ({
   },
 
   handleRegister: () => {
+    set({status: 'loading'});
     const formData = useConfirmationStore.getState().formData;
     const body = {
       "deviceId": localStorage.getItem('device-id'),
@@ -109,8 +113,8 @@ export const useConfirmationStore = create((set) => ({
     const registerUser = async () => {
       const response = await axios.post('http://localhost:8080/api/v1/verify', body);
       console.log(response);
-      if(response.status == 200){
-        set({isVerified: true});
+      if(response.data.response == 'mail verified'){
+        set({status: 'success'});
       }
     }
     registerUser();

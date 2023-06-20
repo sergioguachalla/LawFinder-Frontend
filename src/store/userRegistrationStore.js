@@ -15,17 +15,23 @@ export const useRegisterUserStore = create((set,get) => ({
   secret: '',
   secretConfirm: '',
   status: 'init',
-
+  inputType: 'password',
+  emailExists: false,
+  userAlreadyExists: false,
+  setUserAlreadyExists: (value) => set({userAlreadyExists: value}),
+  setInputText: () => set({inputType:'text'}),
+  setInputPassword: () => set({inputType:'password'}),
   handleChange: (fieldName, event) => {
     const { value } = event.target;
     console.log('Cambio en el campo ' + fieldName + ' con valor ' + value);
     set({ [fieldName]: value });
   },
+
   generateNewUUID: () => {
     const newUUID = generateUUID();
     set({ uuid: newUUID });
     localStorage.setItem('device-id', newUUID);
-    console.log('Nuevo UUID generado: ' + newUUID);
+    //console.log('Nuevo UUID generado: ' + newUUID);
   },
 
 
@@ -74,6 +80,12 @@ export const useRegisterUserStore = create((set,get) => ({
       alert('Las contraseñas no coinciden');
       return;
     }
+    if(get().verifyUsername(formData.nombres,formData.apellidos) == 'User Already Exists'){
+      set({ userAlreadyExists: true });
+      return;
+    }else{
+      set({ userAlreadyExists: false });
+    }
     if (!correoRegex.test(formData.correo)) {
       alert('El correo electrónico no tiene un formato válido');
       return;
@@ -97,26 +109,28 @@ export const useRegisterUserStore = create((set,get) => ({
 
     const userExists = async () => {
       const response = await axios.post('http://localhost:8080/api/v1/verification', requestVerificatioBody);
-      console.log(response);
+      const usernameResponse = await get().verifyUsername(formData.nombres,formData.apellidos);
+      console.log(usernameResponse);
       if(response.data.response == "User Already Exists"){
         //alert('El correo ya se encuentra registrado');
         set({ statusState: 'registered' });
         set({ formData : ''});
         set({ nombres : ''});
         set({ correo : ''});
+        set({emailExists: true})
       }
-      else if(response.data.response == "User Does Not Exist"){
-        registerUser();
+      else if(response.data.response == "User Does Not Exist" && usernameResponse == 'User Does Not Exist'){
+        set({emailExists: false})
+        set({userAlreadyExists: false});
+        
         set({ statusState: 'loading' });
+      }else if(response.data.response == "User Does Not Exist" && usernameResponse == 'User Already Exists'){
+        set({emailExists: false})
+        set({userAlreadyExists: true});
+       
       }
     }
     userExists();
-
-
-
-
-
-    //set({ nombres: '', apellidos: '', tipoDocumento: '', documento: '', complemento: '', direccion: '', celular: '', correo: '', username: '', secret: '', secretConfirm: ''});
     const registerUser = async () => {
       set({ statusState: 'loading' });
       
@@ -134,8 +148,33 @@ export const useRegisterUserStore = create((set,get) => ({
 
       
     };
+    if(get().emailExists == false && get().userAlreadyExists == false){
+      registerUser();
+    }else{
+      console.log(get().emailExists + "a");
+    }
+
+
+
+
+
+    //set({ nombres: '', apellidos: '', tipoDocumento: '', documento: '', complemento: '', direccion: '', celular: '', correo: '', username: '', secret: '', secretConfirm: ''});
+    
    
     
+  },
+
+  verifyUsername: async (name,lastname) => {
+   
+    const response = await axios.get(`http://localhost:8080/api/v1/verification/user/${name}/${lastname}`);
+    console.log(name,lastname);
+    if(response.data.response === 'User Already Exists'){
+      set({ userAlreadyExists: true });
+    }
+    else if(response.data.response === 'User Does Not Exist'){
+      set({ userAlreadyExists: false });
+    }
+    return response.data.response;
   },
 
   

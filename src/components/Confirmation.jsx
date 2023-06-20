@@ -4,7 +4,7 @@ import { useRegisterUserStore } from '../store/userRegistrationStore';
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import '../styles/Confirmation.css';
-
+import Spinner from './Spinner';
 const ConfirmationCode = () => {
   const navigate = useNavigate();
 
@@ -24,7 +24,7 @@ const ConfirmationCode = () => {
         navigate('/');
       }, 1000); // Esperar 2 segundos (2000 milisegundos) antes de navegar
 
-      return () => clearTimeout(timeoutId); // Limpiar el timeout si el componente se desmonta antes de que se complete
+      return () => clearTimeout(timeoutId); 
     } else {
       console.log(status + 'b');
     }
@@ -65,9 +65,12 @@ const ConfirmationCode = () => {
           <button className="continue-button-custom" onClick={handleRequestForm}>
             Continuar
           </button>
+          
         </div>
+        <div>{status === 'success' ? <p className='success-message'>La cuenta ha sido verificada exitósamente!</p> : status === 'error' ? <p className='error-message'>El código introducido es incorrecto</p>  : 
+        status === 'loading' ? <Spinner>cargando</Spinner>: <></>}</div>
       </div>
-      <div>{status === 'success' ? <p>Success</p> : status === 'error' ? <p>Error</p> : <></>}</div>
+      
     </div>
   );
 };

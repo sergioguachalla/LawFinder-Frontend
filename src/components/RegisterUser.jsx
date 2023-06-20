@@ -2,22 +2,37 @@ import { useEffect } from 'react';
 import { useRegisterUserStore } from '../store/userRegistrationStore';
 import '../styles/RegisterUser.css';
 import { useNavigate } from 'react-router-dom';
+import { Eye, EyeSlash } from 'react-bootstrap-icons';
+
 const RegisterUser = () => {
   const navigate = useNavigate();
   const {
     handleChange,
     handleSubmit,
     generateNewUUID,
+    inputType,
+    setInputText, 
+    setInputPassword,
+    userAlreadyExists,
   } = useRegisterUserStore();
   const status = useRegisterUserStore((state) => state.statusState);
 
   useEffect(() => {
     generateNewUUID();
-  }, [generateNewUUID]);
+  }, []);
 
   const handleSubmitForm = async (event) => {
     event.preventDefault();
     await handleSubmit(event);
+  };
+
+  const togglePasswordVisibility = () => {
+    if (inputType === 'password') {
+      setInputText('text');
+    } else {
+      setInputPassword('password');
+    }
+    console.log(inputType);
   };
 
   useEffect(() => {
@@ -50,6 +65,7 @@ const RegisterUser = () => {
               <label>Apellidos *</label>
               <input name='apellidos' type='text' onChange={(event) => handleChange('apellidos', event)} required />
             </div>
+            {userAlreadyExists && <p className='error-message'>El usuario ya se encuentra registrado</p>}
           </div>
           <div className='form-row'>
             <label>Tipo de documento *</label>
@@ -85,13 +101,23 @@ const RegisterUser = () => {
           </div>
           <div className='form-row'>
             <div className='input-group'>
-              <label>Contraseña*</label>
-              <input name='secret' type='password' onChange={(event) => handleChange('secret', event)} required />
+            <label>Contraseña*</label> {inputType === 'password' ? (
+            <EyeSlash onClick={()=> {togglePasswordVisibility()}} />) : (
+            inputType === 'text' &&(
+            <Eye onClick={()=> {togglePasswordVisibility()}} />     
+            ))}
+              <input name='secret' type={inputType} onChange={(event) => handleChange('secret', event)} required />
+       
             </div>
             <div className='input-group'>
-              <label>Confirmar contraseña*</label>
-              <input name='secretConfirm' type='password' onChange={(event) => handleChange('secretConfirm', event)} required />
+              <label>Confirmar contraseña*</label> {inputType === 'password' ? (
+            <EyeSlash onClick={()=> {togglePasswordVisibility()}} />) : (
+            inputType === 'text' &&(
+            <Eye onClick={()=> {togglePasswordVisibility()}} />     
+            ))}
+              <input name='secretConfirm' type={inputType} onChange={(event) => handleChange('secretConfirm', event)} required />
             </div>
+
           </div>
           <div className='button-row'>
             <button type='button' onClick={() => navigate('/')}>Cancelar</button>
@@ -104,6 +130,11 @@ const RegisterUser = () => {
           </div>
         </form>
       </div>
+      {status === 'loading' && (
+        <div className='loading-container'>
+          <div className='loading'></div>
+          </div>
+          )}
       <div className='image-section'>
         <img src="https://rainesinternational.com/wp-content/uploads/2018/01/Articles_EmploymentLawyer-e1550374232107.jpeg" alt="Empleo"/>
       </div>
