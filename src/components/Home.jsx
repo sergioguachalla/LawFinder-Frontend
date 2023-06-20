@@ -100,7 +100,7 @@
           />
   
           <label htmlFor="toDate">Hasta: </label>
-          <input type="date" id="toDate" value={toDate} onChange={(e) => setToDate(e.target.value)} />
+          <input type="date" id="toDate" value={toDate} min={fromDate} onChange={(e) => setToDate(e.target.value)} />
   
           <button onClick={clearFilters}>Vaciar Filtros</button>
         </div>
@@ -109,13 +109,13 @@
   
         {status === 'success' &&
           cases.map((legalCase) => (
-            <div key={legalCase.idLegalCase} className="card">
-              <h2>{legalCase.title}</h2>
-              <p className="last-modified">
-                Última modificación: {formatDate(legalCase.lastUpdate)}
-              </p>
-              <p>{legalCase.summary}</p>
-              <p>{legalCase.crime}</p>
+<div key={legalCase.idLegalCase} className="card" style={{ width: '100%', maxWidth: '800px' }}>
+  <h2>{legalCase.title}</h2>
+  <p className="last-modified">
+    Última modificación: {formatDate(legalCase.lastUpdate)}
+  </p>
+  <p>{legalCase.summary}</p>
+  <p>{legalCase.crime}</p>
   
               {(isClient || isLawyer) && (
                 <Link to={`/CaseDetails/${legalCase.idLegalCase}`}>

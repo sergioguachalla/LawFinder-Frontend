@@ -18,6 +18,8 @@ export const useLawyerStore = create((set,get) => ({
   inputType: 'password',
   userAlreadyExists: false,
   setUserAlreadyExists: (value) => set({userAlreadyExists: value}),
+  setInputText: () => set({inputType:'text'}),
+  setInputPassword: () => set({inputType:'password'}),
 
   handleChange: (fieldName, event) => {
     const { value } = event.target;

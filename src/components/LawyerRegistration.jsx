@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import useLawyerStore from '../store/lawyerRegistrationStore';
 import '../styles/RegisterUser.css';
 import { useNavigate } from 'react-router-dom';
-
+import { Eye, EyeSlash } from 'react-bootstrap-icons';
 
 const LaywerRegistration = () => {
   const navigate = useNavigate();
@@ -10,6 +10,9 @@ const LaywerRegistration = () => {
     handleChange,
     handleSubmit,
     generateNewUUID,
+    inputType,
+    setInputText, 
+    setInputPassword,
   } = useLawyerStore();
   const status = useLawyerStore((state) => state.statusState);
 
@@ -20,6 +23,14 @@ const LaywerRegistration = () => {
   const handleSubmitForm = async (event) => {
     event.preventDefault();
     await handleSubmit(event);
+  };
+  const togglePasswordVisibility = () => {
+    if (inputType === 'password') {
+      setInputText('text');
+    } else {
+      setInputPassword('password');
+    }
+    console.log(inputType);
   };
 
   useEffect(() => {
@@ -87,13 +98,23 @@ const LaywerRegistration = () => {
           </div>
           <div className='form-row'>
             <div className='input-group'>
-              <label>Contraseña*</label>
-              <input name='secret' type='password' onChange={(event) => handleChange('secret', event)} required />
+            <label>Contraseña*</label> {inputType === 'password' ? (
+            <EyeSlash onClick={()=> {togglePasswordVisibility()}} />) : (
+            inputType === 'text' &&(
+            <Eye onClick={()=> {togglePasswordVisibility()}} />     
+            ))}
+              <input name='secret' type={inputType} onChange={(event) => handleChange('secret', event)} required />
+       
             </div>
             <div className='input-group'>
-              <label>Confirmar contraseña*</label>
-              <input name='secretConfirm' type='password' onChange={(event) => handleChange('secretConfirm', event)} required />
+              <label>Confirmar contraseña*</label> {inputType === 'password' ? (
+            <EyeSlash onClick={()=> {togglePasswordVisibility()}} />) : (
+            inputType === 'text' &&(
+            <Eye onClick={()=> {togglePasswordVisibility()}} />     
+            ))}
+              <input name='secretConfirm' type={inputType} onChange={(event) => handleChange('secretConfirm', event)} required />
             </div>
+
           </div>
           <div className='button-row'>
             <button type='button' onClick={() => navigate('/')}>Cancelar</button>

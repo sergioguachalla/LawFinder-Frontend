@@ -7,7 +7,7 @@ import Navbar from './Navbar';
 const RegisterCase = () => {
   const history = useNavigate();
   const navigate = useNavigate();
-  
+  const today = new Date().toISOString().split('T')[0];
   const 
   { formData, departamentos,
     provincias, handleChange,
@@ -17,7 +17,8 @@ const RegisterCase = () => {
     loadCategorias, loadSubCategorias,
     subCategorias, crimes,
     loadCrimes, registerCase,
-    status, lawyerEmail } =
+    status, lawyerEmail,
+ } =
   useCaseStore((state) => ({
     ...state,
     history: history,
@@ -79,7 +80,7 @@ const RegisterCase = () => {
           </div>
           <div className="form-field-rc">
             <label>Fecha de inicio *</label>
-            <input name="startDate" type="date" value={formData.startDate} onChange={(event) => handleChange('startDate', event)} />
+            <input name="startDate" type="date" value={formData.startDate} max={today} onChange={(event) => handleChange('startDate', event)} />
           </div>
         </div>
         <div className="form-row-inline-rc">
@@ -185,15 +186,15 @@ const RegisterCase = () => {
         <div className="form-row-rc">
           <div className="form-field-rc">
             <label>Fecha de inicio de la instancia *</label>
-            <input name="fechaInicioInstancia" type="date" onChange={(event) => handleChange('startDateInstance', event)} />
+            <input name="fechaInicioInstancia" type="date" max={today} onChange={(event) => handleChange('startDateInstance', event)} />
           </div>
           <div className="form-field-rc">
             <label>Fecha final de plazo de la instancia *</label>
-            <input name="fechaFinalInstancia" type="date" onChange={(event) => handleChange('endDateInstance', event)} />
+            <input name="fechaFinalInstancia" type="date" min={formData.startDateInstance} onChange={(event) => handleChange('endDateInstance', event)} />
           </div>
         </div>
         <div className="button-row-rc">
-          <button className="register-button-rc" onClick={()=> {navigate("/Home")}}>Cancelar</button>
+          <button className="register-button-rc"  onClick={()=> {navigate("/Home")}}>Cancelar</button>
           <button type="submit" className="register-button">Registrar</button>  
         </div>
       </form>

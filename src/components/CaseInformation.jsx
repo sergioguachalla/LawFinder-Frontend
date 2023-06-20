@@ -46,7 +46,7 @@ const CaseInformation = () => {
     <div className="legal-case-details">
       <Navbar></Navbar>
       <div className="legal-case-details container">
-        <div className="card">
+        <div className="card" style={{ width: '100%', maxWidth: '800px' }}>
           <h2 className="card-title">Caso # {id}</h2>
         
           <h3 className="card-subtitle">Título del caso: {caseDetails.title}</h3>

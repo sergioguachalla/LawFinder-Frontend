@@ -14,12 +14,13 @@ const RegisterUser = () => {
     setInputText, 
     setInputPassword,
     userAlreadyExists,
+    emailExists,
+    status
   } = useRegisterUserStore();
-  const status = useRegisterUserStore((state) => state.statusState);
-
+  
   useEffect(() => {
     generateNewUUID();
-  }, []);
+  }, [generateNewUUID]);
 
   const handleSubmitForm = async (event) => {
     event.preventDefault();
@@ -37,6 +38,7 @@ const RegisterUser = () => {
 
   useEffect(() => {
     if (status === 'success') {
+      
       const timeoutId = setTimeout(() => {
         navigate('/confirmation');
       }, 1000);
@@ -49,7 +51,7 @@ const RegisterUser = () => {
     } else if (status === 'loading') {
       setTimeout(() => {}, 1000);
     }
-  }, [navigate, status]);
+  }, [emailExists, navigate, status]);
 
   return (
     <div className='app-container'>
