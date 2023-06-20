@@ -30,7 +30,7 @@ const InstanceModal = () => {
 
       <Modal show={isOpen} onHide={() => {setModalOpen(false)}}>
         <Modal.Header closeButton>
-          <Modal.Title>Modal Title</Modal.Title>
+          <Modal.Title>Actualizar Instancia</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <div>

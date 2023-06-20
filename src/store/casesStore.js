@@ -111,7 +111,7 @@ export const useCasesStore = create((set, get) => ({
         },
         
       });
-
+      console.log('response', response);
       if(response.data.response.content.length > 0){
         const casesPage = response.data.response;
         set(() => ({ cases: casesPage.content }));

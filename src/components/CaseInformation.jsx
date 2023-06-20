@@ -16,6 +16,7 @@ const CaseInformation = () => {
   let { cases, getCases, isLawyer, isClient } = useCasesStore();
   const { getCaseDetails, caseId, setCaseId,status, getCaseInformation,caseDetails, handleUpdateCase  } = useCaseDetailsStore();
   const {comments,getCaseComments, handleComment, handleChange, totalPages, nextPage, previousPage, currentPage} = useCommentsStore();
+  const {status: statusComments} = useCommentsStore();
   //const legalCase = cases.find((legalCase) => legalCase.idLegalCase == id);
 
 
@@ -25,7 +26,10 @@ const CaseInformation = () => {
       setCaseId(id);
       cases = getCases();
       getCaseInformation(id);
+     
+      setTimeout(() => {
       getCaseComments(id);
+      }, 1000);
       
       //getCaseDetails(id);
     }else{
@@ -68,6 +72,7 @@ const CaseInformation = () => {
           
           
         </div>
+        {statusComments === 'loading' || status ==='init' && <LoadingSpinner/>}
         <CommentSection
       comments={comments}/>
       

@@ -1,6 +1,7 @@
 import {create} from 'zustand'
 import axios from 'axios'
 import { getIdFromToken } from '../utils/getIdFromToken';
+import { now } from 'moment/moment';
 export const useCommentsStore = create((set,get) => ({
       comments: [],
       comment: '',
@@ -20,17 +21,18 @@ export const useCommentsStore = create((set,get) => ({
          set({[fieldName]: value});
       },
       handleComment: async (e) => {
+         set({status: 'loading'})
          e.preventDefault()
          const token = localStorage.getItem('token');
          const userIdToken = getIdFromToken(token);
          set({caseId: localStorage.getItem('caseId')})
          set({userId: userIdToken})
-         set({status: 'loading'})
+        
          const response = await axios.post(`http://localhost:8080/api/v1/legalcase/${get().caseId}/comment`, {
             "userId": get().userId,
             "commentContent": get().comment,
             "legalCaseId": get().caseId,
-            "commentDate": new Date()
+            "commentDate": new Date(now()).toISOString() 
       }
       )
       if(response.data.response != null || response.data.code == '0000'){
@@ -44,12 +46,15 @@ export const useCommentsStore = create((set,get) => ({
          set({status: 'loading'});
          console.log(caseId);
          localStorage.setItem('caseId', caseId);
+        
          const response = await axios.get(`http://localhost:8080/api/v1/legalcase/${caseId}/comments`,{
             params: {
                page: get().currentPage,
                size: 5,
             }
          });
+      
+
          if(response.data.response != null || response.data.code == '0000'){
             set({status: 'success'});
            // console.log(response.data.response);
@@ -61,6 +66,7 @@ export const useCommentsStore = create((set,get) => ({
          }
       },
       nextPage: () => {
+         set({status: 'loading'});
          if (get().currentPage < get().totalPages - 1) {
            set((state) => ({ currentPage: state.currentPage + 1 }));
            const searchParams = new URLSearchParams(location.search);

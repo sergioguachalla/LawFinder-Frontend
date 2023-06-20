@@ -7,6 +7,8 @@ import { useEffect } from "react";
   import { Link } from "react-router-dom";
   import { getRoleFromToken } from "../utils/getIdFromToken"; 
   import LoadingSpinner from "./Loading";
+  import Footer from "./Footer";
+  import { getCrimeById } from "../utils/caseInfo";
   const Home = () => {
     const navigate = useNavigate();
     const { getCases, cases, status, currentPage, totalPages, nextPage, previousPage, fromDate, toDate, setFromDate, 
@@ -18,12 +20,15 @@ import { useEffect } from "react";
       return formattedDate;
     }
     const currentDate = formatDate(new Date());
-   
-    useEffect(() => {
-      
+    const crime = async (id) => {
+      const crime = await getCrimeById(id);
+      console.log(id);
+      console.log(crime['name']);
+      return getCrimeById(id)['name'];
+    }
 
+    useEffect(() => {
     const token = localStorage.getItem('token');
-    
 
     if(token){
       const role = getRoleFromToken(token);
@@ -119,6 +124,7 @@ import { useEffect } from "react";
   </p>
   <p>{legalCase.summary}</p>
   <p>{legalCase.crime}</p>
+  <p>{crime(legalCase.idCrime)[0]}</p>
   
              {(isClient || isLawyer) && (
                 <Link to={`/CaseDetails/${legalCase.idLegalCase}`}>
@@ -154,6 +160,7 @@ import { useEffect } from "react";
           </button>
         )}
       </div>
+      <Footer></Footer>
     </>
   );
         }
