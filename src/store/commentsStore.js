@@ -7,6 +7,9 @@ export const useCommentsStore = create((set,get) => ({
       status: 'init',
       caseId: localStorage.getItem('caseId'),
       userId: localStorage.getItem('userId'),
+      currentPage: 0,
+      totalPages: 0,
+
       setComments: (comments) => set({comments}),
       setComment: (comment) => set({comment}),
       addComment: (comment) => set({comments: [...get().comments, comment]}),
@@ -25,7 +28,8 @@ export const useCommentsStore = create((set,get) => ({
          const response = await axios.post(`http://localhost:8080/api/v1/legalcase/${get().caseId}/comment`, {
             "userId": get().userId,
             "commentContent": get().comment,
-            "legalCaseId": get().caseId
+            "legalCaseId": get().caseId,
+            "commentDate": new Date()
       }
       )
       if(response.data.response != null || response.data.code == '0000'){
@@ -39,19 +43,38 @@ export const useCommentsStore = create((set,get) => ({
          set({status: 'loading'});
          console.log(caseId);
          localStorage.setItem('caseId', caseId);
-         const response = await axios.get(`http://localhost:8080/api/v1/legalcase/${caseId}/comments`);
+         const response = await axios.get(`http://localhost:8080/api/v1/legalcase/${caseId}/comments`,{
+            params: {
+               page: get().currentPage,
+               size: 5,
+            }
+         });
          if(response.data.response != null || response.data.code == '0000'){
             set({status: 'success'});
            // console.log(response.data.response);
-            set({comments: response.data.response});
-            console.log(response);
+           const commentsPage = response.data.response;
+            set({comments: commentsPage.content});
+            set({currentPage: commentsPage.number});
+            set({totalPages: commentsPage.totalPages});
+            console.log(response.data.response.content);
          }
       },
-      
+      nextPage: () => {
+         if (get().currentPage < get().totalPages - 1) {
+           set((state) => ({ currentPage: state.currentPage + 1 }));
+           const searchParams = new URLSearchParams(location.search);
+           searchParams.set("page", String(get().currentPage + 1));
+         }
+      },
+      previousPage: () => {
+         if (get().currentPage > 0) {
+           set((state) => ({ currentPage: state.currentPage - 1 }));
+           const searchParams = new URLSearchParams(location.search);
+           searchParams.set("page", String(get().currentPage - 1));
+         }
+      }
 
-      
-
-
+ 
          
 
 }))

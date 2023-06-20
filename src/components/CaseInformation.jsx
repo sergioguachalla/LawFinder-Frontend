@@ -15,7 +15,7 @@ const CaseInformation = () => {
   const { id } = useParams();
   let { cases, getCases, isLawyer, isClient } = useCasesStore();
   const { getCaseDetails, caseId, setCaseId,status, getCaseInformation,caseDetails, handleUpdateCase  } = useCaseDetailsStore();
-  const {comments,getCaseComments, handleComment, handleChange} = useCommentsStore();
+  const {comments,getCaseComments, handleComment, handleChange, totalPages, nextPage, previousPage, currentPage} = useCommentsStore();
   //const legalCase = cases.find((legalCase) => legalCase.idLegalCase == id);
 
 
@@ -31,7 +31,7 @@ const CaseInformation = () => {
     }else{
       navigate('/');
     }
-   }, [caseId, getCaseDetails, id, setCaseId, handleComment]);
+   }, [caseId, getCaseDetails, id, setCaseId, handleComment, currentPage]);
   
  
 
@@ -70,6 +70,7 @@ const CaseInformation = () => {
         </div>
         <CommentSection
       comments={comments}/>
+      
       </div>
      
 
