@@ -5,10 +5,11 @@ import useStore from '../store/calendarStore';
 import 'react-big-calendar/lib/css/react-big-calendar.css';
 import Modal from 'react-modal';
 import Navbar from "./Navbar";
+import '../styles/Calendar.css';
 
 const localizer = momentLocalizer(moment);
 
-Modal.setAppElement('#root'); // Esta línea es necesaria para la accesibilidad.
+Modal.setAppElement('#root'); 
 
 const AudienceCalendar = () => {
   const { audiences, fetchAudiences } = useStore((state) => state);
@@ -20,16 +21,21 @@ const AudienceCalendar = () => {
       left: '50%',
       right: 'auto',
       bottom: 'auto',
-      marginRight: '-50%',
       transform: 'translate(-50%, -50%)',
-      width: '50%', // Ancho reducido
+      width: '40%', 
       border: '1px solid #ccc',
       borderRadius: '4px',
       padding: '20px',
+      position: 'relative', 
     },
     overlay: { zIndex: 1000 },
     closeButton: {
       fontSize: '1.5em',
+      position: 'absolute', 
+      top: '12px', 
+      right: '10px',
+      borderRadius: '45%',
+   
     },
   };
 
@@ -38,7 +44,7 @@ const AudienceCalendar = () => {
   }, [fetchAudiences]);
 
   const events = audiences.map((audience) => {
-    const date = new Date(audience.audienceDate);
+    const date = new Date(audience.audienceDate); 
     const endDate = new Date(date.getTime() + 60 * 60 * 1000); // Suponemos que cada audiencia dura 1 hora.
     return {
       start: date,
@@ -62,7 +68,7 @@ const AudienceCalendar = () => {
   return (
     <>
       <Navbar/>
-      <h1>Calendario de audiencias</h1>
+      <h1 className='Calendar-title'>Calendario de audiencias</h1>
       <div style={{ height: 500 }}>
         <Calendar
           localizer={localizer}
@@ -96,9 +102,10 @@ const AudienceCalendar = () => {
         style={customStyles} // Añade los estilos personalizados aquí
       >
         <h2>{selectedEvent?.title}</h2>
-        <p>{selectedEvent?.desc}</p>
-        <p>{selectedEvent?.address}</p>
-        {selectedEvent?.link && <a href={selectedEvent.link} target="_blank" rel="noopener noreferrer">Ver más detalles</a>}
+        <p>Descripción: {selectedEvent?.desc}</p>
+        <p>Dirección: {selectedEvent?.address}</p>
+        <p>Link de la audiencia: {selectedEvent?.link && <a href={selectedEvent.link} target="_blank" rel="noopener noreferrer">Ingresar</a>}</p>
+        
         <button onClick={closeModal} style={customStyles.closeButton}>X</button>
       </Modal>
       </div>
