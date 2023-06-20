@@ -54,107 +54,108 @@
     
     return (
         <>
-        {(status === 'loading' || status === 'init') && <LoadingSpinner />}
-        <Navbar />
-    
-        <div className="cases-container">
+         
+         
+          {(status === 'loading' || status === 'init') && <LoadingSpinner/>}
+          <Navbar />
+          <div className="cases-container">
             <h1>Casos</h1>
-            <div className="search-container">
-            <label htmlFor="searchTitle">Buscador por título: </label>
-            <input
-                type="text"
-                id="searchTitle"
-                value={searchTitle}
-                onChange={(e) => setSearchTitle(e.target.value)}
-            />
+            <div className="filter-container">
+              <div className="search-container">
+                <label htmlFor="searchTitle">Buscador por título: </label>
+                <input
+                  type="text"
+                  id="searchTitle"
+                  value={searchTitle}
+                  onChange={(e) => setSearchTitle(e.target.value)}
+                />
+              </div>
+              <div>
+                <label htmlFor="categoryId" className="label-con-margin">Categoría: </label>
+                <select
+                  id="categoryId"
+                  value={categoryId}
+                  onChange={(e) => setCategoryId(e.target.value)}
+                >
+                  <option value="">Todos</option>
+                  {categories.map((category) => (
+                    <option key={category.categoryId} value={category.categoryId}>
+                      {category.categoryName}
+                    </option>
+                  ))}
+                </select>
+                <label htmlFor="instanceId" className="label-con-margin">Instancia: </label>
+                <select
+                  id="instanceId"
+                  value={instanceId}
+                  onChange={(e) => setInstanceId(e.target.value)}
+                >
+                  <option value="">Todos</option>
+                  {instances.map((instance) => (
+                    <option key={instance.instanceId} value={instance.instanceId}>
+                      {instance.instanceName}
+                    </option>
+                  ))}
+                </select>
+                <label htmlFor="fromDate" className="label-con-margin">Desde: </label>
+                <input
+                  type="date"
+                  id="fromDate"
+                  value={fromDate}
+                  onChange={(e) => setFromDate(e.target.value)}
+                  max={currentDate}
+                />
+        
+                <label htmlFor="toDate" className="label-con-margin">Hasta: </label>
+                <input type="date" id="toDate" value={toDate} onChange={(e) => setToDate(e.target.value)} />
+        
+                <button onClick={clearFilters} className="button-filter" >Vaciar Filtros</button>
+              </div>
             </div>
-            <div>
-            <label htmlFor="categoryId">Categoría: </label>
-            <select
-                id="categoryId"
-                value={categoryId}
-                onChange={(e) => setCategoryId(e.target.value)}
-            >
-                <option value="">Todos</option>
-                {categories.map((category) => (
-                <option key={category.categoryId} value={category.categoryId}>
-                    {category.categoryName}
-                </option>
-                ))}
-            </select>
-    
-            <label htmlFor="instanceId">Instancia: </label>
-            <select
-                id="instanceId"
-                value={instanceId}
-                onChange={(e) => setInstanceId(e.target.value)}
-            >
-                <option value="">Todos</option>
-                {instances.map((instance) => (
-                <option key={instance.instanceId} value={instance.instanceId}>
-                    {instance.instanceName}
-                </option>
-                ))}
-            </select>
-            <label htmlFor="fromDate">Desde: </label>
-            <input
-                type="date"
-                id="fromDate"
-                value={fromDate}
-                onChange={(e) => setFromDate(e.target.value)}
-                max={currentDate}
-            />
-    
-            <label htmlFor="toDate">Hasta: </label>
-            <input type="date" id="toDate" value={toDate} onChange={(e) => setToDate(e.target.value)} />
-    
-            <button onClick={clearFilters}>Vaciar Filtros</button>
-            </div>
-    
-    
-    
+      
+     
+      
             {status === 'success' &&
-            cases.map((legalCase) => (
+              cases.map((legalCase) => (
                 <div key={legalCase.idLegalCase} className="card">
-                <h2>{legalCase.title}</h2>
-                <p className="last-modified">
+                  <h2>{legalCase.title}</h2>
+                  <p className="last-modified">
                     Última modificación: {formatDate(legalCase.lastUpdate)}
-                </p>
-                <p>{legalCase.summary}</p>
-                <p>{legalCase.crime}</p>
-    
-                {(isClient || isLawyer) && (
+                  </p>
+                  <p>{legalCase.summary}</p>
+                  <p>{legalCase.crime}</p>
+      
+                 {(isClient || isLawyer) && (
                     <Link to={`/CaseDetails/${legalCase.idLegalCase}`}>
-                    <button>Ver Más</button>
+                      <button>Ver Más</button>
                     </Link>
-                )}
-    
+                  )}
+                  
+                 
                 </div>
-            ))}
+              ))}
             
-    
-            {isLawyer && (
-            <button className="floating-button-right" onClick={() => navigate('/RegisterCase')}>
-                +
-            </button>
-            )}
-    
+      
+           
+      
             {status === 'empty' && <p>No tienes casos registrados</p>}
-    
+      
             {status === 'success' && (
-            <div className="pagination">
+              <div className="pagination">
                 <button onClick={previousPage} disabled={currentPage === 0}>
-                Anterior
+                  Anterior
                 </button>
                 <span>{currentPage + 1}</span>
                 <button onClick={nextPage} disabled={currentPage === totalPages - 1}>
-                Siguiente
+                  Siguiente
                 </button>
-            </div>
-            )}  
-        </div>
+              </div>
+            )}
+      
+            
+          </div>
         </>
-    );
+      );
         }
 
     export default ArchivedCases;

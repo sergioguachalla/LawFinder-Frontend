@@ -41,7 +41,7 @@ const Invitation = () => {
     return (
       <>
         <Navbar></Navbar>
-        {invitations.length === 0 && status === 'success' && <h2>No tienes invitaciones pendientes</h2>}
+        {invitations.length === 0 && status === 'success' && <h2 style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '80vh' }}>No tienes invitaciones pendientes</h2>}
         {status === 'unauthorized' && <h2>403...</h2>}
         {status === 'loading' || status === 'init' && <div className="loading"><Spinner title={'Cargando Invitaciones'}/></div> }
         <div className="invitation-container">
