@@ -17,6 +17,7 @@ const RegisterCase = () => {
 
   const addContraparte = () => {
     const id = contrapartes[contrapartes.length - 1].id + 1;
+    
     setContrapartes(prev => [...prev, { id }]);
     
   }
@@ -25,7 +26,7 @@ const RegisterCase = () => {
     loadDepartamentos();
     loadCategorias();
     loadInstancias();
-  }, []);
+  }, [loadCategorias, loadDepartamentos, loadInstancias]);
 
   const handleDepartamentoChange =  (event) =>  {
     const idDepartamento = event.target.value;
@@ -155,7 +156,8 @@ const RegisterCase = () => {
           <div key={contraparte.id} className="form-row">
             <label>Contraparte {index + 1} *</label>
         
-            <input name={`contraparte${index}`} type="text" onChange={(event) => addCounterpart(event)}  />
+            <input name={`contraparte${index}`} type="text" onChange={(event) => {handleChange('contraparte',event), addCounterpart(event.target.value)}}  />
+            <button type="button" onClick={() => addCounterpart()}>Añadir</button>
           </div>
         ))}
         <button type="button" onClick={addContraparte}>+</button>

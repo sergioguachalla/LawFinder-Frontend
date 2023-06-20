@@ -22,7 +22,7 @@ export const useLoginUserStore = create((set,get) => ({
          "username": formData.username,
          "password": formData.secret,
       };
-      
+      setTimeout(() => {
       axios.post('http://localhost:8080/api/v1/auth/login', requestBody)
          .then((response) => {
             console.log(response);
@@ -38,7 +38,8 @@ export const useLoginUserStore = create((set,get) => ({
             console.log(error);
          });
          console.log('El estado es: ' + get().status);
-   }
+   }, 2000);
+   },
    
 }));
 

@@ -235,14 +235,13 @@ export const useCaseStore = create((set, get) => ({
     }
   },
 
-  addCounterpart: ( event) => {
-    event.preventDefault();
-    const contentaux=event.target.value;
+  addCounterpart: (value) => {
+    
     set((state) => ({
       ...state,
       formData: {
         ...state.formData,
-        contraparte: [...state.formData.contraparte, contentaux],
+        contraparte: [...state.formData.contraparte, value],
       },
     }));
   },

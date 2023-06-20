@@ -2,12 +2,11 @@ import '../styles/Login.css';
 import { useLoginUserStore } from '../store/userLoginStore';
 import { useNavigate } from 'react-router-dom';
 import { useEffect } from 'react';
-import { Spinner } from '@chakra-ui/react';
-import useAuthStore from '../store/authStore';
+import { Spinner } from 'react-bootstrap';
+import SpinnerCircle from './ui-custom/SpinnerCircle';
 const Login = () => {
   const navigate = useNavigate();
   const {handleChange, handleSubmit,status} = useLoginUserStore();
-  const {login} = useAuthStore();
   
   useEffect(() => {
     if (status === 'success') {
@@ -24,7 +23,7 @@ const Login = () => {
     e.preventDefault();
 
     // Lógica de autenticación
-    const loginSuccess = await handleSubmit(e);
+     await handleSubmit(e);
 
   };
 
@@ -50,19 +49,9 @@ const Login = () => {
               onChange={(e) => handleChange('secret', e)}
               className="login-input"
             />
-            <div className="options">
-              <div className="remember-me">
-                <input
-                  type="checkbox"
-                 
-                  
-                />
-                <label>Recordarme</label>
-              </div>
-              <a href="/forgot" className="forgot-password">¿Olvidaste tu contraseña?</a>
-            </div>
             
-              <button type="submit" className="login-button">Iniciar sesión {status === 'loading' && <Spinner></Spinner>}</button>
+              <button type="submit" className="login-button">Iniciar sesión {status === 'loading' && <SpinnerCircle></SpinnerCircle>    }</button>
+              
               <p className="error-message">{status === 'invalid' && 'Usuario o contraseña incorrectos'}</p>
             
             <a href="/Role" className="register-link">¿No tienes una cuenta? Regístrate</a>

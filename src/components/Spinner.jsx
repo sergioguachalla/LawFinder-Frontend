@@ -1,8 +1,12 @@
 import '../styles/Spinner.css';
-const Spinner = () => {
+const Spinner = ({title}) => {
    return(
-      <div className="loader"></div>
+      <>
+      <div className="chaotic-orbit"></div>
+      {title}
+      </>
    )
 }
 
 export default Spinner;
+

@@ -5,9 +5,9 @@
   import { useNavigate } from "react-router-dom";
   import '../styles/Home.css';
   import Navbar from "./Navbar";
-  import LoadingSpinner from "./Loading";
   import { Link } from "react-router-dom";
   import { getRoleFromToken } from "../utils/getIdFromToken"; 
+  import LoadingSpinner from "./Loading";
   const Home = () => {
     const navigate = useNavigate();
     const { getCases, cases, status, currentPage, totalPages, nextPage, previousPage, fromDate, toDate, setFromDate, 
@@ -19,11 +19,6 @@
       return formattedDate;
     }
     const currentDate = formatDate(new Date());
-
-    const handleArchiveCase = (id) => {
-      console.log(`Caso ${id} archivado xd`);
-      archiveCase(id);
-    }
    
     useEffect(() => {
       
@@ -40,7 +35,7 @@
         getInstances(); 
         getCategories();
         
-      }, 0); // quité el timeout
+      }, 1500); // quité el timeout
   
       return () => clearTimeout(timeoutId);
     } else {
@@ -53,9 +48,10 @@
   
   return (
     <>
-      {(status === 'loading' || status === 'init') && <LoadingSpinner />}
+     
+     
+      {(status === 'loading' || status === 'init') && <LoadingSpinner/>}
       <Navbar />
-  
       <div className="cases-container">
         <h1>Casos</h1>
         <div className="search-container">
