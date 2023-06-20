@@ -235,23 +235,6 @@ export const useCaseStore = create((set, get) => ({
     }
   },
 
-<<<<<<< HEAD
-  addCounterpart: (value) => {
-    
-    set((state) => ({
-      ...state,
-      formData: {
-        ...state.formData,
-        contraparte: [...state.formData.contraparte, value],
-      },
-    }));
-  },
-
-  printCounterpart:() =>{
-    console.log(get().formData.contraparte);
-  },
-=======
->>>>>>> e71582e315fce39488be94edd90c407e64c1e23b
 
   handleInvitation: async (param) => {
     try{

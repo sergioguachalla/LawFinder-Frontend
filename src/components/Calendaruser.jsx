@@ -1,14 +1,37 @@
-// AudienceCalendar.js
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Calendar, momentLocalizer } from 'react-big-calendar';
 import moment from 'moment';
 import useStore from '../store/calendarStore';
 import 'react-big-calendar/lib/css/react-big-calendar.css';
+import Modal from 'react-modal';
 import Navbar from "./Navbar";
+
 const localizer = momentLocalizer(moment);
+
+Modal.setAppElement('#root'); // Esta línea es necesaria para la accesibilidad.
 
 const AudienceCalendar = () => {
   const { audiences, fetchAudiences } = useStore((state) => state);
+  const [modalIsOpen, setModalIsOpen] = useState(false);
+  const [selectedEvent, setSelectedEvent] = useState(null);
+  const customStyles = {
+    content: {
+      top: '50%',
+      left: '50%',
+      right: 'auto',
+      bottom: 'auto',
+      marginRight: '-50%',
+      transform: 'translate(-50%, -50%)',
+      width: '50%', // Ancho reducido
+      border: '1px solid #ccc',
+      borderRadius: '4px',
+      padding: '20px',
+    },
+    overlay: { zIndex: 1000 },
+    closeButton: {
+      fontSize: '1.5em',
+    },
+  };
 
   useEffect(() => {
     fetchAudiences();
@@ -20,12 +43,21 @@ const AudienceCalendar = () => {
     return {
       start: date,
       end: endDate,
-      title: `${moment(date).format('HH:mm')} - ${audience.description} @ ${audience.address}`,
+      title: `${moment(date).format('HH:mm')} - ${audience.description}`,
       desc: audience.description,
       link: audience.link,
       address: audience.address,
     };
   });
+
+  const openModal = (event) => {
+    setSelectedEvent(event);
+    setModalIsOpen(true);
+  };
+
+  const closeModal = () => {
+    setModalIsOpen(false);
+  };
 
   return (
     <>
@@ -48,20 +80,27 @@ const AudienceCalendar = () => {
               color: 'black',
               border: '0',
               display: 'block',
-              cursor: event.link ? 'pointer' : 'default',
+              cursor: 'pointer',
             };
             return {
               style,
             };
           }}
-          onSelectEvent={(event) => {
-            if (event.link) {
-              window.open(event.link, "_blank");
-            } else {
-              alert(`Descripción: ${event.desc}\nDirección: ${event.address}`);
-            }
-          }}
+          onSelectEvent={openModal}
         />
+
+      <Modal
+        isOpen={modalIsOpen}
+        onRequestClose={closeModal}
+        contentLabel="Detalles del evento"
+        style={customStyles} // Añade los estilos personalizados aquí
+      >
+        <h2>{selectedEvent?.title}</h2>
+        <p>{selectedEvent?.desc}</p>
+        <p>{selectedEvent?.address}</p>
+        {selectedEvent?.link && <a href={selectedEvent.link} target="_blank" rel="noopener noreferrer">Ver más detalles</a>}
+        <button onClick={closeModal} style={customStyles.closeButton}>X</button>
+      </Modal>
       </div>
     </>
   );
