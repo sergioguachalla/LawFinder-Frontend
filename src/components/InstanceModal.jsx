@@ -61,7 +61,8 @@ const InstanceModal = () => {
           <Button variant="secondary" onClick={() => {setModalOpen(false)}}>
             Cerrar
           </Button>
-          <Button variant="primary" onClick={()=> {updateRequest(caseId)}}>
+          <Button variant="primary" onClick={()=> {updateRequest(caseId) 
+          setModalOpen(false)}}>
             Guardar
           </Button>
         </Modal.Footer>

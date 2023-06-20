@@ -128,7 +128,7 @@ export const useRegisterUserStore = create((set,get) => ({
      
       //set({ statusState: 'success' });
       if(response.status == 200){    
-        set({ statusState: 'success' });
+        set({ status: 'success' });
         
       }
       else if(response.status === 400){

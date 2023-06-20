@@ -62,7 +62,8 @@ const ConfirmationCode = () => {
         </div>
         <div className="button-row-custom">
           <button className="cancel-button-custom" onClick={()=> {navigate("/")}}>Cancelar</button>
-          <button className="continue-button-custom" onClick={handleRequestForm}>
+          <button className="continue-button-custom" onClick={handleRequestForm}
+          >
             Continuar
           </button>
           

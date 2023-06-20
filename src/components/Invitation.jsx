@@ -5,6 +5,7 @@ import '../styles/Invitation.css';
 import {  } from '../utils/getIdFromToken';
 import Navbar from './Navbar';
 import Spinner from './Spinner';
+import moment from 'moment';
 const Invitation = () => {
     const invitations = invitationStore(state => state.invitations);
     const loading = invitationStore(state => state.loading);
@@ -13,7 +14,9 @@ const Invitation = () => {
     let userId = invitationStore(state => state.userId);
     const getId = invitationStore(state => state.getIdFromToken);
     const { getInvitations, status } = invitationStore();
-  
+    const formatDate = (date) => {
+      return moment(date).format('DD/MM/YYYY');
+    }
     useEffect(() => {
       setTimeout(() => {
 
@@ -49,6 +52,8 @@ const Invitation = () => {
             <div className="card" key={index}>
               <h2>Título: Invitación {index + 1}</h2>
               <p>Número de caso: {invitation.legalCaseId}</p>
+              <p>Caso: {invitation.title}</p>
+              <p>Fecha de Inicio: {invitation.startDate}</p>
               <button onClick={() => acceptInvitation(invitation.actorId)} disabled={loading}>
                 {loading ? 'Procesando...' : 'Aceptar invitación'}
               </button>

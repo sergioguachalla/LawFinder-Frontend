@@ -53,6 +53,9 @@ export const useConfirmationStore = create((set) => ({
         },
       }
       const response = await axios.post('http://localhost:8080/api/v1/user', body);
+      if(response.data.code === '0000'){
+        set({status: 'success'});
+      }
       console.log(response);
       
 
@@ -112,11 +115,12 @@ export const useConfirmationStore = create((set) => ({
     }
     const registerUser = async () => {
       const response = await axios.post('http://localhost:8080/api/v1/verify', body);
-      console.log(response);
-      if(response.data.response == 'mail verified'){
+      console.log(response + " handle register");
+      if(response.data.code === '0000'){
         set({status: 'success'});
       }
     }
+
     registerUser();
   }
 }));

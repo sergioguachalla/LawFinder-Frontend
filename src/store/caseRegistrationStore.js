@@ -92,7 +92,7 @@ export const useCaseStore = create((set, get) => ({
       // Aquí puedes manejar el error, mostrar un mensaje de error, etc.
     }
   },
-  registerCase: () => { 
+  registerCase: async () => { 
     const token = localStorage.getItem('token');
     console.log(get().formData);
     const body = {
@@ -110,12 +110,15 @@ export const useCaseStore = create((set, get) => ({
       "counterpartName": get().formData.counterpart,
     };
     try{
-      const response = axios.post('http://localhost:8080/api/v1/legalcase', body,{
+      const response = await axios.post('http://localhost:8080/api/v1/legalcase', body,{
         headers: {
           'Content-Type': 'application/json', 
           'Authorization': `Bearer ${token}` 
         }
       });
+      // if(response.data.response === 'Task created'){
+        set({status: 'success'});
+      // }
      console.log(response);
     } catch (error) {
       console.log(error);

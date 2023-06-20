@@ -160,7 +160,11 @@ const CommentSection = ({ comments }) => {
       <AddCommentTitle>Añade un comentario</AddCommentTitle>
       <CommentForm>
         <CommentInput type="text" placeholder="Escribe un comentario" onChange={(e) => handleChange('comment', e)} />
-        <CommentButton onClick={(e) => handleSubmitComment(e)}>Comentar</CommentButton>
+        <CommentButton onClick={(e) => {
+  handleSubmitComment(e);
+  window.location.reload();
+}}>Comentar</CommentButton>
+
       </CommentForm>
 
       <Footer />

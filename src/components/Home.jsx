@@ -19,13 +19,8 @@ import { useEffect } from "react";
       const formattedDate = format(new Date(dateInput), 'yyyy-MM-dd');
       return formattedDate;
     }
-    let crimeName = "";
     const currentDate = formatDate(new Date());
-    const crime = async (id) => {
-      const crimeResponse = await getCrimeById(id);
-      crimeName = crimeResponse.data.name;
-      return crimeName;
-    }
+    
 
     useEffect(() => {
 
@@ -41,7 +36,7 @@ import { useEffect } from "react";
         getCategories();
       
         
-      }, 1500); // quité el timeout
+      }, 500); // quité el timeout
   
       return () => clearTimeout(timeoutId);
     } else {
@@ -124,7 +119,7 @@ import { useEffect } from "react";
               </p>
               <p>{legalCase.summary}</p>
               <p>{legalCase.crime}</p>
-              <p>{crime(legalCase.idCrime)[0]}</p>    
+             
               {(isClient || isLawyer) && (
                 <Link to={`/CaseDetails/${legalCase.idLegalCase}`}>
                   <button>Ver Más</button>
@@ -160,7 +155,7 @@ import { useEffect } from "react";
           </button>
         )}
       </div>
-      <Footer></Footer>
+      {/* <Footer></Footer> */}
     </>
   );
         }

@@ -29,7 +29,13 @@ const RegisterCase = () => {
     loadDepartamentos();
     loadCategorias();
     loadInstancias();
-  }, [loadCategorias, loadDepartamentos, loadInstancias]);
+    console.log(status);
+    if(status === 'success'){
+      setTimeout(() => {
+      navigate('/Home');
+      }, 800);
+    }
+  }, [loadCategorias, loadDepartamentos, loadInstancias, navigate, status]);
 
   const handleDepartamentoChange =  (event) =>  {
     const idDepartamento = event.target.value;
@@ -163,7 +169,7 @@ const RegisterCase = () => {
             <input name="customerEmail" type="text" onChange={(event) => handleCustomerEmail(event)} />
             <button type="button" onClick={() => {handleInvitation("customer")}}>Enviar invitación</button>
             {status === 'customerNotFound' && <p>Cliente no registrado</p>}
-            {status === 'customerFound' && <p>Invitación enviada a {formData.lawyerEmail} </p>}
+            {status === 'customerFound' && <p>Invitación enviada a {formData.customerEmail} </p>}
           </div>
         </div>
         <hr />
@@ -186,7 +192,7 @@ const RegisterCase = () => {
         <div className="form-row-rc">
           <div className="form-field-rc">
             <label>Fecha de inicio de la instancia *</label>
-            <input name="fechaInicioInstancia" type="date" max={today} onChange={(event) => handleChange('startDateInstance', event)} />
+            <input name="fechaInicioInstancia" type="date" min={today} onChange={(event) => handleChange('startDateInstance', event)} />
           </div>
           <div className="form-field-rc">
             <label>Fecha final de plazo de la instancia *</label>
