@@ -31,11 +31,6 @@ const Navbar = () => {
             </Link>
           </li>
           <li className="navbar-item">
-            <Link to="/Home" className="navbar-link">
-              <FontAwesomeIcon icon={faBriefcase} /> Casos
-            </Link>
-          </li>
-          <li className="navbar-item">
             <Link to="/Invitation" className="navbar-link">
               <FontAwesomeIcon icon={faEnvelopeOpenText} /> Invitaciones
             </Link>
