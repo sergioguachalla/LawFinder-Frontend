@@ -1,7 +1,6 @@
 import React from 'react';
 import '../styles/Role.css';
 import { Link } from 'react-router-dom';
-import Navbar from './Navbar';
 import useConfirmationStore from '../store/confirmationStore';
 const Role = () => {
   const {setRole} = useConfirmationStore();
@@ -13,7 +12,6 @@ const Role = () => {
   };
   return (
     <>
-    <Navbar></Navbar>
     
     <div className="role-selection">
       <h1 className="role-title">Law Finder</h1>
@@ -47,17 +45,6 @@ const Role = () => {
           <p className="role-label">Abogado</p>
           <p className="role-description">Profesional legal que ofrece servicios de asesoramiento y representación.</p>
         </div>
-        {/* 
-        <div className="button-wrapper">
-          <div className="role-button-container">
-            <button className="role-button">
-              <i className="fas fa-balance-scale"></i>
-            </button>
-          </div>
-          <p className="role-label">Autoridad Judicial</p>
-          <p className="role-description">Persona encargada de administrar justicia en un tribunal o juzgado.</p>
-        </div>
-        */}
       </div>
     </div>
     </>
