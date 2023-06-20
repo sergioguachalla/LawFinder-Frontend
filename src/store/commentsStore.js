@@ -5,7 +5,7 @@ export const useCommentsStore = create((set,get) => ({
       comments: [],
       comment: '',
       status: 'init',
-      caseId: localStorage.getItem('caseId'),
+      caseId: '',
       userId: localStorage.getItem('userId'),
       currentPage: 0,
       totalPages: 0,
@@ -23,6 +23,7 @@ export const useCommentsStore = create((set,get) => ({
          e.preventDefault()
          const token = localStorage.getItem('token');
          const userIdToken = getIdFromToken(token);
+         set({caseId: localStorage.getItem('caseId')})
          set({userId: userIdToken})
          set({status: 'loading'})
          const response = await axios.post(`http://localhost:8080/api/v1/legalcase/${get().caseId}/comment`, {
