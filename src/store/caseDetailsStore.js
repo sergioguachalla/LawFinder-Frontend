@@ -12,9 +12,10 @@ export const useCaseDetailsStore = create((set,get) => ({
 
    getCaseDetails: async (caseId) => {
       set({status: 'loading'});
-      console.log(caseId);
+      //console.log(caseId);
       localStorage.setItem('caseId', caseId);
       const response = await axios.get(`http://localhost:8080/api/v1/case/${caseId}/files`);
+      console.log(response);
       if(response.data.response != null || response.data.code == '0000'){
          set({status: 'success'});
          set({caseFiles: response.data.response});

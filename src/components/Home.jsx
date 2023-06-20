@@ -8,7 +8,7 @@ import { useEffect } from "react";
   import { getRoleFromToken } from "../utils/getIdFromToken"; 
   import LoadingSpinner from "./Loading";
   import Footer from "./Footer";
-  import { getCrimeById } from "../utils/caseInfo";
+  import { getUserNameFromToken } from "../utils/getIdFromToken";
   const Home = () => {
     const navigate = useNavigate();
     const { getCases, cases, status, currentPage, totalPages, nextPage, previousPage, fromDate, toDate, setFromDate, 
@@ -19,15 +19,16 @@ import { useEffect } from "react";
       const formattedDate = format(new Date(dateInput), 'yyyy-MM-dd');
       return formattedDate;
     }
+    let crimeName = "";
     const currentDate = formatDate(new Date());
     const crime = async (id) => {
-      const crime = await getCrimeById(id);
-      console.log(id);
-      console.log(crime['name']);
-      return getCrimeById(id)['name'];
+      const crimeResponse = await getCrimeById(id);
+      crimeName = crimeResponse.data.name;
+      return crimeName;
     }
 
     useEffect(() => {
+
     const token = localStorage.getItem('token');
 
     if(token){
@@ -38,6 +39,7 @@ import { useEffect } from "react";
         getCases();
         getInstances(); 
         getCategories();
+      
         
       }, 1500); // quité el timeout
   
@@ -52,8 +54,6 @@ import { useEffect } from "react";
   
   return (
     <>
-     
-     
       {(status === 'loading' || status === 'init') && <LoadingSpinner/>}
       <Navbar />
       <div className="cases-container">
@@ -106,7 +106,7 @@ import { useEffect } from "react";
             />
     
             <label htmlFor="toDate" className="label-con-margin">Hasta: </label>
-            <input type="date" id="toDate" value={toDate} onChange={(e) => setToDate(e.target.value)} />
+            <input type="date" id="toDate" min={fromDate} value={toDate} onChange={(e) => setToDate(e.target.value)} />
     
             <button onClick={clearFilters} className="button-filter" >Vaciar Filtros</button>
           </div>
@@ -119,14 +119,13 @@ import { useEffect } from "react";
           cases.map((legalCase) => (
 <div key={legalCase.idLegalCase} className="card" style={{ width: '100%', maxWidth: '800px' }}>
   <h2>{legalCase.title}</h2>
+  <p>Subido por: {getUserNameFromToken(localStorage.getItem('token'))}</p>
   <p className="last-modified">
     Última modificación: {formatDate(legalCase.lastUpdate)}
   </p>
-  <p>{legalCase.summary}</p>
-  <p>{legalCase.crime}</p>
-  <p>{crime(legalCase.idCrime)[0]}</p>
   
-             {(isClient || isLawyer) && (
+      <p>{legalCase.summary}</p>
+            {(isClient || isLawyer) && (
                 <Link to={`/CaseDetails/${legalCase.idLegalCase}`}>
                   <button>Ver Más</button>
                 </Link>

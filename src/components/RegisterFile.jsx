@@ -5,6 +5,7 @@ import { useParams } from 'react-router-dom';
 import '../styles/RegisterFile.css'; 
 import { useCaseDetailsStore } from '../store/caseDetailsStore';
 import {useNavigate} from 'react-router-dom';
+import Navbar from './Navbar';
 const RegisterFile = () => {
   const navigate = useNavigate();
   const {caseIdParams} = useParams();
@@ -52,37 +53,94 @@ const RegisterFile = () => {
   const onSubmit = (event) => {
     event.preventDefault();
     uploadFile();
+    setTimeout(() => {
+      navigate(`/CaseDetails/${caseId}`);
+    }, 500);
   }
 
   return (
-    <div className='container'>
-      <form onSubmit={onSubmit} className='register-file-form'>
-        <h1>Añadir al expendiente del caso : {caseId}</h1>
-        <label>Corte:</label>
-        <select onChange={(e) => setSelectedCourt(parseInt(e.target.value))} disabled={loading} value={selectedCourt}>
-          {courts.map(court => <option key={court.idCourt} value={court.idCourt}>{court.courtName}</option>)}
-        </select>
-        <label>Tipo de documento:</label>
-        <select onChange={(e) => setSelectedDocumentType(parseInt(e.target.value))} disabled={loading} value={selectedDocumentType}>
-          {documentTypes.map(type => <option key={type.typeId} value={type.typeId}>{type.name}</option>)}
-        </select>
-        <div {...getRootProps()} className="dropzone">
-          <input {...getInputProps()} disabled={loading} />
-          {isDragActive ?
-            <p>Suelta el archivo aquí...</p> :
-            <p>{fileName ? `Archivo seleccionado: ${fileName}` : "Arrastra algún archivo aquí, o haz clic para seleccionar archivo"}</p>
-          }
+    <div className="container">
+      
+      <div className="row">
+        <div className="col">
+          <form onSubmit={onSubmit} className="register-file-form">
+            <h1>Añadir al expediente del caso: {caseId}</h1>
+            <div className="form-group">
+              <label>Corte:</label>
+              <select
+                onChange={(e) => setSelectedCourt(parseInt(e.target.value))}
+                disabled={loading}
+                value={selectedCourt}
+                className="form-control"
+              >
+                {courts.map((court) => (
+                  <option key={court.idCourt} value={court.idCourt}>
+                    {court.courtName}
+                  </option>
+                ))}
+              </select>
+            </div>
+            <div className="form-group">
+              <label>Tipo de documento:</label>
+              <select
+                onChange={(e) => setSelectedDocumentType(parseInt(e.target.value))}
+                disabled={loading}
+                value={selectedDocumentType}
+                className="form-control"
+              >
+                {documentTypes.map((type) => (
+                  <option key={type.typeId} value={type.typeId}>
+                    {type.name}
+                  </option>
+                ))}
+              </select>
+            </div>
+            <div {...getRootProps()} className="dropzone">
+              <input {...getInputProps()} disabled={loading} />
+              {isDragActive ? (
+                <p>Suelta el archivo aquí...</p>
+              ) : (
+                <p>
+                  {fileName ? `Archivo seleccionado: ${fileName}` : "Arrastra algún archivo aquí, o haz clic para seleccionar archivo"}
+                </p>
+              )}
+            </div>
+            <div className="form-group">
+              <input
+                type="text"
+                value={summary}
+                onChange={(e) => setSummary(e.target.value)}
+                placeholder="Resumen"
+                disabled={loading}
+                className="form-control"
+              />
+            </div>
+            <div className="form-group">
+              <input
+                type="date"
+                value={dueDate}
+                onChange={(e) => setDueDate(e.target.value)}
+                disabled={loading}
+                className="form-control"
+              />
+            </div>
+            <button type="submit" disabled={loading} className="btn btn-primary">
+              Enviar
+            </button>
+            {/* cuando se le de click a cancelar, vuelve a /home */}
+            <button
+              type="button"
+              onClick={() => navigate('/Home')}
+              disabled={loading}
+              className="btn btn-secondary"
+            >
+              Cancelar
+            </button>
+            {loading ? <p>Cargando...</p> : <p>{message}</p>}
+          </form>
         </div>
-        <input type="text" value={summary} onChange={(e) => setSummary(e.target.value)} placeholder="Resumen" disabled={loading}  />
-        <input type="date" value={dueDate} onChange={(e) => setDueDate(e.target.value)} disabled={loading}  />
-        <button type="submit" disabled={loading} >Enviar</button>
-        {/* cuando se le de click a cancelar, vuelve a /home */}
-        <button type="button" onClick={() => navigate('/Home')} disabled={loading} >Cancelar</button>
-
-        {loading ? <p>Cargando... </p> : <p>{message}</p>}
-      </form>
+      </div>
     </div>
   );
 };
-
 export default RegisterFile;

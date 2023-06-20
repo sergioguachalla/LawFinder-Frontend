@@ -2,7 +2,8 @@
   background-color: #f8f8f8;
   padding: 20px;
   border-radius: 10px;
-  max-width: 600px;
+  width: 100%;
+  max-width: 1000px;
   margin: 40px auto;
   font-family: 'San Francisco', Arial, sans-serif;
 }
