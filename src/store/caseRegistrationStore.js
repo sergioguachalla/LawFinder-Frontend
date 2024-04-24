@@ -110,7 +110,7 @@ export const useCaseStore = create((set, get) => ({
       "counterpartName": get().formData.counterpart,
     };
     try{
-      const response = await axios.post('http://localhost:8080/api/v1/legalcase', body,{
+      const response = await axios.post(`${process.env.API_URL}/legalcase`, body,{
         headers: {
           'Content-Type': 'application/json', 
           'Authorization': `Bearer ${token}` 
@@ -127,7 +127,7 @@ export const useCaseStore = create((set, get) => ({
   },
   loadDepartamentos: async () => {
     try {
-      const response = await axios.get('http://localhost:8080/api/v1/department');
+      const response = await axios.get(`${process.env.API_URL}/department`);
       set((state) => ({
         ...state,
         departamentos: response.data.response,
@@ -152,7 +152,7 @@ export const useCaseStore = create((set, get) => ({
   
   loadProvincias: async (idDepartamento) => {
     try {
-      const response = await axios.get(`http://localhost:8080/api/v1/department/${idDepartamento}/province`);
+      const response = await axios.get(`${process.env.API_URL}/department/${idDepartamento}/province`);
       set((state) => ({
         ...state,
         provincias: response.data.response,
@@ -167,7 +167,7 @@ export const useCaseStore = create((set, get) => ({
   },
   loadInstancias: async () => {
     try{
-      const responseInstancias = await axios.get('http://localhost:8080/api/v1/legalcase/instance');
+      const responseInstancias = await axios.get(`${process.env.API_URL}/legalcase/instance`);
       set(() => ({ instancias: responseInstancias.data.response }));
       console.log(responseInstancias.data.response);
       set((state) => ({formData: {...state.formData, idInstance: ''+responseInstancias.data.response[0].instanceId}}));
@@ -181,7 +181,7 @@ export const useCaseStore = create((set, get) => ({
   },
   loadCategorias: async () => {
     try{
-      const response = await axios.get('http://localhost:8080/api/v1/category');
+      const response = await axios.get(`${process.env.API_URL}/category`);
       // eslint-disable-next-line no-unused-vars
       set((state) => ({ categorias: response.data.response }));
       if(response.data.response[0].idCategory) {
@@ -199,7 +199,7 @@ export const useCaseStore = create((set, get) => ({
   },
   loadSubCategorias: async (idCategoria) => {
     try {
-      const response = await axios.get(`http://localhost:8080/api/v1/category/${idCategoria}/subcategory`,{
+      const response = await axios.get(`${process.env.API_URL}/category/${idCategoria}/subcategory`,{
         headers: {
           'Content-Type': 'application/json',
           'Authorization': `Bearer ${localStorage.getItem('token')}`
@@ -227,7 +227,7 @@ export const useCaseStore = create((set, get) => ({
   
   loadCrimes: async (idSubCategoria) => {
     try {
-      const response = await axios.get(`http://localhost:8080/api/v1/subcategory/${idSubCategoria}/crime`);
+      const response = await axios.get(`${process.env.API_URL}/subcategory/${idSubCategoria}/crime`);
       set((state) => ({
         ...state,
         crimes: response.data.response,
@@ -249,7 +249,7 @@ export const useCaseStore = create((set, get) => ({
         email = get().formData.customerEmail;
       }
       console.log(email);
-      const response = await axios.post(`http://localhost:8080/api/v1/userverification`,{"email":email});
+      const response = await axios.post(`${process.env.API_URL}/userverification`,{"email":email});
       console.log(response);
       if(response.data.response == "User Does Not Exist"){
         set(() => ({status : param+"NotFound"}));

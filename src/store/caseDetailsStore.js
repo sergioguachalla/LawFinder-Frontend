@@ -14,7 +14,7 @@ export const useCaseDetailsStore = create((set,get) => ({
       set({status: 'loading'});
       //console.log(caseId);
       localStorage.setItem('caseId', caseId);
-      const response = await axios.get(`${API_URL}/case/${caseId}/files`);
+      const response = await axios.get(`${process.env.API_URL}/case/${caseId}/files`);
       console.log(response);
       if(response.data.response != null || response.data.code == '0000'){
          set({status: 'success'});
@@ -27,7 +27,7 @@ export const useCaseDetailsStore = create((set,get) => ({
       set({status: 'loading'});
       console.log(caseId);
       //localStorage.setItem('caseId', caseId);
-      const response = await axios.get(`http://localhost:8080/api/v1/legalcase/${caseId}/information`);
+      const response = await axios.get(`${process.env.API_URL}/legalcase/${caseId}/information`);
       if(response.data.response != null || response.data.code == '0000'){
          set({status: 'success'});
         // console.log(response.data.response);
@@ -40,7 +40,7 @@ export const useCaseDetailsStore = create((set,get) => ({
       set({status: 'loading'});
       const token = localStorage.getItem('token');
       //localStorage.setItem('caseId', caseId);
-      const response = await axios.put(`http://localhost:8080/api/v1/legalcase/${caseId}`,{},{
+      const response = await axios.put(`${process.env.API_URL}/legalcase/${caseId}`,{},{
          headers: {
             'Content-Type': 'application/json',
             'Authorization': `Bearer ${token}`

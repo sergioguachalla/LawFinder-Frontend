@@ -14,7 +14,7 @@ export const useCaseFilesStore = create((set,get) => ({
    getPreliminarCases: async (caseId) => {
       
       set({status: 'loading'});
-      const response = await axios.get(`http://localhost:8080/api/v1/case/${caseId}/instance/Instancia Preliminar`);
+      const response = await axios.get(`${process.env.API_URL}/case/${caseId}/instance/Instancia Preliminar`);
       if(response.data.response != null || response.data.code == '0000'){
          set({status: 'success'});
          set({preliminarCases: response.data.response});
@@ -24,7 +24,7 @@ export const useCaseFilesStore = create((set,get) => ({
    },
    getSentenceCases: async (caseId) => {
       set({status: 'loading'});
-      const response = await axios.get(`http://localhost:8080/api/v1/case/${caseId}/instance/Instancia de Sentencia`);
+      const response = await axios.get(`${process.env.API_URL}/case/${caseId}/instance/Instancia de Sentencia`);
       if(response.data.response != null || response.data.code == '0000'){
          set({status: 'success'});
          set({sentenceCases: response.data.response});
@@ -34,7 +34,7 @@ export const useCaseFilesStore = create((set,get) => ({
    },
    getInvestigationCases: async (caseId) => {
       set({status: 'loading'});
-      const response = await axios.get(`http://localhost:8080/api/v1/case/${caseId}/instance/Instancia de Investigación`);
+      const response = await axios.get(`${process.env.API_URL}/case/${caseId}/instance/Instancia de Investigación`);
       if(response.data.response != null || response.data.code == '0000'){
          set({status: 'success'});
          set({investigationCases: response.data.response});
