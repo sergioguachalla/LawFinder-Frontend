@@ -8,7 +8,6 @@ export const useLoginUserStore = create((set,get) => ({
    setStatus: (status) => set({status: status}),
    handleChange: (fieldName, event) => {
       const {value} = event.target;
-      console.log('Cambio en el campo ' + fieldName + ' con valor ' + value);
       set({[fieldName]: value});
    },
    handleSubmit: (event) => {
@@ -23,7 +22,7 @@ export const useLoginUserStore = create((set,get) => ({
          "password": formData.secret,
       };
       setTimeout(() => {
-      axios.post('http://localhost:8080/api/v1/auth/login', requestBody)
+      axios.post(`${process.env.API_URL}/auth/login`, requestBody)
          .then((response) => {
             console.log(response);
             set({username: formData.username});     
