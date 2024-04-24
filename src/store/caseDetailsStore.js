@@ -14,7 +14,7 @@ export const useCaseDetailsStore = create((set,get) => ({
       set({status: 'loading'});
       //console.log(caseId);
       localStorage.setItem('caseId', caseId);
-      const response = await axios.get(`http://localhost:8080/api/v1/case/${caseId}/files`);
+      const response = await axios.get(`${API_URL}/case/${caseId}/files`);
       console.log(response);
       if(response.data.response != null || response.data.code == '0000'){
          set({status: 'success'});
