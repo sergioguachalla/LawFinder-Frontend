@@ -20,7 +20,7 @@ export const useRegisterAudienceStore = create((set, get) => ({
     set({ loading: true, status: 'loading' });
     try {
       const audienceDate = moment(`${get().date}T${get().hour}`).format("YYYY-MM-DDTHH:mm:ss");
-      await axios.post(`http://localhost:8080/api/v1/legalcase/${caseId}/audience`, {
+      await axios.post(`${API_URL}/legalcase/${caseId}/audience`, {
         audienceDate: audienceDate,
         description: get().description,
         link: get().meetingLink,
