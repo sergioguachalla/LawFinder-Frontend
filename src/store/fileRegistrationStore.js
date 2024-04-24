@@ -20,12 +20,12 @@ export const useStore = create((set, get) => ({
   setSelectedDocumentType: (type) => set({ selectedDocumentType: type }),
   getCourts: async () => {
     set({caseId: localStorage.getItem('caseId')})
-    const response = await axios.get('http://localhost:8080/api/v1/Court');
+    const response = await axios.get(`${process.env.API_URL}/Court`);
     set({ courts: response.data.response });
     console.log("caseid" + get().caseId);
   },
   getDocumentTypes: async () => {
-    const response = await axios.get('http://localhost:8080/api/v1/LegalType');
+    const response = await axios.get(`${process.env.API_URL}/LegalType`);
     set({ documentTypes: response.data.response });
   },
   uploadFile: async () => {
@@ -49,7 +49,7 @@ export const useStore = create((set, get) => ({
     console.log(formData);
 
     try {
-      const response = await axios.post('http://localhost:8080/api/v1/legalfile', formData, {
+      const response = await axios.post(`${process.env.API_URL}/legalfile`, formData, {
         headers: {
           'Content-Type': 'multipart/form-data'
         }
@@ -60,7 +60,7 @@ export const useStore = create((set, get) => ({
     }
   },
   getInstanceId: async () => {
-    const response = await axios.get(`http://localhost:8080/api/v1/instanceLegal/${localStorage.getItem('caseId')}`);
+    const response = await axios.get(`${process.env.API_URL}/instanceLegal/${localStorage.getItem('caseId')}`);
     console.log(response.data.response.instanceId);
     set({ instanceId: response.data.response.instanceLegalCaseId });
   }
