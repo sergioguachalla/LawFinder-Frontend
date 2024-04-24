@@ -2,6 +2,8 @@ import {create} from 'zustand';
 import axios from 'axios';
 import {useRegisterUserStore} from './userRegistrationStore';
 import useLawyerStore from './lawyerRegistrationStore';
+const API_URL = import.meta.env.VITE_API_URL;
+
 export const useConfirmationStore = create((set) => ({
   code: ['', '', '', '', '', ''],
   status: 'init',
@@ -25,7 +27,7 @@ export const useConfirmationStore = create((set) => ({
       "code": useConfirmationStore.getState().code.join(''),
     };
     const verifyUser = async () => {
-      const response = await axios.put(`${process.env.API_URL}/verify`, body);
+      const response = await axios.put(`${API_URL}/verify`, body);
       console.log(response);
       if(response.data.response == 'mail verified'){
         set({status: 'success'});
@@ -52,7 +54,7 @@ export const useConfirmationStore = create((set) => ({
 
         },
       }
-      const response = await axios.post(`${process.env.API_URL}/user`, body);
+      const response = await axios.post(`${API_URL}/user`, body);
       if(response.data.code === '0000'){
         set({status: 'success'});
       }
@@ -70,7 +72,7 @@ export const useConfirmationStore = create((set) => ({
       "code": useConfirmationStore.getState().code.join(''),
     };
     const verifyUser = async () => {
-      const response = await axios.put(`${process.env.API_URL}/verify`, body);
+      const response = await axios.put(`${API_URL}/verify`, body);
       console.log(response);
       if(response.data.response == 'mail verified'){
         set({status: 'verified'});
@@ -97,7 +99,7 @@ export const useConfirmationStore = create((set) => ({
 
         },
       }
-      const response = await axios.post(`${process.env.API_URL}/lawyer`, body);
+      const response = await axios.post(`${API_URL}/lawyer`, body);
       console.log(response);
       
 
@@ -114,7 +116,7 @@ export const useConfirmationStore = create((set) => ({
       "email": formData.correo,
     }
     const registerUser = async () => {
-      const response = await axios.post(`${process.env.API_URL}/verify`, body);
+      const response = await axios.post(`${API_URL}/verify`, body);
       console.log(response + " handle register");
       if(response.data.code === '0000'){
         set({status: 'success'});

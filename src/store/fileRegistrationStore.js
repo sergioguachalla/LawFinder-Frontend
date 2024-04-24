@@ -1,5 +1,9 @@
 import axios from 'axios';
 import {create} from 'zustand';
+import { configDotenv } from 'dotenv';
+
+const API_URL = import.meta.env.VITE_API_URL;
+
 export const useStore = create((set, get) => ({
   loading: false,
   message: '',
@@ -20,12 +24,12 @@ export const useStore = create((set, get) => ({
   setSelectedDocumentType: (type) => set({ selectedDocumentType: type }),
   getCourts: async () => {
     set({caseId: localStorage.getItem('caseId')})
-    const response = await axios.get(`${process.env.API_URL}/Court`);
+    const response = await axios.get(`${configDotenv.env.API_URL}/Court`);
     set({ courts: response.data.response });
     console.log("caseid" + get().caseId);
   },
   getDocumentTypes: async () => {
-    const response = await axios.get(`${process.env.API_URL}/LegalType`);
+    const response = await axios.get(`${API_URL}/LegalType`);
     set({ documentTypes: response.data.response });
   },
   uploadFile: async () => {
@@ -49,7 +53,7 @@ export const useStore = create((set, get) => ({
     console.log(formData);
 
     try {
-      const response = await axios.post(`${process.env.API_URL}/legalfile`, formData, {
+      const response = await axios.post(`${API_URL}/legalfile`, formData, {
         headers: {
           'Content-Type': 'multipart/form-data'
         }
@@ -60,7 +64,7 @@ export const useStore = create((set, get) => ({
     }
   },
   getInstanceId: async () => {
-    const response = await axios.get(`${process.env.API_URL}/instanceLegal/${localStorage.getItem('caseId')}`);
+    const response = await axios.get(`${API_URL}/instanceLegal/${localStorage.getItem('caseId')}`);
     console.log(response.data.response.instanceId);
     set({ instanceId: response.data.response.instanceLegalCaseId });
   }

@@ -2,6 +2,8 @@ import create from 'zustand';
 import axios from 'axios';
 import jwt_decode from "jwt-decode";
 
+const API_URL = import.meta.env.VITE_API_URL;
+
 const useStore = create((set,get) => ({
   audiences: [],
   id: '',
@@ -17,7 +19,7 @@ const useStore = create((set,get) => ({
   fetchAudiences: async () => {
     set(() => ({ id: get().getIdFromToken() }));
     try {
-      const res = await axios.get(`${process.env.API_URL}/audience/user/${get().id}`);
+      const res = await axios.get(`${API_URL}/audience/user/${get().id}`);
       if (res.data.code === "0000") {
         set({ audiences: res.data.response });
       }

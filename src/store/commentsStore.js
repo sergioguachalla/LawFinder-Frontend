@@ -2,6 +2,9 @@ import {create} from 'zustand'
 import axios from 'axios'
 import { getIdFromToken } from '../utils/getIdFromToken';
 import { now } from 'moment/moment';
+
+const API_URL = import.meta.env.VITE_API_URL;
+
 export const useCommentsStore = create((set,get) => ({
       comments: [],
       comment: '',
@@ -28,7 +31,7 @@ export const useCommentsStore = create((set,get) => ({
          set({caseId: localStorage.getItem('caseId')})
          set({userId: userIdToken})
         
-         const response = await axios.post(`${process.env.API_URL}/legalcase/${get().caseId}/comment`, {
+         const response = await axios.post(`${API_URL}/legalcase/${get().caseId}/comment`, {
             "userId": get().userId,
             "commentContent": get().comment,
             "legalCaseId": get().caseId,
@@ -47,7 +50,7 @@ export const useCommentsStore = create((set,get) => ({
          console.log(caseId);
          localStorage.setItem('caseId', caseId);
         
-         const response = await axios.get(`${process.env.API_URL}/legalcase/${caseId}/comments`,{
+         const response = await axios.get(`${API_URL}/legalcase/${caseId}/comments`,{
             params: {
                page: get().currentPage,
                size: 5,

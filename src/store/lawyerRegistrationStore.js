@@ -1,6 +1,9 @@
 import { create } from 'zustand';
 import axios from 'axios';
 
+
+const API_URL = import.meta.env.VITE_API_URL;
+
 export const useLawyerStore = create((set,get) => ({
   deviceId: localStorage.getItem('device-id') || generateUUID(),
   nombres: '',
@@ -105,7 +108,7 @@ export const useLawyerStore = create((set,get) => ({
     };
 
     const userExists = async () => {
-      const response = await axios.post(`${process.env.API_URL}/verification`, requestVerificatioBody);
+      const response = await axios.post(`${API_URL}/verification`, requestVerificatioBody);
       console.log(response);
       if(response.data.response == "User Already Exists"){
         //alert('El correo ya se encuentra registrado');
@@ -125,7 +128,7 @@ export const useLawyerStore = create((set,get) => ({
     const registerUser = async () => {
       set({ statusState: 'loading' });
       
-      const response = await axios.post(`${process.env.API_URL}/verify`, verificationBody);
+      const response = await axios.post(`${API_URL}/verify`, verificationBody);
       console.log(response);
      
       //set({ statusState: 'success' });
@@ -144,7 +147,7 @@ export const useLawyerStore = create((set,get) => ({
   },
   verifyUsername: async (name,lastname) => {
    
-    const response = await axios.get(`${process.env.API_URL}/verification/user/${name}/${lastname}`);
+    const response = await axios.get(`${API_URL}/verification/user/${name}/${lastname}`);
     console.log(name,lastname);
     if(response.data.response === 'User Already Exists'){
       set({ userAlreadyExists: true });

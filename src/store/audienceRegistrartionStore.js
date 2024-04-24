@@ -2,6 +2,9 @@ import axios from 'axios';
 import {create} from 'zustand';
 import moment from 'moment';
 
+const API_URL = import.meta.env.VITE_API_URL;
+
+
 export const useRegisterAudienceStore = create((set, get) => ({
   loading: false,
   date: '',
@@ -20,7 +23,7 @@ export const useRegisterAudienceStore = create((set, get) => ({
     set({ loading: true, status: 'loading' });
     try {
       const audienceDate = moment(`${get().date}T${get().hour}`).format("YYYY-MM-DDTHH:mm:ss");
-      await axios.post(`${process.env.API_URL}/legalcase/${caseId}/audience`, {
+      await axios.post(`${API_URL}/legalcase/${caseId}/audience`, {
         audienceDate: audienceDate,
         description: get().description,
         link: get().meetingLink,

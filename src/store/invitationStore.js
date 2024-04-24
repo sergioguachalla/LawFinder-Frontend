@@ -1,6 +1,9 @@
 import {create} from 'zustand';
 import jwt_decode from "jwt-decode";
 import axios from 'axios';
+
+const API_URL = import.meta.env.VITE_API_URL;
+
 const invitationStore = create(set => ({
   invitations: [],
   loading: false,
@@ -20,7 +23,7 @@ const invitationStore = create(set => ({
   getInvitations: async (userId) => {
  
    set(() => ({ status: 'loading' }));
-    const response = await axios.get(`${process.env.API_URL}/invitation/${userId}`,{
+    const response = await axios.get(`${API_URL}/invitation/${userId}`,{
       headers: {
         'Content-Type': 'application/json',
         'Authorization': `Bearer ${localStorage.getItem('token')}`

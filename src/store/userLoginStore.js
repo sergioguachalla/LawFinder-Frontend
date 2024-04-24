@@ -1,7 +1,10 @@
 import {create} from 'zustand';
 import axios from 'axios';
 
+const API_URL = import.meta.env.VITE_API_URL;
+
 export const useLoginUserStore = create((set,get) => ({
+   
    username: '',
    secret: '',
    status: 'init',
@@ -22,7 +25,7 @@ export const useLoginUserStore = create((set,get) => ({
          "password": formData.secret,
       };
       setTimeout(() => {
-      axios.post(`${process.env.API_URL}/auth/login`, requestBody)
+      axios.post(`${API_URL}/auth/login`, requestBody)
          .then((response) => {
             console.log(response);
             set({username: formData.username});     
@@ -37,7 +40,7 @@ export const useLoginUserStore = create((set,get) => ({
             console.log(error);
          });
          console.log('El estado es: ' + get().status);
-   }, 2000);
+   }, 1500);
    },
    
 }));
