@@ -25,7 +25,7 @@ export const useConfirmationStore = create((set) => ({
       "code": useConfirmationStore.getState().code.join(''),
     };
     const verifyUser = async () => {
-      const response = await axios.put('http://localhost:8080/api/v1/verify', body);
+      const response = await axios.put(`${process.env.API_URL}/verify`, body);
       console.log(response);
       if(response.data.response == 'mail verified'){
         set({status: 'success'});
@@ -52,7 +52,7 @@ export const useConfirmationStore = create((set) => ({
 
         },
       }
-      const response = await axios.post('http://localhost:8080/api/v1/user', body);
+      const response = await axios.post(`${process.env.API_URL}/user`, body);
       if(response.data.code === '0000'){
         set({status: 'success'});
       }
@@ -70,7 +70,7 @@ export const useConfirmationStore = create((set) => ({
       "code": useConfirmationStore.getState().code.join(''),
     };
     const verifyUser = async () => {
-      const response = await axios.put('http://localhost:8080/api/v1/verify', body);
+      const response = await axios.put(`${process.env.API_URL}/verify`, body);
       console.log(response);
       if(response.data.response == 'mail verified'){
         set({status: 'verified'});
@@ -97,7 +97,7 @@ export const useConfirmationStore = create((set) => ({
 
         },
       }
-      const response = await axios.post('http://localhost:8080/api/v1/lawyer', body);
+      const response = await axios.post(`${process.env.API_URL}/lawyer`, body);
       console.log(response);
       
 
@@ -114,7 +114,7 @@ export const useConfirmationStore = create((set) => ({
       "email": formData.correo,
     }
     const registerUser = async () => {
-      const response = await axios.post('http://localhost:8080/api/v1/verify', body);
+      const response = await axios.post(`${process.env.API_URL}/verify`, body);
       console.log(response + " handle register");
       if(response.data.code === '0000'){
         set({status: 'success'});

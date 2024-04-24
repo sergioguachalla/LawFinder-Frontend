@@ -28,7 +28,7 @@ export const useCommentsStore = create((set,get) => ({
          set({caseId: localStorage.getItem('caseId')})
          set({userId: userIdToken})
         
-         const response = await axios.post(`http://localhost:8080/api/v1/legalcase/${get().caseId}/comment`, {
+         const response = await axios.post(`${process.env.API_URL}/legalcase/${get().caseId}/comment`, {
             "userId": get().userId,
             "commentContent": get().comment,
             "legalCaseId": get().caseId,
@@ -47,7 +47,7 @@ export const useCommentsStore = create((set,get) => ({
          console.log(caseId);
          localStorage.setItem('caseId', caseId);
         
-         const response = await axios.get(`http://localhost:8080/api/v1/legalcase/${caseId}/comments`,{
+         const response = await axios.get(`${process.env.API_URL}/legalcase/${caseId}/comments`,{
             params: {
                page: get().currentPage,
                size: 5,
