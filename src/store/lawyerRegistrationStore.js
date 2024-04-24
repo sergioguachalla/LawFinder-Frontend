@@ -105,7 +105,7 @@ export const useLawyerStore = create((set,get) => ({
     };
 
     const userExists = async () => {
-      const response = await axios.post('http://localhost:8080/api/v1/verification', requestVerificatioBody);
+      const response = await axios.post(`${process.env.API_URL}/verification`, requestVerificatioBody);
       console.log(response);
       if(response.data.response == "User Already Exists"){
         //alert('El correo ya se encuentra registrado');
@@ -125,7 +125,7 @@ export const useLawyerStore = create((set,get) => ({
     const registerUser = async () => {
       set({ statusState: 'loading' });
       
-      const response = await axios.post('http://localhost:8080/api/v1/verify', verificationBody);
+      const response = await axios.post(`${process.env.API_URL}/verify`, verificationBody);
       console.log(response);
      
       //set({ statusState: 'success' });
@@ -144,7 +144,7 @@ export const useLawyerStore = create((set,get) => ({
   },
   verifyUsername: async (name,lastname) => {
    
-    const response = await axios.get(`http://localhost:8080/api/v1/verification/user/${name}/${lastname}`);
+    const response = await axios.get(`${process.env.API_URL}/verification/user/${name}/${lastname}`);
     console.log(name,lastname);
     if(response.data.response === 'User Already Exists'){
       set({ userAlreadyExists: true });
