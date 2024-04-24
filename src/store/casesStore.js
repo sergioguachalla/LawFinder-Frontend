@@ -50,7 +50,7 @@ export const useCasesStore = create((set, get) => ({
 
   getCategories: async () => {
     try {
-      const response = await axios.get('http://localhost:8080/api/v1/category');
+      const response = await axios.get(`${process.env.API_URL}/category`);
       if (response.data.code === '0000') {
         set({ categories: response.data.response });
       }
@@ -60,7 +60,7 @@ export const useCasesStore = create((set, get) => ({
   },
   getInstances: async () => {
     try {
-      const response = await axios.get('http://localhost:8080/api/v1/legalcase/instance');
+      const response = await axios.get(`${process.env.API_URL}/legalcase/instance`);
       if (response.data.code === '0000') {
         set({ instances: response.data.response });
       }
@@ -98,7 +98,7 @@ export const useCasesStore = create((set, get) => ({
       const page = get().currentPage;
       set(() => ({ currentPage: page }) );
   
-      const response = await axios.get(`http://localhost:8080/api/v1/legalcase/user/${get().id}`, {
+      const response = await axios.get(`${process.env.API_URL}/legalcase/user/${get().id}`, {
         params: {
           page: get().currentPage,
           size: 2, // Tamaño de página
@@ -161,7 +161,7 @@ export const useCasesStore = create((set, get) => ({
   },
   archiveCase: async (caseId) => {
     try {
-      const response = await axios.put(`http://localhost:8080/api/v1/legalcase/${caseId}`);
+      const response = await axios.put(`${process.env.API_URL}/legalcase/${caseId}`);
       if (response.status === 200) {
         console.log('Case archived');
         //get().getCases();  Refetch cases
