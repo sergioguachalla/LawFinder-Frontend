@@ -20,7 +20,7 @@ const invitationStore = create(set => ({
   getInvitations: async (userId) => {
  
    set(() => ({ status: 'loading' }));
-    const response = await axios.get(`http://localhost:8080/api/v1/invitation/${userId}`,{
+    const response = await axios.get(`${process.env.API_URL}/invitation/${userId}`,{
       headers: {
         'Content-Type': 'application/json',
         'Authorization': `Bearer ${localStorage.getItem('token')}`
