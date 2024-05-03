@@ -120,11 +120,12 @@ import { useEffect } from "react";
               <p>{legalCase.summary}</p>
               <p>{legalCase.crime}</p>
              
-              {(isClient || isLawyer) && (
-                <Link to={`/CaseDetails/${legalCase.idLegalCase}`}>
+              <Link to={`/CaseDetails/${legalCase.idLegalCase}`}>
                   <button>Ver Más</button>
                 </Link>
-              )}        
+              {/*(isClient || isLawyer) && (
+                
+              )*/}        
                 
                 <Link to={`/RegisterAudience/${legalCase.idLegalCase}`}><button>Registrar Audiencia</button></Link>
              
@@ -149,11 +150,10 @@ import { useEffect } from "react";
           </div>
         )}
   
-        {isLawyer === true &&  (
           <button className="floating-button-right" onClick={() => navigate('/RegisterCase')}>
             +
           </button>
-        )}
+        {/*isLawyer === true &&  ()*/}
       </div>
       {/* <Footer></Footer> */}
     </>

@@ -90,7 +90,7 @@ const CaseInformation = () => {
           <div>
           <p className="card-description">Resumen: {caseDetails.summary}</p></div>
           <div className="button-row">
-  {isLawyer ? (
+  
     <>
       <div className="row">
         <button className="card-button" onClick={() => navigate(`/RegisterFile/${caseId}`)}>
@@ -103,7 +103,7 @@ const CaseInformation = () => {
         </button>
       </div>
     </>
-  ) : null}
+    {/*isLawyer ? () ) : null*/}
 
   {isLawyer && <InstanceModal></InstanceModal>}
 
