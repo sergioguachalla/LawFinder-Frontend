@@ -37,7 +37,7 @@
             getInstances(); 
             getCategories();
             
-        }, 0); // quité el timeout
+        }, 0); // without timeout
     
         return () => clearTimeout(timeoutId);
         } else {
@@ -59,7 +59,7 @@
           {(status === 'loading' || status === 'init') && <LoadingSpinner/>}
           <Navbar />
           <div className="cases-container">
-            <h1>Casos</h1>
+            <h1>Casos Archivados</h1>
             <div className="filter-container">
               <div className="search-container">
                 <label htmlFor="searchTitle">Buscador por título: </label>

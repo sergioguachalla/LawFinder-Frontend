@@ -91,7 +91,7 @@ const RegisterCase = () => {
         </div>
         <div className="form-row-inline-rc">
           <label>Resumen *</label>
-          <textarea name="summary" value={formData.summary} onChange={(event) => handleChange('summary', event)} />
+          <textarea name="summary" value={formData.summary} onChange={(event) => handleChange('summary', event)} maxLength={500} />
         </div>
         <div className="form-row-rc">
           <div className="form-field-rc">
