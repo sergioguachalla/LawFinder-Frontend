@@ -1,0 +1,96 @@
+.users-container {
+    display: flex;
+    height: 100vh;
+    font-family: 'San Francisco', sans-serif; /* Esta es la fuente de Apple, asegúrate de importarla */
+}
+
+.users-white, .users-black {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+
+.users-white {
+    background-color: white;
+    color: black;
+}
+
+.users-black {
+    background-color: black;
+    color: white;
+}
+
+.users-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%; /* Añadido */
+}
+
+.users-table {
+    width: calc(100% - 5em); /* Cambiar */
+    border-collapse: collapse;
+    margin-top: 2em;
+    margin: 1em; /* Añadido */
+}
+
+
+.users-table th,
+.users-table td {
+    border: 1px solid black;
+    padding: 0.5em;
+    text-align: center;
+}
+
+.users-table th {
+    background-color: black;
+    color: white;
+}
+
+.users-table tbody tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+.users-table tbody tr:hover {
+    background-color: #ddd;
+}
+
+.users-button {
+    border: none;
+    background-color: black;
+    color: white;
+    padding: 0.5em 1em;
+    font-size: 1em;
+    cursor: pointer;
+    margin: 0.2em;
+}
+
+.users-button:hover {
+    background-color: #333;
+}
+
+.users-icons {
+    display: flex;
+    justify-content: center;
+}
+
+.users-icons button {
+    margin: 0 0.5em;
+}
+.confirmation-modal {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: white;
+    padding: 2em;
+    border: 1px solid black;
+    z-index: 9999;
+    text-align: center;
+  }
+  
+  .confirmation-modal p {
+    margin-bottom: 1em;
+  }
+  
