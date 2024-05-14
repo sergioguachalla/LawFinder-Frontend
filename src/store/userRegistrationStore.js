@@ -41,7 +41,7 @@ export const useRegisterUserStore = create((set) => ({
   handleSubmit: (event) => {
     // Expresión regular para validar formato de correo electrónico
     const correoRegex = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i;
-    const passwordRegex = /^(?=.*\d).{6,}$/;
+    const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
 
     event.preventDefault();
     const usernameAux = event.target.nombres.value.split(' ');
@@ -89,10 +89,11 @@ export const useRegisterUserStore = create((set) => ({
       return;
     }
     if (!passwordRegex.test(formData.secret)) {
-      alert('La contraseña debe tener al menos 6 caracteres y un número');
+      alert('La contraseña debe tener al menos 8 caracteres, una letra mayúscula, una letra minúscula, un número y un caracter especial');
       return;
     }
     set({ statusState: 'loading' });
+    
     
     
 

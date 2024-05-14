@@ -18,6 +18,7 @@ const RegisterUser = () => {
     status
   } = useRegisterUserStore();
   
+
   useEffect(() => {
     generateNewUUID();
   }, [generateNewUUID]);
@@ -27,6 +28,8 @@ const RegisterUser = () => {
     await handleSubmit(event);
   };
 
+  
+  
   const togglePasswordVisibility = () => {
     if (inputType === 'password') {
       setInputText('text');
