@@ -21,6 +21,7 @@ export const useRegisterUserStore = create((set) => ({
   inputType: 'password',
   emailExists: false,
   userAlreadyExists: false,
+  goodPassword: true,
   setUserAlreadyExists: (value) => set({userAlreadyExists: value}),
   setInputText: () => set({inputType:'text'}),
   setInputPassword: () => set({inputType:'password'}),
@@ -28,7 +29,18 @@ export const useRegisterUserStore = create((set) => ({
     const { value } = event.target;
     console.log('Cambio en el campo ' + fieldName + ' con valor ' + value);
     set({ [fieldName]: value });
+    if(fieldName === 'secret'){
+      const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+      if(passwordRegex.test(value)){
+        set({goodPassword: true});
+      }
+      else{
+        set({goodPassword: false});
+      }
+
+    }
   },
+
 
   generateNewUUID: () => {
     const newUUID = generateUUID();

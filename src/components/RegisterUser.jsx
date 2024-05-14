@@ -15,7 +15,8 @@ const RegisterUser = () => {
     setInputPassword,
     userAlreadyExists,
     emailExists,
-    status
+    status,
+    goodPassword,
   } = useRegisterUserStore();
   
 
@@ -124,6 +125,7 @@ const RegisterUser = () => {
             </div>
 
           </div>
+          {goodPassword && <p className='error-message'>La contraseña debe tener al menos 8 caracteres, una letra mayúscula, una letra minúscula, un número y un caracter especial</p>}
           <div className='button-row'>
             <button type='button' onClick={() => navigate('/')}>Cancelar</button>
             <button type='submit' className='register-button'>Registrar</button>
