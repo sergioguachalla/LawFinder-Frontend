@@ -12,7 +12,7 @@ export const useRolesAdminStore = create((set, get) => ({
   getRoles: async () => {
     set({ status: 'loading' });
     try {
-      const response = await axios.get(`${API_URL}/roles`);
+      const response = await axios.get(`${API_URL}/roles/`);
       if (response.data.response !== null || response.data.code === '0000') {
         set({ status: 'success' });
         set({ roles: response.data.response });
@@ -27,7 +27,7 @@ export const useRolesAdminStore = create((set, get) => ({
     set({ status: 'loading' });
     const token = localStorage.getItem('token');
     try {
-      const response = await axios.post(`${API_URL}/role`, roleData, {
+      const response = await axios.post(`${API_URL}/roles/`, roleData, {
         headers: {
           'Content-Type': 'application/json',
           'Authorization': `Bearer ${token}`,
