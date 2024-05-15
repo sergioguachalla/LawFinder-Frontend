@@ -18,6 +18,7 @@ import LaywerRegistration from "./components/LawyerRegistration";
 import ArchivedCases from "./components/ArchivedCases";
 import RegisterAudience from "./components/RegisterAudience";
 import Calendaruser from "./components/Calendaruser";
+import RolesAdmin from "./components/RolesAdmin";
 
 import CaseFile from "./components/CaseFile";
 import { Calendar } from "react-big-calendar";
@@ -80,6 +81,10 @@ const router = createBrowserRouter([
   {
     path: "Calendar/",
     element: <Calendaruser/>,
+  },
+  {
+    path: "RolesAdmin/",
+    element: <RolesAdmin/>,
   }
 
 ]);

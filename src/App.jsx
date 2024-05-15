@@ -17,10 +17,10 @@ function App() {
       <Container>
         <Routes>
           <Route path="/Login" element={<Login />} />
-          <Route path="/Role" element={<Role />} />
+          <Route path="/Role" element={<Role/>} />
           <Route path="/Home" element={<Home/>} />
           <Route path="/CaseDetails/:id" element={<CaseInformation />} />
-          <Route path="/LawyerRegistration" element={<LaywerRegistration />} />
+          <Route path="/LawyerRegistration" element={<Role />} />
           {/* <Route element={<PrivateRoute/>}>
             <Route path="/Home" element={<Home/>} />
           </Route> */}

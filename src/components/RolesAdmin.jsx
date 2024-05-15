@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { useRoleStore } from "../store/roleStore"; // Asegúrate de que esta ruta sea correcta
+import { useRolesAdminStore } from "../store/rolesAdminStore"; 
 import { useNavigate } from "react-router-dom";
 import '../styles/Home.css';
 import Navbar from "./Navbar";
@@ -14,7 +14,7 @@ const RolesAdmin = () => {
     createRole,
     updateRole,
     deleteRole,
-  } = useRoleStore();
+  } = useRolesAdminStore();
 
   useEffect(() => {
     const token = localStorage.getItem('token');
@@ -25,9 +25,7 @@ const RolesAdmin = () => {
         }, 0);
     
         return () => clearTimeout(timeoutId);
-    } else {
-      navigate('/');
-    }
+    } 
   }, [getRoles, createRole, updateRole, navigate]);
 
   const handleRoleClick = (id) => {
