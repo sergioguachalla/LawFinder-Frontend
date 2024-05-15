@@ -7,6 +7,7 @@ import Home from './components/Home';
 import LaywerRegistration from './components/LawyerRegistration';
 import CaseFile from './components/CaseFile';
 import { Container } from 'react-bootstrap';
+import RolesAdmin from './components/RolesAdmin';
 
 
 
@@ -24,6 +25,7 @@ function App() {
             <Route path="/Home" element={<Home/>} />
           </Route> */}
           <Route path="/CaseDetails/:id/CaseFile" element={<CaseFile />} />
+          <Routh path="/RolesAdmin" element={<RolesAdmin/>} />
           
         </Routes>
       </Container>
