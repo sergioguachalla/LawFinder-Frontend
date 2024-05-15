@@ -68,22 +68,19 @@ const EditUser = () => {
     <>
       <Navbar />
       <br/><br/><br/>
-      <div className='app-container'>
-        <div className='form-section users-content users-white'> 
-        <br/>
-        <br/>
-        
+      <div className='edituser edit-user-container'>
+        <div className='edituser edit-user-white'> 
           <h1>EDITAR USUARIO</h1>
-          <form className='form-container' onSubmit={handleFormSubmit}>
-            <div className='form-row'>
-              <div className='input-group'>
+          <form className='edituser form-container' onSubmit={handleFormSubmit}>
+            <div className='edituser form-row'>
+              <div className='edituser input-group'>
                 <label>Nombre de Usuario</label>
                 <input name='username' type='text' value={username} onChange={(event) => handleChange('username', event)} />
               </div>
             
-              <div className='input-group'>
+              <div className='edituser input-group'>
                 <label>Password</label>
-                <div className='input-group'>
+                <div className='edituser input-group'>
                   <input name='password' type={inputType} value={password} onChange={(event) => handlePasswordChange('password', event)} />
                   {inputType === 'password' ? (
                     <EyeSlash onClick={togglePasswordVisibility} />
@@ -92,9 +89,9 @@ const EditUser = () => {
                   )}
                 </div>
               </div>
-              <div className='input-group'>
+              <div className='edituser input-group'>
                 <label>Confirm Password</label>
-                <div className='input-group'>
+                <div className='edituser input-group'>
                   <input name='confirm_password' type={inputType} value={confirm_password} onChange={(event) => handlePasswordChange('confirm_password', event)} />
                   {inputType === 'password' ? (
                     <EyeSlash onClick={togglePasswordVisibility} />
@@ -105,12 +102,12 @@ const EditUser = () => {
                 {!passwordMatch && <span style={{ color: 'red' }}>Las contraseñas no coinciden</span>}
               </div>
             
-              <div className='button-row'>
-                  <button type='submit' className='users-button'>Guardar Cambios</button> 
+              <div className='edituser button-row'>
+                  <button type='submit' className='edituser edit-users-button'>Guardar Cambios</button> 
               </div>
             </div>
-            <div className='form-row'>
-            <h1>CAMBIAR ROLES</h1>
+            <div className='edituser form-row'>
+              <h1>CAMBIAR ROLES</h1>
 
               <Dropdown>
                 <Dropdown.Toggle variant="success" id="dropdown-basic">
@@ -126,8 +123,8 @@ const EditUser = () => {
               </Dropdown>
               <Button variant='primary' onClick={handleAddRole}>Añadir</Button>
             </div>
-            <div className='form-row'>
-              <table className='users-table'> 
+            <div className='edituser form-row'>
+              <table className='edituser users-table'> 
                 <thead>
                   <tr>
                     <th>ID</th>
@@ -141,8 +138,7 @@ const EditUser = () => {
                       <td>{role.id}</td>
                       <td>{role.role}</td>
                       <td>
-                          <Button variant='danger' onClick={() => handleDeleteRole(role.id)}>Eliminar</Button>
-
+                        <Button variant='danger' onClick={() => handleDeleteRole(role.id)}>Eliminar</Button>
                       </td>
                     </tr>
                   ))}
