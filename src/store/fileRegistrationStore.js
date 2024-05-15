@@ -24,7 +24,7 @@ export const useStore = create((set, get) => ({
   setSelectedDocumentType: (type) => set({ selectedDocumentType: type }),
   getCourts: async () => {
     set({caseId: localStorage.getItem('caseId')})
-    const response = await axios.get(`${configDotenv.env.API_URL}/Court`);
+    const response = await axios.get(`${API_URL}/Court`);
     set({ courts: response.data.response });
     console.log("caseid" + get().caseId);
   },

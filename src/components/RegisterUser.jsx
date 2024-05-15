@@ -56,7 +56,7 @@ const RegisterUser = () => {
   return (
     <div className='app-container'>
       <div className='form-section'>
-        <h1>REGISTRO DE USUARIO</h1>
+        <h1>REGISTRO DE CLIENTE</h1>
         <form className='form-container' onSubmit={(event) => handleSubmitForm(event)}>
           <div className='form-row'>
             <div className='input-group'>
