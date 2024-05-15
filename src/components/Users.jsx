@@ -5,9 +5,11 @@ import '../styles/Users.css';
 import { useUsersListStore } from '../store/usersListStore';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEdit, faTrashAlt, faKey } from '@fortawesome/free-solid-svg-icons';
+import { Link } from 'react-router-dom';
 
 const Users = () => {
   const { users, status, fetchUsers, deleteUser, changeLock } = useUsersListStore();
+  
 
   React.useEffect(() => {
     fetchUsers();
@@ -72,9 +74,11 @@ const Users = () => {
                       <td>{(user.isBlocked) ? "Cuenta bloqueada" : "Cuenta desbloqueada"}</td>
                       <td>
                         <div className="users-icons">
+                        <Link to={`/EditUser/${user.id}`}>
                           <Button variant="light" size="sm" className="users-button">
                             <FontAwesomeIcon icon={faEdit} />
                           </Button>
+                        </Link>
                           <Button variant="danger" size="sm" className="users-button" onClick={() => confirmDelete(user.id)}>
                             <FontAwesomeIcon icon={faTrashAlt} />
                           </Button>

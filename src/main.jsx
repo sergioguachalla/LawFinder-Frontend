@@ -22,7 +22,7 @@ import Users from "./components/Users";
 
 import CaseFile from "./components/CaseFile";
 import { Calendar } from "react-big-calendar";
-
+import EditUser from "./components/EditUser";
 
 const router = createBrowserRouter([
   {
@@ -85,6 +85,10 @@ const router = createBrowserRouter([
   {
     path: "Users/",
     element: <Users/>,
+  },
+  {
+    path: "EditUser/:id",
+    element: <EditUser/>,
   }
 
 ]);
