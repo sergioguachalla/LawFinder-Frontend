@@ -54,7 +54,7 @@ const Login = () => {
               
               <p className="error-message">
                 {status === 'invalid' && 'Usuario o contraseña incorrectos'}
-                {status === 'blocked' && 'Cuenta bloqueada'}
+                {status === 'blocked' && 'Su cuenta se encuentra en estado de verificación, por favor espere'}
                 </p>
             
             <a href="/Role" className="register-link">¿No tienes una cuenta? Regístrate</a>
