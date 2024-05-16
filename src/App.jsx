@@ -8,7 +8,7 @@ import LaywerRegistration from './components/LawyerRegistration';
 import CaseFile from './components/CaseFile';
 import { Container } from 'react-bootstrap';
 import RolesAdmin from './components/RolesAdmin';
-
+import Forbidden from './components/403';
 
 
 function App() {
@@ -25,8 +25,8 @@ function App() {
             <Route path="/Home" element={<Home/>} />
           </Route> */}
           <Route path="/CaseDetails/:id/CaseFile" element={<CaseFile />} />
-          <Routh path="/RolesAdmin" element={<RolesAdmin/>} />
-          
+          <Route path="/RolesAdmin" element={<RolesAdmin/>} />
+          <Route path="/Forbidden" element={<Forbidden/>} /> 
         </Routes>
       </Container>
     </BrowserRouter>

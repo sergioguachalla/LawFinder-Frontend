@@ -3,6 +3,7 @@ import axios from 'axios';
 
 const API_URL = import.meta.env.VITE_API_URL;
 
+
 export const useRolesAdminStore = create((set, get) => ({
   roles: [],
   status: 'init',
@@ -91,4 +92,30 @@ export const useRolesAdminStore = create((set, get) => ({
       console.error("Error deleting role:", error);
     }
   },
+
+  assignPrivileges: async (roleId, privileges) => {
+    set({ status: 'loading' });
+    const token = localStorage.getItem('token');
+    try {
+      const response = await axios.put(`${API_URL}/role/${roleId}/privileges`, { privileges }, {
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`,
+        },
+      });
+      if (response.data.response !== null || response.data.code === '0000') {
+        set({ status: 'success' });
+        alert('Privileges Assigned Successfully');
+        set((state) => ({
+          roles: state.roles.map((role) =>
+            role.roleId === roleId ? response.data.response : role
+          ),
+        }));
+      }
+    } catch (error) {
+      set({ status: 'error' });
+      console.error("Error assigning privileges:", error);
+    }
+  }
+
 }));

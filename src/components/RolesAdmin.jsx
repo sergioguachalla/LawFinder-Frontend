@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import '../styles/Home.css';
 import Navbar from "./Navbar";
 import LoadingSpinner from "./Loading";
+import { getRoleFromToken } from "../utils/getIdFromToken";
 
 const RolesAdmin = () => {
   const navigate = useNavigate();
@@ -18,6 +19,12 @@ const RolesAdmin = () => {
 
   useEffect(() => {
     const token = localStorage.getItem('token');
+    const roles = getRoleFromToken();
+    const requiredRoles = ['CREATE_ROLE','CREATE_PRIVILEGE'];
+    if(!roles.includes("CREATE_ROLE")  ) {
+        navigate('/Unauthorized');
+    }
+    
 
     if (token) {
         const timeoutId = setTimeout(() => {
