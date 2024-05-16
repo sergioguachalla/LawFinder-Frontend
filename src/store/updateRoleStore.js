@@ -1,5 +1,6 @@
 import { create } from 'zustand';
 import axios from 'axios';
+import UpdateRoles from '../components/UpdateRole';
 
 const API_URL = import.meta.env.VITE_API_URL;
 
@@ -7,19 +8,19 @@ export const useUpdateRoleStore = create((set, get) => ({
   status: 'init',
   privileges: [],
   roleName: '',
-  privilegeRole: {
+  roleDetail: {
     roleName: '',
     privileges: []
   },
 
   handleRoleNameChange: (event) => {
     const { value } = event.target;
-    set({ roleName: value });
+    set({ roleDetail: { ...get().roleDetail, roleName: value } });
   },
 
   handlePrivilegeChange: (event) => {
     const { value } = event.target;
-    set({ privilegeRole: { ...get().privilegeRole, privileges: value } });
+    set({ roleDetail: { ...get().roleDetail, privileges: value } });
   },
 
   getRoleDetails: async() => {
@@ -27,14 +28,14 @@ export const useUpdateRoleStore = create((set, get) => ({
       const { roleId } = get();
       const response = await axios.get(`${API_URL}/${roleId}`);
       if(response.data.code === '0004'){
-        set({ roleName: response.data.response.roleName });
-        set({ privilegeRole: { ...get().privilegeRole, privileges: response.data.response.privileges.map(privilege => privilege.privilege) } });
+        set ({ roleDetail: {roleName: response.data.response.roleName, privileges: response.data.response.privilege.map(privilege => privilege.privilege)} });
       }
     }
     catch(error){
       console.error("Error fetching role details:", error);
     }
   },
+
 
   getPrivileges: async () => {
     try {
@@ -48,12 +49,12 @@ export const useUpdateRoleStore = create((set, get) => ({
   },
 
   updateRole: async () => {
-    const { roleId, privilegeRole } = get();
+    const { roleId, roleDetail } = get();
     set({ status: 'loading' });
     const token = localStorage.getItem('token');
 
     try {
-      const response = await axios.put(`${API_URL}/role/${roleId}`, privilegeRole, {
+      const response = await axios.put(`${API_URL}/role/${roleId}`, roleDetail, {
         headers: {
           'Content-Type': 'application/json',
           'Authorization': `Bearer ${token}`,
