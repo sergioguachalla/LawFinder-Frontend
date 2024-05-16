@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useRegisterRolesStore } from "../store/RegisterRolesStore";
+import { useRegisterRolesStore } from "../store/RegisterRoles";
 import { useNavigate } from "react-router-dom";
 import Navbar from "./Navbar";
 import '../styles/Home.css';
@@ -21,17 +21,23 @@ const RegisterRoles = () => {
       return;
     }
     try {
-      await createRole({ roleName, privileges: selectedPrivileges });
-      navigate('/roles');
+      let privileges = selectedPrivileges.map(i=>Number(i));
+      console.log(privileges);
+
+      
+
+      await createRole({roleName, privileges});
+      //navigate('/roles');
     } catch (error) {
       console.error("Error al registrar el rol:", error);
     }
   };
 
-  const handlePrivilegeChange = (e) => {
+  const handlePrivilegeChange = async (e) => {
     const { value, checked } = e.target;
     if (checked) {
       setSelectedPrivileges([...selectedPrivileges, value]);
+
     } else {
       setSelectedPrivileges(selectedPrivileges.filter(privilege => privilege !== value));
     }
@@ -59,14 +65,16 @@ const RegisterRoles = () => {
                 <input
                   type="checkbox"
                   id={`privilege_${privilege.privilegeId}`}
-                  value={privilege.privilege}
+                  value={privilege.privilegeId}
                   onChange={handlePrivilegeChange}
                 />
                 <label htmlFor={`privilege_${privilege.privilegeId}`}>{privilege.privilege}</label>
               </div>
             ))}
           </div>
-          <button type="submit">Registrar Rol</button>
+          <button type="submit" onClick={
+            handleRoleSubmit
+          }>Registrar Rol</button>
         </form>
       </div>
     </>
