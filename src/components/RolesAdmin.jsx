@@ -37,8 +37,11 @@ const RolesAdmin = () => {
 
   const handleRoleClick = (id) => {
     console.log(id);
-    navigate(`/RoleDetails/${id}`);
+    navigate(`/UpdateRole/${id}`);
   };
+  const registerRole = () => {
+    navigate('/RegisterRoles');
+  }
   return (
     <>
       {(status === 'loading' || status === 'init') && <LoadingSpinner />}
@@ -58,6 +61,9 @@ const RolesAdmin = () => {
           {status === 'empty' && <p>No hay roles registrados</p>}
         </div>
       </div>
+      <button className="add-role-button" onClick={registerRole}>
+        <i className="fas fa-plus"></i>
+      </button>
     </>
   );
 };

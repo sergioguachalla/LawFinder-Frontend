@@ -21,6 +21,9 @@ import Calendaruser from "./components/Calendaruser";
 
 import Users from "./components/Users";
 
+import UpdateRoles from "./components/UpdateRole";
+import RegisterRoles from "./components/RegisterRoles";
+
 import CaseFile from "./components/CaseFile";
 import { Calendar } from "react-big-calendar";
 import EditUser from "./components/EditUser";
@@ -100,7 +103,16 @@ const router = createBrowserRouter([
   {
     path:"Unauthorized",
     element: <Forbidden/>,
+  },
+  {
+    path: "UpdateRole/:id",
+    element: <UpdateRoles/>,
+  },
+  {
+    path: "RegisterRoles/",
+    element: <RegisterRoles/>,
   }
+
 
 ]);
 
