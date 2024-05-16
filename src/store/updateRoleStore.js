@@ -3,37 +3,43 @@ import axios from 'axios';
 
 const API_URL = import.meta.env.VITE_API_URL;
 
-export const useUpdateRoleStore = create((set) => ({
+export const useUpdateRoleStore = create((set, get) => ({
   status: 'init',
-  roleDetails: null,
   privileges: [],
+  roleName: '',
+  privilegeRole: {
+    roleName: '',
+    privileges: []
+  },
 
-  getRoleDetails: async (roleId) => {
-    set({ status: 'loading' });
+  handleRoleNameChange: (event) => {
+    const { value } = event.target;
+    set({ roleName: value });
+  },
+
+  handlePrivilegeChange: (event) => {
+    const { value } = event.target;
+    set({ privilegeRole: { ...get().privilegeRole, privileges: value } });
+  },
+
+  getPrivileges: async () => {
     try {
-      const [roleResponse, privilegeResponse] = await Promise.all([
-        axios.get(`${API_URL}/roles/${roleId}`),
-        axios.get(`${API_URL}/privileges`)
-      ]);
-
-      if (roleResponse.data.code === '0004' && privilegeResponse.data.code === '0004') {
-        set({ 
-          status: 'success', 
-          roleDetails: roleResponse.data.response,
-          privileges: privilegeResponse.data.response
-        });
+      const response = await axios.get(`${API_URL}/privileges/`);
+      if (response.data.code === '0004') {
+        set({ privileges: response.data.response });
       }
     } catch (error) {
-      set({ status: 'error' });
-      console.error("Error fetching role details:", error);
+      console.error("Error fetching privileges:", error);
     }
   },
 
-  updateRoleDetails: async (roleId, updatedDetails) => {
+  updateRole: async () => {
+    const { roleId, privilegeRole } = get();
     set({ status: 'loading' });
     const token = localStorage.getItem('token');
+
     try {
-      const response = await axios.put(`${API_URL}/roles/${roleId}`, updatedDetails, {
+      const response = await axios.put(`${API_URL}/role/${roleId}`, privilegeRole, {
         headers: {
           'Content-Type': 'application/json',
           'Authorization': `Bearer ${token}`,
@@ -45,7 +51,7 @@ export const useUpdateRoleStore = create((set) => ({
       }
     } catch (error) {
       set({ status: 'error' });
-      console.error("Error updating role details:", error);
+      console.error("Error updating role:", error);
     }
   },
 }));
