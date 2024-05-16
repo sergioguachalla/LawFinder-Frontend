@@ -24,7 +24,7 @@ import Users from "./components/Users";
 import CaseFile from "./components/CaseFile";
 import { Calendar } from "react-big-calendar";
 import EditUser from "./components/EditUser";
-
+import Forbidden from "./components/403";
 import RolesAdmin from "./components/RolesAdmin";
 
 const router = createBrowserRouter([
@@ -96,6 +96,10 @@ const router = createBrowserRouter([
   {
     path: "EditUser/:id",
     element: <EditUser/>,
+  },
+  {
+    path:"Unauthorized",
+    element: <Forbidden/>,
   }
 
 ]);

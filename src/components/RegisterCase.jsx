@@ -3,6 +3,8 @@ import { useCaseStore } from '../store/caseRegistrationStore';
 import { useEffect } from 'react';
 import '../styles/RegisterCase.css';
 import Navbar from './Navbar';
+import { getRoleFromToken } from '../utils/getIdFromToken';
+
 
 const RegisterCase = () => {
   const history = useNavigate();
@@ -26,6 +28,11 @@ const RegisterCase = () => {
 
 
   useEffect(() => {
+    //const navigate = useNavigate();
+    const roles = getRoleFromToken();
+    if(!roles.includes("CREATE_CASE")  ) {
+        navigate('/Unauthorized');
+    }
     loadDepartamentos();
     loadCategorias();
     loadInstancias();

@@ -5,8 +5,12 @@ import { useEditUserStore } from '../store/EditUserStore';
 import { useParams } from 'react-router-dom';
 import { Eye, EyeSlash } from 'react-bootstrap-icons';
 import '../styles/EditUsers.css';
+import { getRoleFromToken } from '../utils/getIdFromToken';
+import { useNavigate } from 'react-router-dom';
 
 const EditUser = () => {
+  const navigate = useNavigate();
+
   const { id } = useParams();
   const { userId, username, password, confirm_password, roles, allRoles, loadUserData, handleChange, handleSubmit, DeleteRole, addRoleToUser } = useEditUserStore(); 
 
@@ -16,6 +20,10 @@ const EditUser = () => {
   const [userModified, setUserModified] = useState(false);
 
   useEffect(() => {
+    const roles = getRoleFromToken();
+    if(!roles.includes("CREATE_ROLE")  ) {
+        navigate('/Unauthorized');
+    }
     loadUserData(id);
   }, [id, loadUserData]);
 

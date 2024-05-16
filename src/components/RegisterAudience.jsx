@@ -1,8 +1,9 @@
 import { useEffect } from 'react';
 import { useRegisterAudienceStore } from '../store/audienceRegistrartionStore';
 import '../styles/RegisterUser.css';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from "react-router-dom";
 import Navbar from './Navbar';
+import { getRoleFromToken } from '../utils/getIdFromToken';
 
 const RegisterAudience = () => {
   const navigate = useNavigate();
@@ -30,6 +31,10 @@ const RegisterAudience = () => {
 
       return () => clearTimeout(timeoutId);
     }
+    const roles = getRoleFromToken();
+    if(!roles.includes("CREATE_AUDIENCE")  ) {
+      navigate('/Unauthorized');
+  }
   }, [navigate, status]);
 
   return (

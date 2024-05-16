@@ -26,7 +26,7 @@ function App() {
           </Route> */}
           <Route path="/CaseDetails/:id/CaseFile" element={<CaseFile />} />
           <Route path="/RolesAdmin" element={<RolesAdmin/>} />
-          <Route path="/Forbidden" element={<Forbidden/>} /> 
+          <Route path="/Unauthorized" element={<Forbidden/>} /> 
         </Routes>
       </Container>
     </BrowserRouter>

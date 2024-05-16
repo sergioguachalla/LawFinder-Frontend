@@ -11,6 +11,7 @@ import { useEffect } from "react";
   import { getUserNameFromToken } from "../utils/getIdFromToken";
   const Home = () => {
     const navigate = useNavigate();
+    const roles = getRoleFromToken();
     const { getCases, cases, status, currentPage, totalPages, nextPage, previousPage, fromDate, toDate, setFromDate, 
       setToDate, clearFilters, getInstances, instances, setInstanceId, instanceId, archiveCase,
       searchTitle, setSearchTitle, getCategories, categories, categoryId, setCategoryId, isLawyer, isClient} = useCasesStore();
@@ -149,10 +150,11 @@ import { useEffect } from "react";
             </button>
           </div>
         )}
-  
+        {roles.includes("CREATE_CASE") && 
           <button className="floating-button-right" onClick={() => navigate('/RegisterCase')}>
             +
           </button>
+  }
         {/*isLawyer === true &&  ()*/}
       </div>
       {/* <Footer></Footer> */}

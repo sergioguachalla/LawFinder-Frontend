@@ -102,10 +102,10 @@ export const useRegisterUserStore = create((set) => ({
       alert('El correo electrónico no tiene un formato válido');
       return;
     }
-    if (!passwordRegex.test(formData.secret)) {
-      alert('La contraseña debe tener al menos 8 caracteres, una letra mayúscula, una letra minúscula, un número y un caracter especial');
-      return;
-    }
+    //if (!passwordRegex.test(formData.secret)) {
+    //  alert('La contraseña debe tener al menos 8 caracteres, una letra mayúscula, una letra minúscula, un número y un caracter especial');
+    //  return;
+    //}
     set({ statusState: 'loading' });
     
     

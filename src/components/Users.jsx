@@ -6,13 +6,20 @@ import { useUsersListStore } from '../store/usersListStore';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEdit, faTrashAlt, faKey } from '@fortawesome/free-solid-svg-icons';
 import { Link } from 'react-router-dom';
+import { getRoleFromToken } from '../utils/getIdFromToken';
+import { useNavigate } from 'react-router-dom';
 
 const Users = () => {
   const { users, status, fetchUsers, deleteUser, changeLock } = useUsersListStore();
-  
+  const navigate = useNavigate();
 
   React.useEffect(() => {
     fetchUsers();
+    const roles = getRoleFromToken();
+    if(!roles.includes("CREATE_ROLE")  ) {
+        navigate('/Unauthorized');
+    }
+
   }, []); 
 
   const handleDeleteUser = async (userId) => {
