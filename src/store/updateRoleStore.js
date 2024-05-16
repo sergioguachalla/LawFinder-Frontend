@@ -22,6 +22,20 @@ export const useUpdateRoleStore = create((set, get) => ({
     set({ privilegeRole: { ...get().privilegeRole, privileges: value } });
   },
 
+  getRoleDetails: async() => {
+    try{
+      const { roleId } = get();
+      const response = await axios.get(`${API_URL}/${roleId}`);
+      if(response.data.code === '0004'){
+        set({ roleName: response.data.response.roleName });
+        set({ privilegeRole: { ...get().privilegeRole, privileges: response.data.response.privileges.map(privilege => privilege.privilege) } });
+      }
+    }
+    catch(error){
+      console.error("Error fetching role details:", error);
+    }
+  },
+
   getPrivileges: async () => {
     try {
       const response = await axios.get(`${API_URL}/privileges/`);
