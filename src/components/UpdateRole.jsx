@@ -6,12 +6,13 @@ import '../styles/Home.css';
 
 const UpdateRoles = () => {
   const { roleId } = useParams();
-  const { roleDetails, privileges, getRoleDetails, updateRole } = useUpdateRoleStore();
+  const { roleDetails, privileges, getRoleDetails, updateRole, getPrivileges } = useUpdateRoleStore();
   const [updatedRole, setUpdatedRole] = useState({ roleName: '', privileges: [] });
 
   useEffect(() => {
     getRoleDetails(roleId);
-  }, [getRoleDetails, roleId]);
+    getPrivileges();
+  }, [getRoleDetails, roleId, getPrivileges]);
 
   useEffect(() => {
     if (roleDetails) {
