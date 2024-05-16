@@ -30,14 +30,16 @@ export const useRegisterUserStore = create((set) => ({
     console.log('Cambio en el campo ' + fieldName + ' con valor ' + value);
     set({ [fieldName]: value });
     if(fieldName === 'secret'){
-      const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[#@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
-      if(passwordRegex.test(value)){
-        set({goodPassword: true});
+      const containsSpecialChar = /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/.test(value);
+      const containsNumber = /[0-9]/.test(value);
+      const containsUpper = /[A-Z]/.test(value);
+      const containsLower = /[a-z]/.test(value);
+      console.log('Special: ' + containsSpecialChar + ' Number: ' + containsNumber + ' Upper: ' + containsUpper + ' Lower: ' + containsLower);
+      if(containsSpecialChar && containsNumber && containsUpper && containsLower){
+        set({ goodPassword: true });
+      }else{
+        set({ goodPassword: false });
       }
-      else{
-        set({goodPassword: false});
-      }
-
     }
   },
 
