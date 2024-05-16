@@ -51,6 +51,7 @@ const RolesAdmin = () => {
           {status === 'empty' && <p>No hay roles registrados</p>}
         </div>
       </div>
+      <button onClick={() => navigate('/AddRole')}>Añadir</button>
     </>
   );
 };
