@@ -18,6 +18,10 @@ import LaywerRegistration from "./components/LawyerRegistration";
 import ArchivedCases from "./components/ArchivedCases";
 import RegisterAudience from "./components/RegisterAudience";
 import Calendaruser from "./components/Calendaruser";
+
+import RolesAdmin from "./components/RolesAdmin";
+import Forbidden from "./components/403";
+
 import Users from "./components/Users";
 
 import CaseFile from "./components/CaseFile";
@@ -83,6 +87,18 @@ const router = createBrowserRouter([
     element: <Calendaruser/>,
   },
   {
+    path: "RolesAdmin/",
+    element: <RolesAdmin/>,
+  },
+  {
+    path: "RoleDetails/:id",
+    element: <RolesAdmin/>,
+  },
+  {
+    path: "Unauthorized/",
+    element: <Forbidden/>,
+  },
+  {
     path: "Users/",
     element: <Users/>,
   },
@@ -90,6 +106,7 @@ const router = createBrowserRouter([
     path: "EditUser/:id",
     element: <EditUser/>,
   }
+  
 
 ]);
 
