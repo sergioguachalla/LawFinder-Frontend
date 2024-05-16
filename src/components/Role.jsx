@@ -28,7 +28,7 @@ const Role = () => {
             </button>
           </div>
           </Link>
-          <p className="role-label">Persona</p>
+          <p className="role-label">Cliente</p>
           <p className="role-description">Usuario individual que busca asesoramiento legal.</p>
         </div>
         

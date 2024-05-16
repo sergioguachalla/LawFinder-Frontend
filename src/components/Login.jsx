@@ -52,7 +52,10 @@ const Login = () => {
             
               <button type="submit" className="login-button">Iniciar sesión {status === 'loading' && <SpinnerCircle></SpinnerCircle>    }</button>
               
-              <p className="error-message">{status === 'invalid' && 'Usuario o contraseña incorrectos'}</p>
+              <p className="error-message">
+                {status === 'invalid' && 'Usuario o contraseña incorrectos'}
+                {status === 'blocked' && 'Cuenta bloqueada'}
+                </p>
             
             <a href="/Role" className="register-link">¿No tienes una cuenta? Regístrate</a>
           </form>

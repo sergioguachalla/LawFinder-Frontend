@@ -32,9 +32,16 @@ export const useLoginUserStore = create((set,get) => ({
             if(response.data.response !== null){
                localStorage.setItem('token', response.data.response.authToken);
                set({status: 'success'});
-            }else if(response.data.response === null){
-               set({status: 'invalid'});
+            }else if (response.data.code === '0001') {
+               set({ status: 'invalid' });
+            }else if (response.data.code === '0002') {
+               set({ status: 'blocked' });
             }
+            
+            
+            /*else if(response.data.response === null){
+               set({status: 'invalid'});
+            }*/
          })
          .catch((error) => {
             console.log(error);

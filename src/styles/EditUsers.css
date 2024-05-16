@@ -1,0 +1,34 @@
+.edituser .edit-user-container {
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    font-family: 'San Francisco', sans-serif;
+}
+
+.edituser .edit-user-white,
+.edituser .edit-user-black {
+    width: 100%;
+    max-width: 90%; /* Cambiado a un porcentaje del ancho de la pantalla */
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.edituser .form-row {
+    display: flex;
+    flex-direction: column;
+    width: 100%; /* Asegura que los campos ocupen todo el ancho */
+    align-items: center; /* Centra horizontalmente */
+}
+
+.edituser .input-group {
+    width: 100%; /* Cambiado para ocupar todo el ancho disponible */
+    max-width: 600px; /* Limita el ancho máximo */
+    margin-bottom: 10px;
+}
+
+.edituser .edit-users-button {
+    width: 100%; /* Ajusta el ancho de los botones para que coincida con los campos */
+    margin-top: 20px;
+}
