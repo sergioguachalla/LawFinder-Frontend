@@ -50,7 +50,7 @@ export const useEditUserStore = create((set) => ({
 
   DeleteRole: async (userId, roleId) => {
     try {
-      await axios.put(`${API_URL}/user/${userId}/role/${roleId}/delete`);
+      await axios.put(`${API_URL}/roles/users/${userId}/role/${roleId}/delete`);
       console.log('Rol eliminado del usuario con éxito');
     } catch (error) {
       console.error('Error al eliminar rol del usuario:', error);
@@ -60,7 +60,7 @@ export const useEditUserStore = create((set) => ({
 
   addRoleToUser: async (userId, roleId) => {
     try {
-      await axios.put(`${API_URL}/user/${userId}/role/${roleId}/add`);
+      await axios.put(`${API_URL}/roles/users/${userId}/role/${roleId}/add`);
       console.log('Rol añadido al usuario con éxito');
     } catch (error) {
       console.error('Error al añadir rol al usuario:', error);

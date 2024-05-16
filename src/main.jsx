@@ -19,14 +19,13 @@ import ArchivedCases from "./components/ArchivedCases";
 import RegisterAudience from "./components/RegisterAudience";
 import Calendaruser from "./components/Calendaruser";
 
-import RolesAdmin from "./components/RolesAdmin";
-import Forbidden from "./components/403";
-
 import Users from "./components/Users";
 
 import CaseFile from "./components/CaseFile";
 import { Calendar } from "react-big-calendar";
 import EditUser from "./components/EditUser";
+
+import RolesAdmin from "./components/RolesAdmin";
 
 const router = createBrowserRouter([
   {
@@ -87,26 +86,17 @@ const router = createBrowserRouter([
     element: <Calendaruser/>,
   },
   {
-    path: "RolesAdmin/",
-    element: <RolesAdmin/>,
-  },
-  {
-    path: "RoleDetails/:id",
-    element: <RolesAdmin/>,
-  },
-  {
-    path: "Unauthorized/",
-    element: <Forbidden/>,
-  },
-  {
     path: "Users/",
     element: <Users/>,
+  },
+  {
+    path:"RolesAdmin",
+    element: <RolesAdmin>,</RolesAdmin>
   },
   {
     path: "EditUser/:id",
     element: <EditUser/>,
   }
-  
 
 ]);
 
