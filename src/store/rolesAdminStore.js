@@ -74,10 +74,10 @@ export const useRolesAdminStore = create((set, get) => ({
     set({ status: 'loading' });
     const token = localStorage.getItem('token');
     try {
-      const response = await axios.delete(`${API_URL}/role/${roleId}`, {
+      const response = await axios.delete(`${API_URL}/roles/${roleId}`, {
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': `Bearer {token}`,
+          'Authorization': `Bearer ${token}`,
         },
       });
       if (response.data.code === '0000') {

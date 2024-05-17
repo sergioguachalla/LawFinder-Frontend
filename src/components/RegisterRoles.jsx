@@ -27,7 +27,7 @@ const RegisterRoles = () => {
       
 
       await createRole({roleName, privileges});
-      //navigate('/roles');
+      navigate('/RolesAdmin');
     } catch (error) {
       console.error("Error al registrar el rol:", error);
     }

@@ -42,6 +42,14 @@ const RolesAdmin = () => {
   const registerRole = () => {
     navigate('/RegisterRoles');
   }
+
+  const handleRoleDeletion = (id) => {
+    console.log(id);
+    deleteRole(id);
+    window.location.reload();
+
+  }
+
   return (
     <>
       {(status === 'loading' || status === 'init') && <LoadingSpinner />}
@@ -55,7 +63,7 @@ const RolesAdmin = () => {
                 <h2>{role.roleName}</h2>
                 <p>Privilegios: {role.privileges.join(', ')}</p>
                 <button onClick={() => handleRoleClick(role.roleId)}>Ver Más</button>
-                <button onClick={() => deleteRole(role.roleId)}>Eliminar</button>
+                <button onClick={() => handleRoleDeletion(role.roleId)}>Eliminar</button>
               </div>
             ))}
           {status === 'empty' && <p>No hay roles registrados</p>}

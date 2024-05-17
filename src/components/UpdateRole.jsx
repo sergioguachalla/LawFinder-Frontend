@@ -4,21 +4,25 @@ import { useUpdateRoleStore } from "../store/updateRoleStore";
 import Navbar from "./Navbar";
 import '../styles/Home.css';
 
+
+
 const UpdateRoles = () => {
-  const { roleId } = useParams();
-  const { roleDetails, privileges, getRoleDetails, updateRole, getPrivileges } = useUpdateRoleStore();
+  const { id } = useParams();
+  const { roleDetails, privileges, getRoleDetails, updateRole, getPrivileges, setRoleId } = useUpdateRoleStore();
   const [updatedRole, setUpdatedRole] = useState({ roleName: '', privileges: [] });
 
   useEffect(() => {
-    getRoleDetails(roleId);
+    setRoleId(id);
+    getRoleDetails(id);
     getPrivileges();
-  }, [getRoleDetails, roleId, getPrivileges]);
+    
+  }, [getRoleDetails, getPrivileges, setRoleId, id]);
 
   useEffect(() => {
     if (roleDetails) {
       setUpdatedRole({
         roleName: roleDetails.roleName,
-        privileges: roleDetails.privileges.map(privilege => privilege.privilege)
+        privileges: roleDetails.privileges.map(privilege => privilege?.privilege)
       });
     }
   }, [roleDetails]);

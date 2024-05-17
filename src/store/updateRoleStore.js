@@ -12,6 +12,7 @@ export const useUpdateRoleStore = create((set, get) => ({
     roleName: '',
     privileges: []
   },
+  setRoleId: (roleId) => set({ roleId }),
 
   handleRoleNameChange: (event) => {
     const { value } = event.target;
@@ -26,9 +27,10 @@ export const useUpdateRoleStore = create((set, get) => ({
   getRoleDetails: async() => {
     try{
       const { roleId } = get();
-      const response = await axios.get(`${API_URL}/${roleId}`);
+      const response = await axios.get(`${API_URL}/roles/${roleId}`);
       if(response.data.code === '0004'){
-        set ({ roleDetail: {roleName: response.data.response.roleName, privileges: response.data.response.privilege.map(privilege => privilege.privilege)} });
+        set ({ roleDetail: {roleName: response.data.response.roleName, 
+          privileges: response.data.response.privilege.map(privilege => privilege.privilege)} });
       }
     }
     catch(error){
