@@ -23,6 +23,8 @@ export const useLawyerStore = create((set,get) => ({
   userAlreadyExists: false,
   goodPassword: true,
   errorMessage: '',
+  confirmSecret: true,
+  confirmSecretMessage: '',
   getgoodPassword: () => get().goodPassword,
   setErrorMessage: (value) => set({errorMessage: value}),
   setUserAlreadyExists: (value) => set({userAlreadyExists: value}),
@@ -34,6 +36,7 @@ export const useLawyerStore = create((set,get) => ({
     console.log('Cambio en el campo ' + fieldName + ' con valor ' + value);
     set({ [fieldName]: value });
     if(fieldName === 'secret'){
+      set({secret: value});
       set({errorMessage: ''});
       const result = owasp.test(value);
       let errors = [];
@@ -46,6 +49,16 @@ export const useLawyerStore = create((set,get) => ({
       else{
         set({ goodPassword: true });
 
+      }
+    }
+    if(fieldName === 'secretConfirm'){
+      if(value !== get().secret){
+        set({confirmSecret: false});
+        set({confirmSecretMessage: 'Las contraseñas no coinciden'});
+      }
+      else{
+        set({confirmSecret: true});
+        set({confirmSecretMessage: ''});
       }
     }
   },
@@ -63,6 +76,7 @@ export const useLawyerStore = create((set,get) => ({
     const letrasRegex = /^[a-zA-Z\s]*$/;
     const numbersRegex = /^[0-9]*$/;
     const apellidosRegex = /^[a-zA-Z]+ [a-zA-Z]+$/;
+    const apellidosRegex2 = /^[a-zA-Z]+ [a-zA-Z]+ [a-zA-Z]+$/;
 
     event.preventDefault();
     const usernameAux = event.target.nombres.value.split(' ');
@@ -109,7 +123,8 @@ export const useLawyerStore = create((set,get) => ({
     }
     console.log(formData.apellidos);
     console.log(apellidosRegex.test(formData.apellidos));
-    if(!apellidosRegex.test(formData.apellidos)){
+    console.log(apellidosRegex2.test(formData.apellidos));
+    if(!apellidosRegex.test(formData.apellidos) && !apellidosRegex2.test(formData.apellidos)){
       alert('El campo de apellidos debe tener dos apellidos y solo puede contener letras');
       return;
     }

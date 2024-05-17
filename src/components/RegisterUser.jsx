@@ -17,7 +17,9 @@ const RegisterUser = () => {
     emailExists,
     status,
     goodPassword,
-    errorMessage
+    errorMessage,
+    confirmSecret,
+    confirmSecretMessage,
   } = useRegisterUserStore();
   
 
@@ -127,6 +129,7 @@ const RegisterUser = () => {
 
           </div>
           {!goodPassword && <p className='error-message'>{errorMessage}</p>}
+          {!confirmSecret && <p className='error-message'>{confirmSecretMessage}</p>}
           <div className='button-row'>
             <button type='button' onClick={() => navigate('/')}>Cancelar</button>
             <button type='submit' className='register-button'>Registrar</button>

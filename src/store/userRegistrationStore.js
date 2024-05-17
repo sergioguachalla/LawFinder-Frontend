@@ -3,7 +3,7 @@ import axios from 'axios';
 import {owasp, traducirErrores} from '../utils/passwordStrengthTestEs';
 const API_URL = import.meta.env.VITE_API_URL;
 
-export const useRegisterUserStore = create((set) => ({
+export const useRegisterUserStore = create((set, get) => ({
   deviceId: localStorage.getItem('device-id') || generateUUID(),
   nombres: '',
   apellidos: '',
@@ -25,6 +25,7 @@ export const useRegisterUserStore = create((set) => ({
   confirmSecret: true,
   confirmSecretMessage: '',
   getgoodPassword: () => get().goodPassword,
+  getSecret: () => get().secret,
   setErrorMessage: (value) => set({errorMessage: value}),
   setUserAlreadyExists: (value) => set({userAlreadyExists: value}),
   setInputText: () => set({inputType:'text'}),
@@ -49,6 +50,16 @@ export const useRegisterUserStore = create((set) => ({
       set({ goodPassword: true });
     }
     }
+    if(fieldName === 'secretConfirm'){
+      if(value !== get().secret){
+        set({confirmSecret: false});
+        set({confirmSecretMessage: 'Las contraseñas no coinciden'});
+      }
+      else{
+        set({confirmSecret: true});
+        set({confirmSecretMessage: ''});
+      }
+    }
   },
 
 
@@ -61,11 +72,11 @@ export const useRegisterUserStore = create((set) => ({
 
 
   handleSubmit: (event) => {
-    // Expresión regular para validar formato de correo electrónico
     const correoRegex = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i;
     const letrasRegex = /^[a-zA-Z\s]*$/;
     const numbersRegex = /^[0-9]*$/;
     const apellidosRegex = /^[a-zA-Z]+ [a-zA-Z]+$/;
+    const apellidosRegex2 = /^[a-zA-Z]+ [a-zA-Z]+ [a-zA-Z]+$/;
 
     event.preventDefault();
     const usernameAux = event.target.nombres.value.split(' ');
@@ -112,7 +123,8 @@ export const useRegisterUserStore = create((set) => ({
     }
     console.log(formData.apellidos);
     console.log(apellidosRegex.test(formData.apellidos));
-    if(!apellidosRegex.test(formData.apellidos)){
+    console.log(apellidosRegex2.test(formData.apellidos));
+    if(!apellidosRegex.test(formData.apellidos) && !apellidosRegex2.test(formData.apellidos)){
       alert('El campo de apellidos debe tener dos apellidos y solo puede contener letras');
       return;
     }

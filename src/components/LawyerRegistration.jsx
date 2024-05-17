@@ -15,6 +15,8 @@ const LaywerRegistration = () => {
     setInputPassword,
     goodPassword,
     errorMessage,
+    confirmSecret,
+    confirmSecretMessage,
   } = useLawyerStore();
   const status = useLawyerStore((state) => state.statusState);
 
@@ -63,7 +65,7 @@ const LaywerRegistration = () => {
             </div>
             <div className='input-group'>
               <label>Apellidos *</label>
-              <input name='apellidos' type='text' onChange={(event) => handleChange('apellidos', event)} required placeholder='Ingrese apellidos' />
+              <input name='apellidos' type='text' onChange={(event) => handleChange('apellidos', event)} required placeholder='Ingrese dos apellidos' />
             </div>
           </div>
           <div className='form-row'>
@@ -118,6 +120,7 @@ const LaywerRegistration = () => {
             </div>
           </div>
           {goodPassword === false && <p className='error-message'>{errorMessage}</p>}
+          {!confirmSecret && <p className='error-message'>{confirmSecretMessage}</p>}
           <div className='button-row'>
             <button type='button' onClick={() => navigate('/')}>Cancelar</button>
             <button type='submit' className='register-button'>Registrar</button>
