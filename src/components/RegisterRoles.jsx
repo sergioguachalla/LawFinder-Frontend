@@ -24,6 +24,10 @@ const RegisterRoles = () => {
       let privileges = selectedPrivileges.map(i => Number(i));
       console.log(privileges);
 
+      
+
+      await createRole({roleName, privileges});
+      navigate('/RolesAdmin');
       await createRole({ roleName, privileges });
       navigate('/RolesAdmin');
     } catch (error) {

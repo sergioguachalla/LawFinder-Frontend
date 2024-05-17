@@ -45,7 +45,10 @@ const RolesAdmin = () => {
   const handleDeleteRole = (id) => {
     if (window.confirm("¿Estás seguro de que deseas eliminar este rol?")) {
       deleteRole(id);
+      window.location.reload();
+
     }
+    
   };
 
   return (
