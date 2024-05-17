@@ -14,6 +14,7 @@ const LaywerRegistration = () => {
     setInputText, 
     setInputPassword,
     goodPassword,
+    passwordMessage,
   } = useLawyerStore();
   const status = useLawyerStore((state) => state.statusState);
 
@@ -116,7 +117,8 @@ const LaywerRegistration = () => {
               <input name='secretConfirm' type={inputType} onChange={(event) => handleChange('secretConfirm', event)} required />
             </div>
           </div>
-          {!goodPassword && <p className='error-message'>La contraseña debe tener al menos 8 caracteres, una letra mayúscula, una letra minúscula, un número y un caracter especial</p>}
+          {!goodPassword && <p className='error-message'>
+            {passwordMessage}</p>}
           
           <div className='button-row'>
             <button type='button' onClick={() => navigate('/')}>Cancelar</button>

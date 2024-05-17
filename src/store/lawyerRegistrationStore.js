@@ -1,7 +1,7 @@
 import { create } from 'zustand';
 import axios from 'axios';
-
-
+import {isPasswordInDictionary} from '../utils/passwordUtils';
+ 
 const API_URL = import.meta.env.VITE_API_URL;
 
 export const useLawyerStore = create((set,get) => ({
@@ -20,6 +20,7 @@ export const useLawyerStore = create((set,get) => ({
   statusState: 'init',
   inputType: 'password',
   userAlreadyExists: false,
+  passwordMessage: '',
   goodPassword: true,
   setUserAlreadyExists: (value) => set({userAlreadyExists: value}),
   setInputText: () => set({inputType:'text'}),
@@ -31,11 +32,17 @@ export const useLawyerStore = create((set,get) => ({
     set({ [fieldName]: value });
     if(fieldName === 'secret'){
       const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[#@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
-      if(passwordRegex.test(value)){
+      if(passwordRegex.test(value) && !isPasswordInDictionary(value)){
+        
         set({goodPassword: true});
       }
-      else{
+      else if(!passwordRegex.test(value)){
         set({goodPassword: false});
+        set({passwordMessage: 'La contraseña debe tener al menos 8 caracteres, una letra mayúscula, una letra minúscula, un número y un caracter especial'});
+      }
+      else if(isPasswordInDictionary(value)){
+        set({goodPassword: false});
+        set({passwordMessage: 'La contraseña no puede ser una contraseña común'});
       }
 
     }
@@ -103,6 +110,10 @@ export const useLawyerStore = create((set,get) => ({
     }
     if (!passwordRegex.test(formData.secret)) {
       alert('La contraseña debe tener al menos 6 caracteres y un número');
+      return;
+    }
+    if(isPasswordInDictionary(formData.secret)){
+      alert('La contraseña no puede ser una contraseña común');
       return;
     }
     set({ statusState: 'loading' });

@@ -24,3 +24,4 @@ const passwordDictionary = [
 export const isPasswordInDictionary = (password) => {
    return passwordDictionary.includes(password);
 }
+export default isPasswordInDictionary;
