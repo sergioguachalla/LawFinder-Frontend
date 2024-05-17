@@ -1,6 +1,6 @@
 import { create } from 'zustand';
 import axios from 'axios';
-
+import owasp from 'owasp-password-strength-test';
 
 const API_URL = import.meta.env.VITE_API_URL;
 
@@ -10,7 +10,7 @@ export const useRegisterUserStore = create((set) => ({
   apellidos: '',
   tipoDocumento: '',
   documento: '',
-  complemento: '',
+  complemento: '', 
   direccion: '',
   celular: '',
   correo: '',
@@ -22,6 +22,8 @@ export const useRegisterUserStore = create((set) => ({
   emailExists: false,
   userAlreadyExists: false,
   goodPassword: true,
+  errorMessage: '',
+  setErrorMessage: (value) => set({errorMessage: value}),
   setUserAlreadyExists: (value) => set({userAlreadyExists: value}),
   setInputText: () => set({inputType:'text'}),
   setInputPassword: () => set({inputType:'password'}),
@@ -30,16 +32,19 @@ export const useRegisterUserStore = create((set) => ({
     console.log('Cambio en el campo ' + fieldName + ' con valor ' + value);
     set({ [fieldName]: value });
     if(fieldName === 'secret'){
-      const containsSpecialChar = /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/.test(value);
-      const containsNumber = /[0-9]/.test(value);
-      const containsUpper = /[A-Z]/.test(value);
-      const containsLower = /[a-z]/.test(value);
-      console.log('Special: ' + containsSpecialChar + ' Number: ' + containsNumber + ' Upper: ' + containsUpper + ' Lower: ' + containsLower);
-      if(containsSpecialChar && containsNumber && containsUpper && containsLower){
-        set({ goodPassword: true });
-      }else{
+      set({errorMessage: ''});
+      const result = owasp.test(value);
+      let errors = [];
+      result.errors.forEach(error => {
+        errors.push(error);
+      });
+      set({errorMessage: errors});
+      if(!result.strong){
         set({ goodPassword: false });
-      }
+    }
+    else{
+      set({ goodPassword: true });
+    }
     }
   },
 
@@ -56,6 +61,8 @@ export const useRegisterUserStore = create((set) => ({
     // Expresión regular para validar formato de correo electrónico
     const correoRegex = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i;
     const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+    const letrasRegex = /^[a-zA-Z\s]*$/;
+    
 
     event.preventDefault();
     const usernameAux = event.target.nombres.value.split(' ');
@@ -93,11 +100,25 @@ export const useRegisterUserStore = create((set) => ({
     //set({formData: formData});
     localStorage.setItem('correo', formData.correo);
 
+    if(!letrasRegex.test(formData.nombres)){
+      alert('El campo de nombres solo puede contener letras');
+      return;
+    }
+
+    if(!letrasRegex.test(formData.apellidos)){
+      alert('El campo de apellidos solo puede contener letras');
+      return;
+    }
+
+
+    if(goodPassword === false){
+      alert('La contraseña debe tener al menos 10 caracteres, una letra mayúscula, una letra minúscula, un número y un caracter especial');
+      return;
+    }
     if (formData.secret !== formData.secretConfirm) {
       alert('Las contraseñas no coinciden');
       return;
     }
-   
     if (!correoRegex.test(formData.correo)) {
       alert('El correo electrónico no tiene un formato válido');
       return;
