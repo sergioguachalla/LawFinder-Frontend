@@ -10,6 +10,17 @@ export const useUpdateRoleStore = create((set, get) => ({
   
   
   setRoleId: (roleId) => set({ roleId }),
+  setPrivilegeStatus: (privilegeId, status) => {
+    const updatedPrivileges = get().privileges.map(privilege => {
+      if (privilege.privilegeId === privilegeId) {
+        console.log(privilegeId, status);
+        return { ...privilege, status };
+      }
+      return privilege;
+    });
+    set({ privileges: updatedPrivileges });
+    console.log(get().privileges);
+  },
 
   handleRoleNameChange: (event) => {
     const { value } = event.target;
@@ -29,13 +40,26 @@ export const useUpdateRoleStore = create((set, get) => ({
         set({ privileges: response.data.response });
       }
       
-      console.log(privileges)
+      console.log(get().privileges)
       
     }
     catch(error){
       console.error("Error fetching role details:", error);
     }
   },
+  updateRole: async() => {
+    try{
+      const { roleId } = get();
+      const privileges = get().privileges;
+      const response = await axios.put(`${API_URL}/roles/${roleId}/privileges`, privileges);
+      if(response.data.code === '0000'){
+        console.log("Role updated successfully");
+      }
+    }
+    catch(error){
+      console.error("Error updating role:", error);
+    }
+  }
 
   
 

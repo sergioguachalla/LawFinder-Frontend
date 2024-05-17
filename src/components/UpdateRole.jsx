@@ -8,7 +8,7 @@ import '../styles/Home.css';
 
 const UpdateRoles = () => {
   const { id } = useParams();
-  const { privileges, getRoleDetails, updateRole, setRoleId } = useUpdateRoleStore();
+  const { privileges, getRoleDetails, updateRole, setRoleId,setPrivilegeStatus } = useUpdateRoleStore();
   const [updatedRole, setUpdatedRole] = useState({ roleName: '', privileges: [] });
 
   useEffect(() => {
@@ -27,6 +27,14 @@ const UpdateRoles = () => {
       console.error("Error updating role:", error);
     }
   };
+
+  const handlePrivilegeStatusChange = (e) => {
+    const { checked } = e.target;
+  
+    const privilegeId = parseInt(e.target.id.split('_')[1]);
+    
+    setPrivilegeStatus(privilegeId, checked);
+  }
 
   /*
   const handlePrivilegeChange = (e) => {
@@ -68,6 +76,7 @@ const UpdateRoles = () => {
                   id={`privilege_${privilege.privilegeId}`}
                   value={privilege.privilege}
                   checked={privilege.status}
+                  onChange={handlePrivilegeStatusChange}
                 />
                 <label htmlFor={`privilege_${privilege.privilegeId}`}>{privilege.privilege}</label>
               </div>
