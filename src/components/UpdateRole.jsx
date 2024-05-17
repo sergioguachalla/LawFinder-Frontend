@@ -8,24 +8,16 @@ import '../styles/Home.css';
 
 const UpdateRoles = () => {
   const { id } = useParams();
-  const { roleDetails, privileges, getRoleDetails, updateRole, getPrivileges, setRoleId } = useUpdateRoleStore();
+  const { privileges, getRoleDetails, updateRole, setRoleId } = useUpdateRoleStore();
   const [updatedRole, setUpdatedRole] = useState({ roleName: '', privileges: [] });
 
   useEffect(() => {
     setRoleId(id);
     getRoleDetails(id);
-    getPrivileges();
     
-  }, [getRoleDetails, getPrivileges, setRoleId, id]);
+  }, [getRoleDetails, setRoleId, id]);
 
-  useEffect(() => {
-    if (roleDetails) {
-      setUpdatedRole({
-        roleName: roleDetails.roleName,
-        privileges: roleDetails.privileges.map(privilege => privilege?.privilege)
-      });
-    }
-  }, [roleDetails]);
+
 
   const handleRoleUpdate = async (e) => {
     e.preventDefault();
@@ -36,6 +28,7 @@ const UpdateRoles = () => {
     }
   };
 
+  /*
   const handlePrivilegeChange = (e) => {
     const { value, checked } = e.target;
     if (checked) {
@@ -50,7 +43,7 @@ const UpdateRoles = () => {
       }));
     }
   };
-
+*/
   return (
     <>
       <Navbar />
@@ -74,8 +67,7 @@ const UpdateRoles = () => {
                   type="checkbox"
                   id={`privilege_${privilege.privilegeId}`}
                   value={privilege.privilege}
-                  checked={updatedRole.privileges.includes(privilege.privilege)}
-                  onChange={handlePrivilegeChange}
+                  checked={privilege.status}
                 />
                 <label htmlFor={`privilege_${privilege.privilegeId}`}>{privilege.privilege}</label>
               </div>

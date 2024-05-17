@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useRegisterRolesStore } from "../store/RegisterRoles";
 import { useNavigate } from "react-router-dom";
 import Navbar from "./Navbar";
-import '../styles/Home.css';
+import '../styles/RegisterRoles.css';
 
 const RegisterRoles = () => {
   const navigate = useNavigate();
@@ -21,12 +21,9 @@ const RegisterRoles = () => {
       return;
     }
     try {
-      let privileges = selectedPrivileges.map(i=>Number(i));
+      let privileges = selectedPrivileges.map(i => Number(i));
       console.log(privileges);
-
-      
-
-      await createRole({roleName, privileges});
+      await createRole({ roleName, privileges });
       navigate('/RolesAdmin');
     } catch (error) {
       console.error("Error al registrar el rol:", error);
@@ -37,7 +34,6 @@ const RegisterRoles = () => {
     const { value, checked } = e.target;
     if (checked) {
       setSelectedPrivileges([...selectedPrivileges, value]);
-
     } else {
       setSelectedPrivileges(selectedPrivileges.filter(privilege => privilege !== value));
     }
@@ -46,9 +42,9 @@ const RegisterRoles = () => {
   return (
     <>
       <Navbar />
-      <div className="register-roles-container">
-        <h1>Registrar Nuevo Rol</h1>
-        <form onSubmit={handleRoleSubmit}>
+      <div className="roles-container">
+        <h1 className="Audience-title">Registrar Nuevo Rol</h1>
+        <form onSubmit={handleRoleSubmit} className="form-container">
           <div className="form-group">
             <label htmlFor="roleName">Nombre del Rol:</label>
             <input
@@ -60,21 +56,33 @@ const RegisterRoles = () => {
           </div>
           <div className="form-group">
             <label>Privilegios:</label>
-            {privileges.map(privilege => (
-              <div key={privilege.privilegeId}>
-                <input
-                  type="checkbox"
-                  id={`privilege_${privilege.privilegeId}`}
-                  value={privilege.privilegeId}
-                  onChange={handlePrivilegeChange}
-                />
-                <label htmlFor={`privilege_${privilege.privilegeId}`}>{privilege.privilege}</label>
-              </div>
-            ))}
+            <table className="privileges-table">
+              <thead>
+                <tr>
+                  <th>Privilegio</th>
+                  <th>Check</th>
+                </tr>
+              </thead>
+              <tbody>
+                {privileges.map(privilege => (
+                  <tr key={privilege.privilegeId}>
+                    <td>{privilege.privilege}</td>
+                    <td>
+                      <input
+                        type="checkbox"
+                        id={`privilege_${privilege.privilegeId}`}
+                        value={privilege.privilegeId}
+                        onChange={handlePrivilegeChange}
+                      />
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
           </div>
-          <button type="submit" onClick={
-            handleRoleSubmit
-          }>Registrar Rol</button>
+          <button type="submit" className="add-role-button">Registrar Rol</button>
+          <button className="add-role-button" onClick={()=>{navigate("/RolesAdmin")}}>Cancelar</button>
+
         </form>
       </div>
     </>
