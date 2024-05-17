@@ -3,7 +3,6 @@ import axios from 'axios';
 
 const API_URL = import.meta.env.VITE_API_URL;
 
-
 export const useRolesAdminStore = create((set, get) => ({
   roles: [],
   status: 'init',
@@ -52,7 +51,7 @@ export const useRolesAdminStore = create((set, get) => ({
       const response = await axios.put(`${API_URL}/role/${roleId}`, roleData, {
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': `Bearer {token}`,
+          'Authorization': `Bearer ${token}`,
         },
       });
       if (response.data.response !== null || response.data.code === '0000') {
@@ -74,15 +73,15 @@ export const useRolesAdminStore = create((set, get) => ({
     set({ status: 'loading' });
     const token = localStorage.getItem('token');
     try {
-      const response = await axios.delete(`${API_URL}/role/${roleId}`, {
+      const response = await axios.delete(`${API_URL}/roles/${roleId}`, {
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': `Bearer {token}`,
+          'Authorization': `Bearer ${token}`,
         },
       });
       if (response.data.code === '0000') {
         set({ status: 'success' });
-        alert('Role Deleted Successfully');
+        //alert('Role Deleted Successfully');
         set((state) => ({
           roles: state.roles.filter((role) => role.roleId !== roleId),
         }));
@@ -117,5 +116,4 @@ export const useRolesAdminStore = create((set, get) => ({
       console.error("Error assigning privileges:", error);
     }
   }
-
 }));

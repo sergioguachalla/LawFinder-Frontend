@@ -14,21 +14,17 @@
     flex-grow: 1; /* Esto permitirá que la sección del formulario crezca para ocupar el espacio vacío */
   }
   
-  
   .image-section {
     display: flex;
-    justify-content: flex-end; 
+    justify-content: flex-end;
     align-items: center;
     padding-left: 2em;
   }
   
   .image-section img {
     height: 830px;
-    
     width: 800px;
   }
-  
-  
   
   .form-container {
     display: flex;
@@ -39,7 +35,7 @@
     color: black;
     width: 100%;
     margin: 0 auto;
-    max-width: 1200px; 
+    max-width: 1200px;
   }
   
   .form-row {
@@ -57,7 +53,7 @@
   .input-group {
     display: flex;
     flex-direction: column;
-    width: 100%; 
+    width: 100%;
   }
   
   label {
@@ -67,7 +63,7 @@
   
   input, select {
     border: 1px solid black;
-    padding: 0.6em; 
+    padding: 0.6em;
     font-size: 1em;
   }
   
@@ -100,13 +96,14 @@
   .error-message {
     color: red;
   }
+  
   .Audience-title {
     display: flex;
     justify-content: center;
     align-items: center;
     margin-top: 50px;
   }
-
+  
   .roles-container {
     display: flex;
     flex-direction: column;
@@ -118,7 +115,7 @@
     padding: 1em;
     box-sizing: border-box; /* Asegura que el padding se incluya en el ancho total */
   }
-
+  
   .add-role-button {
     display: flex;
     justify-content: center;
@@ -129,5 +126,21 @@
     color: white;
     border: none;
     cursor: pointer;
+  }
+  
+  .privileges-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 1em;
+  }
+  
+  .privileges-table th, .privileges-table td {
+    border: 1px solid black;
+    padding: 0.5em;
+    text-align: left;
+  }
+  
+  .privileges-table th {
+    background-color: #f2f2f2;
   }
   
