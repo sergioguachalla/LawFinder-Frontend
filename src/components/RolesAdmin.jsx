@@ -53,7 +53,6 @@ const RolesAdmin = () => {
 
   return (
     <>
-      {(status === 'loading' || status === 'init') && <LoadingSpinner />}
       <Navbar />
       <div className="roles-container">
         <h1>Lista de Roles</h1>

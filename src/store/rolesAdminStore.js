@@ -70,7 +70,7 @@ export const useRolesAdminStore = create((set, get) => ({
   },
 
   deleteRole: async (roleId) => {
-    set({ status: 'loading' });
+    //set({ status: 'loading' });
     const token = localStorage.getItem('token');
     try {
       const response = await axios.delete(`${API_URL}/roles/${roleId}`, {
@@ -93,7 +93,7 @@ export const useRolesAdminStore = create((set, get) => ({
   },
 
   assignPrivileges: async (roleId, privileges) => {
-    set({ status: 'loading' });
+    //set({ status: 'loading' });
     const token = localStorage.getItem('token');
     try {
       const response = await axios.put(`${API_URL}/role/${roleId}/privileges`, { privileges }, {
