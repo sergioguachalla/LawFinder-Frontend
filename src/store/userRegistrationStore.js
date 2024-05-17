@@ -1,7 +1,6 @@
 import { create } from 'zustand';
 import axios from 'axios';
-import owasp from 'owasp-password-strength-test';
-
+import {owasp, traducirErrores} from '../utils/passwordStrengthTestEs';
 const API_URL = import.meta.env.VITE_API_URL;
 
 export const useRegisterUserStore = create((set) => ({
@@ -23,6 +22,9 @@ export const useRegisterUserStore = create((set) => ({
   userAlreadyExists: false,
   goodPassword: true,
   errorMessage: '',
+  confirmSecret: true,
+  confirmSecretMessage: '',
+  getgoodPassword: () => get().goodPassword,
   setErrorMessage: (value) => set({errorMessage: value}),
   setUserAlreadyExists: (value) => set({userAlreadyExists: value}),
   setInputText: () => set({inputType:'text'}),
@@ -32,17 +34,18 @@ export const useRegisterUserStore = create((set) => ({
     console.log('Cambio en el campo ' + fieldName + ' con valor ' + value);
     set({ [fieldName]: value });
     if(fieldName === 'secret'){
+      set({secret: value});
       set({errorMessage: ''});
       const result = owasp.test(value);
       let errors = [];
-      result.errors.forEach(error => {
-        errors.push(error);
-      });
+      const erroresTraducidos = traducirErrores(result.errors); 
+      erroresTraducidos.forEach(error => errors.push(error+"\n"));
       set({errorMessage: errors});
       if(!result.strong){
         set({ goodPassword: false });
     }
     else{
+      
       set({ goodPassword: true });
     }
     }
@@ -60,16 +63,19 @@ export const useRegisterUserStore = create((set) => ({
   handleSubmit: (event) => {
     // Expresión regular para validar formato de correo electrónico
     const correoRegex = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i;
-    const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
     const letrasRegex = /^[a-zA-Z\s]*$/;
-    
+    const numbersRegex = /^[0-9]*$/;
+    const apellidosRegex = /^[a-zA-Z]+ [a-zA-Z]+$/;
 
     event.preventDefault();
     const usernameAux = event.target.nombres.value.split(' ');
     const lastnameAux = event.target.apellidos.value.split(' ');
     const primerNombre = usernameAux[0];
     const primerApellido = lastnameAux[0];
-    const usernameFinal = `${primerNombre}_${primerApellido}`;
+    //get the second last name first letter
+    const segundoApellido = lastnameAux[lastnameAux.length - 1].charAt(0);
+    const usernameFinal = `${primerNombre}_${primerApellido}${segundoApellido}`;
+    console.log(usernameFinal);
     const formData = {
       nombres: event.target.nombres.value,
       apellidos: event.target.apellidos.value,
@@ -104,12 +110,20 @@ export const useRegisterUserStore = create((set) => ({
       alert('El campo de nombres solo puede contener letras');
       return;
     }
-
-    if(!letrasRegex.test(formData.apellidos)){
-      alert('El campo de apellidos solo puede contener letras');
+    console.log(formData.apellidos);
+    console.log(apellidosRegex.test(formData.apellidos));
+    if(!apellidosRegex.test(formData.apellidos)){
+      alert('El campo de apellidos debe tener dos apellidos y solo puede contener letras');
       return;
     }
-
+    if(!numbersRegex.test(formData.documento)){
+      alert('El campo de documento solo puede contener números');
+      return;
+    }
+    if(!numbersRegex.test(formData.celular)){
+      alert('El campo de celular solo puede contener números');
+      return;
+    }
 
     if(goodPassword === false){
       alert('La contraseña debe tener al menos 10 caracteres, una letra mayúscula, una letra minúscula, un número y un caracter especial');

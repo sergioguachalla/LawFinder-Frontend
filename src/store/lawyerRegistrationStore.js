@@ -1,5 +1,6 @@
 import { create } from 'zustand';
 import axios from 'axios';
+import {owasp, traducirErrores} from '../utils/passwordStrengthTestEs';
 
 
 const API_URL = import.meta.env.VITE_API_URL;
@@ -21,6 +22,9 @@ export const useLawyerStore = create((set,get) => ({
   inputType: 'password',
   userAlreadyExists: false,
   goodPassword: true,
+  errorMessage: '',
+  getgoodPassword: () => get().goodPassword,
+  setErrorMessage: (value) => set({errorMessage: value}),
   setUserAlreadyExists: (value) => set({userAlreadyExists: value}),
   setInputText: () => set({inputType:'text'}),
   setInputPassword: () => set({inputType:'password'}),
@@ -30,14 +34,19 @@ export const useLawyerStore = create((set,get) => ({
     console.log('Cambio en el campo ' + fieldName + ' con valor ' + value);
     set({ [fieldName]: value });
     if(fieldName === 'secret'){
-      const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[#@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
-      if(passwordRegex.test(value)){
-        set({goodPassword: true});
+      set({errorMessage: ''});
+      const result = owasp.test(value);
+      let errors = [];
+      const erroresTraducidos = traducirErrores(result.errors); 
+      erroresTraducidos.forEach(error => errors.push(error+"\n"));
+      set({errorMessage: errors});
+      if(!result.strong){
+        set({ goodPassword: false });
       }
       else{
-        set({goodPassword: false});
-      }
+        set({ goodPassword: true });
 
+      }
     }
   },
   generateNewUUID: () => {
@@ -51,14 +60,19 @@ export const useLawyerStore = create((set,get) => ({
   handleSubmit: (event) => {
     // Expresión regular para validar formato de correo electrónico
     const correoRegex = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i;
-    const passwordRegex = /^(?=.*\d).{6,}$/;
+    const letrasRegex = /^[a-zA-Z\s]*$/;
+    const numbersRegex = /^[0-9]*$/;
+    const apellidosRegex = /^[a-zA-Z]+ [a-zA-Z]+$/;
 
     event.preventDefault();
     const usernameAux = event.target.nombres.value.split(' ');
     const lastnameAux = event.target.apellidos.value.split(' ');
     const primerNombre = usernameAux[0];
     const primerApellido = lastnameAux[0];
-    const usernameFinal = `${primerNombre}_${primerApellido}`;
+    //get the second last name first letter
+    const segundoApellido = lastnameAux[lastnameAux.length - 1].charAt(0);
+    const usernameFinal = `${primerNombre}_${primerApellido}${segundoApellido}`;
+    console.log(usernameFinal);
     const formData = {
       nombres: event.target.nombres.value,
       apellidos: event.target.apellidos.value,
@@ -89,22 +103,38 @@ export const useLawyerStore = create((set,get) => ({
     //set({formData: formData});
     localStorage.setItem('correo', formData.correo);
 
-    if (formData.secret !== formData.secretConfirm) {
-      alert('Las contraseñas no coinciden');
+    if(!letrasRegex.test(formData.nombres)){
+      alert('El campo de nombres solo puede contener letras');
       return;
     }
-    if(get().userAlreadyExists === true){
-      alert('El usuario ya se encuentra registrado');
+    console.log(formData.apellidos);
+    console.log(apellidosRegex.test(formData.apellidos));
+    if(!apellidosRegex.test(formData.apellidos)){
+      alert('El campo de apellidos debe tener dos apellidos y solo puede contener letras');
+      return;
+    }
+    if(!numbersRegex.test(formData.documento)){
+      alert('El campo de documento solo puede contener números');
+      return;
+    }
+    if(!numbersRegex.test(formData.celular)){
+      alert('El campo de celular solo puede contener números');
+      return;
+    }
+
+    if(goodPassword === false){
+      alert('La contraseña debe tener al menos 10 caracteres, una letra mayúscula, una letra minúscula, un número y un caracter especial');
+      return;
+    }
+    if (formData.secret !== formData.secretConfirm) {
+      alert('Las contraseñas no coinciden');
       return;
     }
     if (!correoRegex.test(formData.correo)) {
       alert('El correo electrónico no tiene un formato válido');
       return;
     }
-    if (!passwordRegex.test(formData.secret)) {
-      alert('La contraseña debe tener al menos 6 caracteres y un número');
-      return;
-    }
+
     set({ statusState: 'loading' });
     
     

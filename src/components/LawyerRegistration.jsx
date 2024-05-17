@@ -14,6 +14,7 @@ const LaywerRegistration = () => {
     setInputText, 
     setInputPassword,
     goodPassword,
+    errorMessage,
   } = useLawyerStore();
   const status = useLawyerStore((state) => state.statusState);
 
@@ -58,16 +59,16 @@ const LaywerRegistration = () => {
           <div className='form-row'>
             <div className='input-group'>
               <label>Nombres *</label>
-              <input name='nombres' type='text' onChange={(event) => handleChange('nombres', event)} required />
+              <input name='nombres' type='text' onChange={(event) => handleChange('nombres', event)} required placeholder='Ingrese nombres' />
             </div>
             <div className='input-group'>
               <label>Apellidos *</label>
-              <input name='apellidos' type='text' onChange={(event) => handleChange('apellidos', event)} required />
+              <input name='apellidos' type='text' onChange={(event) => handleChange('apellidos', event)} required placeholder='Ingrese apellidos' />
             </div>
           </div>
           <div className='form-row'>
             <label>Tipo de documento *</label>
-            <select name='tipoDocumento' onChange={(event) => handleChange('tipoDocumento', event)} required>
+            <select name='tipoDocumento' onChange={(event) => handleChange('tipoDocumento', event)} required >
               <option value=''>Seleccione</option>
               <option value='ci'>CI</option>
               <option value='pasaporte'>Pasaporte</option>
@@ -76,25 +77,25 @@ const LaywerRegistration = () => {
           <div className='form-row'>
             <div className='input-group'>
               <label>Documento*</label>
-              <input name='documento' type='text' onChange={(event) => handleChange('documento', event)} required />
+              <input name='documento' type='text' onChange={(event) => handleChange('documento', event)} required placeholder='Ingrese documento solo numeros' />
             </div>
             <div className='input-group'>
               <label>Complemento*</label>
-              <input name='complemento' type='text' onChange={(event) => handleChange('complemento', event)} />
+              <input name='complemento' type='text' onChange={(event) => handleChange('complemento', event)} placeholder='Ingrese complemento' />
             </div>
           </div>
           <div className='form-row'>
             <label>Dirección de domicilio*</label>
-            <input name='direccion' type='text' onChange={(event) => handleChange('direccion', event)} required />
+            <input name='direccion' type='text' onChange={(event) => handleChange('direccion', event)} required placeholder='Ingrese dirección de domicilio' />
           </div>
           <div className='form-row'>
             <div className='input-group'>
               <label>Celular*</label>
-              <input name='celular' type='text' onChange={(event) => handleChange('celular', event)} required />
+              <input name='celular' type='text' onChange={(event) => handleChange('celular', event)} required placeholder='Ingrese celular solo numeros' />
             </div>
             <div className='input-group'>
               <label>Correo electrónico*</label>
-              <input name='correo' type='email' onChange={(event) => handleChange('correo', event)} required />
+              <input name='correo' type='email' onChange={(event) => handleChange('correo', event)} required placeholder='Ingrese correo electrónico' />
             </div>
           </div>
           <div className='form-row'>
@@ -116,8 +117,7 @@ const LaywerRegistration = () => {
               <input name='secretConfirm' type={inputType} onChange={(event) => handleChange('secretConfirm', event)} required />
             </div>
           </div>
-          {!goodPassword && <p className='error-message'>La contraseña debe tener al menos 8 caracteres, una letra mayúscula, una letra minúscula, un número y un caracter especial</p>}
-          
+          {goodPassword === false && <p className='error-message'>{errorMessage}</p>}
           <div className='button-row'>
             <button type='button' onClick={() => navigate('/')}>Cancelar</button>
             <button type='submit' className='register-button'>Registrar</button>

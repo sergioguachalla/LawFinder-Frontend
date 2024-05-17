@@ -66,17 +66,17 @@ const RegisterUser = () => {
           <div className='form-row'>
             <div className='input-group'>
               <label>Nombres *</label>
-              <input name='nombres' type='text' onChange={(event) => handleChange('nombres', event)} required />
+              <input name='nombres' type='text' onChange={(event) => handleChange('nombres', event)} required placeholder='Ingrese nombres' />
             </div>
             <div className='input-group'>
               <label>Apellidos *</label>
-              <input name='apellidos' type='text' onChange={(event) => handleChange('apellidos', event)} required />
+              <input name='apellidos' type='text' onChange={(event) => handleChange('apellidos', event)} required placeholder='Ingrese sus dos apellidos' />
             </div>
             {userAlreadyExists && <p className='error-message'>El usuario ya se encuentra registrado</p>}
           </div>
           <div className='form-row'>
             <label>Tipo de documento *</label>
-            <select name='tipoDocumento' onChange={(event) => handleChange('tipoDocumento', event)} required>
+            <select name='tipoDocumento' onChange={(event) => handleChange('tipoDocumento', event)} required >
               <option value=''>Seleccione</option>
               <option value='ci'>CI</option>
               <option value='pasaporte'>Pasaporte</option>
@@ -85,25 +85,25 @@ const RegisterUser = () => {
           <div className='form-row'>
             <div className='input-group'>
               <label>Documento*</label>
-              <input name='documento' type='text' onChange={(event) => handleChange('documento', event)} required />
+              <input name='documento' type='text' onChange={(event) => handleChange('documento', event)} required placeholder='El campo solo acepta numeros'/>
             </div>
             <div className='input-group'>
               <label>Complemento*</label>
-              <input name='complemento' type='text' onChange={(event) => handleChange('complemento', event)} />
+              <input name='complemento' type='text' onChange={(event) => handleChange('complemento', event)} placeholder='El campo solo acepta numeros'/>
             </div>
           </div>
           <div className='form-row'>
             <label>Dirección de domicilio*</label>
-            <input name='direccion' type='text'  onChange={(event) => handleChange('direccion', event)} required/>
+            <input name='direccion' type='text'  onChange={(event) => handleChange('direccion', event)} required placeholder='Ingrese la dirección'/>
           </div>
           <div className='form-row'>
             <div className='input-group'>
               <label>Celular*</label>
-              <input name='celular' type='text' onChange={(event) => handleChange('celular', event)} required />
+              <input name='celular' type='text' onChange={(event) => handleChange('celular', event)} required placeholder='El campo solo acepta numeros'/>
             </div>
             <div className='input-group'>
               <label>Correo electrónico*</label>
-              <input name='correo' type='email' onChange={(event) => handleChange('correo', event)} required />
+              <input name='correo' type='email' onChange={(event) => handleChange('correo', event)} required placeholder='Ingrese un correo válido'/>
             </div>
           </div>
           <div className='form-row'>
