@@ -12,7 +12,8 @@ const EditUser = () => {
   const navigate = useNavigate();
 
   const { id } = useParams();
-  const { userId, username, password, confirm_password, roles, allRoles, loadUserData, handleChange, handleSubmit, DeleteRole, addRoleToUser } = useEditUserStore(); 
+  const { userId, username, password, confirm_password, roles, allRoles, 
+    loadUserData, handleChange, handleSubmit, DeleteRole, addRoleToUser, errorMessage,status, goodPassword } = useEditUserStore(); 
 
   const [selectedRole, setSelectedRole] = useState(null);
   const [inputType, setInputType] = useState('password');
@@ -108,11 +109,17 @@ const EditUser = () => {
                   )}
                 </div>
                 {!passwordMatch && <span style={{ color: 'red' }}>Las contraseñas no coinciden</span>}
+                {!goodPassword && <p className='error-message'>{errorMessage} </p>}
               </div>
             
               <div className='edituser button-row'>
-                  <button type='submit' className='edituser edit-users-button'>Guardar Cambios</button> 
+                  <button type='submit' className='edituser edit-users-button' disabled={goodPassword ? false : true}>
+                    Guardar Cambios</button> 
               </div>
+              <div>
+            {status === 'success' && <p className='success-message'>Password reset successfully</p>}
+            
+          </div>
             </div>
             <div className='edituser form-row'>
               <h1>CAMBIAR ROLES</h1>

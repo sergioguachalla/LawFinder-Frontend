@@ -1,7 +1,7 @@
 import { useEffect } from "react";
-import { useRolesAdminStore } from "../store/rolesAdminStore"; 
+import { useRolesAdminStore } from "../store/rolesAdminStore";
 import { useNavigate } from "react-router-dom";
-import '../styles/Home.css';
+import '../styles/RolesAdmin.css';
 import Navbar from "./Navbar";
 import LoadingSpinner from "./Loading";
 import { getRoleFromToken } from "../utils/getIdFromToken";
@@ -21,17 +21,15 @@ const RolesAdmin = () => {
     const token = localStorage.getItem('token');
     const roles = getRoleFromToken();
     const requiredRoles = ['CREATE_ROLE','CREATE_PRIVILEGE'];
-    if(!roles.includes("CREATE_ROLE")  ) {
-        navigate('/Unauthorized');
+    if (!roles.includes("CREATE_ROLE")) {
+      navigate('/Unauthorized');
     }
-    
 
     if (token) {
-        const timeoutId = setTimeout(() => {
-            getRoles();
-        }, 0);
-    
-        return () => clearTimeout(timeoutId);
+      const timeoutId = setTimeout(() => {
+        getRoles();
+      }, 0);
+      return () => clearTimeout(timeoutId);
     } 
   }, [getRoles, createRole, updateRole, navigate]);
 
@@ -39,12 +37,22 @@ const RolesAdmin = () => {
     console.log(id);
     navigate(`/UpdateRole/${id}`);
   };
+
   const registerRole = () => {
     navigate('/RegisterRoles');
-  }
+  };
+
+  const handleDeleteRole = (id) => {
+    if (window.confirm("¿Estás seguro de que deseas eliminar este rol?")) {
+      deleteRole(id);
+      window.location.reload();
+
+    }
+    
+  };
+
   return (
     <>
-      {(status === 'loading' || status === 'init') && <LoadingSpinner />}
       <Navbar />
       <div className="roles-container">
         <h1>Lista de Roles</h1>
@@ -55,7 +63,7 @@ const RolesAdmin = () => {
                 <h2>{role.roleName}</h2>
                 <p>Privilegios: {role.privileges.join(', ')}</p>
                 <button onClick={() => handleRoleClick(role.roleId)}>Ver Más</button>
-                <button onClick={() => deleteRole(role.roleId)}>Eliminar</button>
+                <button onClick={() => handleDeleteRole(role.roleId)}>Eliminar</button>
               </div>
             ))}
           {status === 'empty' && <p>No hay roles registrados</p>}

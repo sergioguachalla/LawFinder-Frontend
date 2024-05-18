@@ -2,6 +2,7 @@ import { create } from 'zustand';
 import axios from 'axios';
 import {owasp, traducirErrores} from '../utils/passwordStrengthTestEs';
 
+import {isPasswordInDictionary} from '../utils/passwordUtils';
 
 const API_URL = import.meta.env.VITE_API_URL;
 
@@ -21,6 +22,7 @@ export const useLawyerStore = create((set,get) => ({
   statusState: 'init',
   inputType: 'password',
   userAlreadyExists: false,
+  passwordMessage: '',
   goodPassword: true,
   errorMessage: '',
   confirmSecret: true,
@@ -50,6 +52,10 @@ export const useLawyerStore = create((set,get) => ({
         set({ goodPassword: true });
 
       }
+      if(isPasswordInDictionary(value)){
+        set({ goodPassword: false });
+        set({ passwordMessage: 'La contraseña no puede ser una contraseña común' });
+      }
     }
     if(fieldName === 'secretConfirm'){
       if(value !== get().secret){
@@ -61,6 +67,7 @@ export const useLawyerStore = create((set,get) => ({
         set({confirmSecretMessage: ''});
       }
     }
+    
   },
   generateNewUUID: () => {
     const newUUID = generateUUID();
@@ -150,6 +157,10 @@ export const useLawyerStore = create((set,get) => ({
       return;
     }
 
+    if(isPasswordInDictionary(formData.secret)){
+      alert('La contraseña no puede ser una contraseña común');
+      return;
+    }
     set({ statusState: 'loading' });
     
     

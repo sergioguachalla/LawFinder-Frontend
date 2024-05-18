@@ -6,12 +6,16 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUserAlt,faHome, faBriefcase, faEnvelopeOpenText, faSignOutAlt, faUser, faArchive, faCalendarAlt } from '@fortawesome/free-solid-svg-icons';
 import useAuthStore from '../store/authStore';
 import { useLoginUserStore } from '../store/userLoginStore';
+import { getRoleFromToken } from "../utils/getIdFromToken"; 
+
 
 
 const Navbar = () => {
    const {username,setUsername} = useNavbarStore();
    const {setStatus} = useLoginUserStore();
    const {logout} = useAuthStore();
+   const roles = getRoleFromToken();
+
    
    useEffect(() => {
     
@@ -21,6 +25,11 @@ const Navbar = () => {
     setStatus('init');
     logout();
   }
+
+  const hasRole = (requiredRoles) => {
+    return requiredRoles.some(role => roles.includes(role));
+  };
+
   return (
     <nav className="navbar">
       <div className="links-container">
@@ -30,11 +39,13 @@ const Navbar = () => {
               <FontAwesomeIcon icon={faHome} /> Inicio
             </Link>
           </li>
-          <li className="navbar-item">
+          {hasRole(["DELETE_USER", "BLOCK_USER","UNLOCK_USER","EDIT_USER"]) && 
+            <li className="navbar-item">
               <Link to="/Users" className="navbar-link">
               <FontAwesomeIcon icon={faUserAlt} /> Usuarios
-            </Link>
-          </li>
+              </Link>
+            </li>
+          }
 
           <li className="navbar-item">
             <Link to="/Invitation" className="navbar-link">
@@ -56,11 +67,13 @@ const Navbar = () => {
               <FontAwesomeIcon icon={faSignOutAlt} /> Salir
             </Link>
           </li>
-          <li className="navbar-item">
-            <Link to="/RolesAdmin" className="navbar-link">
-              <FontAwesomeIcon icon={faBriefcase} /> Roles
-            </Link>
-          </li>
+          {roles.includes("CREATE_PRIVILEGE") && 
+            <li className="navbar-item">
+              <Link to="/RolesAdmin" className="navbar-link">
+                <FontAwesomeIcon icon={faBriefcase} /> Roles
+              </Link>
+            </li>
+          }
         </ul>
       </div>
       <div className="username">

@@ -4,24 +4,20 @@ import { useUpdateRoleStore } from "../store/updateRoleStore";
 import Navbar from "./Navbar";
 import '../styles/Home.css';
 
+
+
 const UpdateRoles = () => {
-  const { roleId } = useParams();
-  const { roleDetails, privileges, getRoleDetails, updateRole, getPrivileges } = useUpdateRoleStore();
+  const { id } = useParams();
+  const { privileges, getRoleDetails, updateRole, setRoleId,setPrivilegeStatus } = useUpdateRoleStore();
   const [updatedRole, setUpdatedRole] = useState({ roleName: '', privileges: [] });
 
   useEffect(() => {
-    getRoleDetails(roleId);
-    getPrivileges();
-  }, [getRoleDetails, roleId, getPrivileges]);
+    setRoleId(id);
+    getRoleDetails(id);
+    
+  }, [getRoleDetails, setRoleId, id]);
 
-  useEffect(() => {
-    if (roleDetails) {
-      setUpdatedRole({
-        roleName: roleDetails.roleName,
-        privileges: roleDetails.privileges.map(privilege => privilege.privilege)
-      });
-    }
-  }, [roleDetails]);
+
 
   const handleRoleUpdate = async (e) => {
     e.preventDefault();
@@ -32,6 +28,15 @@ const UpdateRoles = () => {
     }
   };
 
+  const handlePrivilegeStatusChange = (e) => {
+    const { checked } = e.target;
+  
+    const privilegeId = parseInt(e.target.id.split('_')[1]);
+    
+    setPrivilegeStatus(privilegeId, checked);
+  }
+
+  /*
   const handlePrivilegeChange = (e) => {
     const { value, checked } = e.target;
     if (checked) {
@@ -46,7 +51,7 @@ const UpdateRoles = () => {
       }));
     }
   };
-
+*/
   return (
     <>
       <Navbar />
@@ -70,8 +75,8 @@ const UpdateRoles = () => {
                   type="checkbox"
                   id={`privilege_${privilege.privilegeId}`}
                   value={privilege.privilege}
-                  checked={updatedRole.privileges.includes(privilege.privilege)}
-                  onChange={handlePrivilegeChange}
+                  checked={privilege.status}
+                  onChange={handlePrivilegeStatusChange}
                 />
                 <label htmlFor={`privilege_${privilege.privilegeId}`}>{privilege.privilege}</label>
               </div>

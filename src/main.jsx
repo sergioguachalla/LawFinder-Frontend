@@ -30,6 +30,7 @@ import EditUser from "./components/EditUser";
 import Forbidden from "./components/403";
 import RolesAdmin from "./components/RolesAdmin";
 import ResetPassword from "./components/PasswordReset";
+import ForgotPassword from "./components/ForgotPassword";
 
 const router = createBrowserRouter([
   {
@@ -116,6 +117,10 @@ const router = createBrowserRouter([
   {
     path: "ResetPassword/",
     element: <ResetPassword/>,
+  },
+  {
+    path: "ForgotPassword",
+    element: <ForgotPassword/>  
   }
 
 
