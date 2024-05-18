@@ -122,7 +122,7 @@ const LaywerRegistration = () => {
           
           <div className='button-row'>
             <button type='button' onClick={() => navigate('/')}>Cancelar</button>
-            <button type='submit' className='register-button'>Registrar</button>
+            <button type='submit' className='register-button' disabled={goodPassword ? false : true}>Registrar</button>
           </div>
           <div>
             {status === 'success' && <p className='success-message'>Usuario registrado con éxito</p>}

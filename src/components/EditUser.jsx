@@ -113,7 +113,8 @@ const EditUser = () => {
               </div>
             
               <div className='edituser button-row'>
-                  <button type='submit' className='edituser edit-users-button'>Guardar Cambios</button> 
+                  <button type='submit' className='edituser edit-users-button' disabled={goodPassword ? false : true}>
+                    Guardar Cambios</button> 
               </div>
               <div>
             {status === 'success' && <p className='success-message'>Password reset successfully</p>}

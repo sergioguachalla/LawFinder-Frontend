@@ -1,7 +1,8 @@
 import { create } from 'zustand';
 import axios from 'axios';
 import {isPasswordInDictionary} from '../utils/passwordUtils';
- 
+import owasp from 'owasp-password-strength-test';
+
 const API_URL = import.meta.env.VITE_API_URL;
 
 export const useLawyerStore = create((set,get) => ({
@@ -30,22 +31,19 @@ export const useLawyerStore = create((set,get) => ({
     const { value } = event.target;
     console.log('Cambio en el campo ' + fieldName + ' con valor ' + value);
     set({ [fieldName]: value });
-    if(fieldName === 'secret'){
-      const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[#@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
-      if(passwordRegex.test(value) && !isPasswordInDictionary(value)){
-        
-        set({goodPassword: true});
+    if (fieldName === 'secret') {
+      const result = owasp.test(value);
+      set((state) => ({ 
+        goodPassword: result.strong,
+        passwordMessage: result.errors.join(' ')
+      }));
+      if(isPasswordInDictionary(value)){
+        set({ goodPassword: false });
+        set({ passwordMessage: 'La contraseña no puede ser una contraseña común' });
       }
-      else if(!passwordRegex.test(value)){
-        set({goodPassword: false});
-        set({passwordMessage: 'La contraseña debe tener al menos 8 caracteres, una letra mayúscula, una letra minúscula, un número y un caracter especial'});
-      }
-      else if(isPasswordInDictionary(value)){
-        set({goodPassword: false});
-        set({passwordMessage: 'La contraseña no puede ser una contraseña común'});
-      }
-
+      console.log(result.strong);
     }
+    
   },
   generateNewUUID: () => {
     const newUUID = generateUUID();

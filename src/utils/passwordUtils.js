@@ -18,7 +18,8 @@ const passwordDictionary = [
    "Check16&",
    "Lock17*",
    "Key18(",
-   "Open19)"
+   "Open19)",
+   "Admin_1234",
  ];
 
 export const isPasswordInDictionary = (password) => {
