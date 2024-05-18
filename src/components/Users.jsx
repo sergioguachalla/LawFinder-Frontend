@@ -12,15 +12,19 @@ import { useNavigate } from 'react-router-dom';
 const Users = () => {
   const { users, status, fetchUsers, deleteUser, changeLock } = useUsersListStore();
   const navigate = useNavigate();
+  const roles = getRoleFromToken();
+
 
   React.useEffect(() => {
     fetchUsers();
     const roles = getRoleFromToken();
-    if(!roles.includes("CREATE_ROLE")  ) {
-        navigate('/Unauthorized');
+    const allowedRoles = ["DELETE_USER", "BLOCK_USER","UNLOCK_USER","EDIT_USER"];
+    const hasAccess = allowedRoles.some(role => roles.includes(role));
+    if (!hasAccess) {
+      navigate('/Unauthorized');
     }
 
-  }, []); 
+  }, [fetchUsers, navigate]); 
 
   const handleDeleteUser = async (userId) => {
     try {
@@ -28,6 +32,9 @@ const Users = () => {
     } catch (error) {
       console.error('Error deleting user:', error);
     }
+  };
+  const hasRole = (requiredRoles) => {
+    return requiredRoles.some(role => roles.includes(role));
   };
 
   const confirmDelete = (userId) => {
@@ -81,17 +88,23 @@ const Users = () => {
                       <td>{(user.isBlocked) ? "Cuenta bloqueada" : "Cuenta desbloqueada"}</td>
                       <td>
                         <div className="users-icons">
-                        <Link to={`/EditUser/${user.id}`}>
-                          <Button variant="light" size="sm" className="users-button">
-                            <FontAwesomeIcon icon={faEdit} />
-                          </Button>
-                        </Link>
+                        {hasRole(["EDIT_USER"]) && 
+                          <Link to={`/EditUser/${user.id}`}>
+                            <Button variant="light" size="sm" className="users-button">
+                              <FontAwesomeIcon icon={faEdit} />
+                            </Button>
+                          </Link>
+                        }
+                        {hasRole(["DELETE_USER"]) && 
                           <Button variant="danger" size="sm" className="users-button" onClick={() => confirmDelete(user.id)}>
                             <FontAwesomeIcon icon={faTrashAlt} />
                           </Button>
+                        } 
+                        {hasRole(["BLOCK_USER","UNLOCK_USER"]) && 
                           <Button variant="info" size="sm" className="users-button" onClick={() => confirmLock(user.id)}>
                             <FontAwesomeIcon icon={faKey} />
                           </Button>
+        }
                         </div>
                       </td>
                     </tr>
