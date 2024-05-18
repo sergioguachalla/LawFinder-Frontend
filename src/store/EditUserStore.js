@@ -1,15 +1,18 @@
 import { create } from 'zustand';
 import axios from 'axios';
+import owasp from 'owasp-password-strength-test';
 
 const API_URL = import.meta.env.VITE_API_URL;
 
-export const useEditUserStore = create((set) => ({
+export const useEditUserStore = create((set,get) => ({
   userId: '',
   username: '',
   email: '',
   password: '',
   roles: [],
   allRoles: [],
+  goodPassword: true,
+  errorMessage: '',
 
   loadUserData: async (userId) => {
     try {
@@ -27,9 +30,21 @@ export const useEditUserStore = create((set) => ({
     }
   },
 
-  handleChange: (fieldName, event) => {
-    const { value } = event.target;
-    set({ [fieldName]: value });
+  handleChange: (field, event) => {
+    const value = event.target.value;
+    set((state) => ({ ...state, [field]: value }));
+
+    if (field === 'password') {
+      const result = owasp.test(value);
+      set((state) => ({ 
+        
+        goodPassword: result.strong,
+        errorMessage: result.errors.join(' ')
+      }));
+      console.log(result.strong);
+    }
+    console.log(get().errorMessage);
+    console.log(get().goodPassword);
   },
 
   handleSubmit: async (userId, username, password, event) => {
