@@ -37,6 +37,8 @@ export const useLawyerStore = create((set,get) => ({
     const { value } = event.target;
     console.log('Cambio en el campo ' + fieldName + ' con valor ' + value);
     set({ [fieldName]: value });
+    console.log();
+
     if(fieldName === 'secret'){
       set({secret: value});
       set({errorMessage: ''});
@@ -90,9 +92,11 @@ export const useLawyerStore = create((set,get) => ({
     const lastnameAux = event.target.apellidos.value.split(' ');
     const primerNombre = usernameAux[0];
     const primerApellido = lastnameAux[0];
+    const segundoApellido = lastnameAux[1];
     //get the second last name first letter
-    const segundoApellido = lastnameAux[lastnameAux.length - 1].charAt(0);
-    const usernameFinal = `${primerNombre}_${primerApellido}${segundoApellido}`;
+    //const segundoApellido = lastnameAux[lastnameAux.length - 1].charAt(0);
+    const usernameFinal = `${primerNombre}_${primerApellido}`;
+    
     console.log(usernameFinal);
     const formData = {
       nombres: event.target.nombres.value,
@@ -144,7 +148,7 @@ export const useLawyerStore = create((set,get) => ({
       return;
     }
 
-    if(goodPassword === false){
+    if(get().goodPassword === false){
       alert('La contraseña debe tener al menos 10 caracteres, una letra mayúscula, una letra minúscula, un número y un caracter especial');
       return;
     }

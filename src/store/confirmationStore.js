@@ -54,6 +54,7 @@ export const useConfirmationStore = create((set) => ({
 
         },
       }
+      console.log(body);
       const response = await axios.post(`${API_URL}/user`, body);
       if(response.data.code === '0000'){
         set({status: 'success'});
