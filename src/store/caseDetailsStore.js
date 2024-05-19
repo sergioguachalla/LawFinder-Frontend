@@ -58,7 +58,23 @@ export const useCaseDetailsStore = create((set,get) => ({
          set({caseDetails: response.data.response});
          console.log(get().caseDetails);
       }
-   }
+   },
+
+   sendInvitation: async (caseId, email, type) => {
+      set({ status: 'loading' });
+      try {
+        const response = await axios.post(
+          `${API_URL}/legalcase/${caseId}/invitation`,
+          { email },
+          { headers: { 'Content-Type': 'application/json' } }
+        );
+        if (response.data.response != null || response.data.code === '0000') {
+          set({ status: `${type}Found` });
+        }
+      } catch (error) {
+        set({ status: `${type}NotFound` });
+      }
+    }
 
   
 
