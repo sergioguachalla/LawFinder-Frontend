@@ -23,12 +23,20 @@ export const useRegisterAudienceStore = create((set, get) => ({
     set({ loading: true, status: 'loading' });
     try {
       const audienceDate = moment(`${get().date}T${get().hour}`).format("YYYY-MM-DDTHH:mm:ss");
-      await axios.post(`${API_URL}/legalcase/${caseId}/audience`, {
-        audienceDate: audienceDate,
-        description: get().description,
-        link: get().meetingLink,
-        address: get().location,
-      });
+      await axios.post(`${API_URL}/legalcase/${caseId}/audience`, 
+        {
+          audienceDate: audienceDate,
+          description: get().description,
+          link: get().meetingLink,
+          address: get().location,
+        }, 
+        {
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${localStorage.getItem('token')}`
+          }
+        }
+      );
       set({ loading: false, status: 'success' });
     } catch (error) {
       set({ loading: false, status: 'error' });
