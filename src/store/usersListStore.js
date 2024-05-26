@@ -26,7 +26,7 @@ export const useUsersListStore = create((set,get) => ({
 
       deleteUser: async (userId) => {
         try {
-          await axios.put(`${API_URL}/users/${userId}`, {
+          await axios.put(`${API_URL}/users/${userId}`,{}, {
             headers: {
               'Content-Type': 'application/json',
               'Authorization': `Bearer ${localStorage.getItem('token')}`
