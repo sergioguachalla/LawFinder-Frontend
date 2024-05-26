@@ -55,7 +55,9 @@ export const useStore = create((set, get) => ({
     try {
       const response = await axios.post(`${API_URL}/legalfile`, formData, {
         headers: {
-          'Content-Type': 'multipart/form-data'
+          'Content-Type': 'multipart/form-data',
+          'Authorization': `Bearer ${localStorage.getItem('token')}`
+
         }
       });
       set({ loading: false, message: 'Archivo cargado con éxito: ' + response.data });
