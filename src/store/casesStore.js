@@ -112,8 +112,12 @@ export const useCasesStore = create((set, get) => ({
           inProgress: 'true',
           title: get().searchTitle,
         },
-        
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${localStorage.getItem('token')}`
+        }
       });
+  
       console.log('response', response);
       if(response.data.response.content.length > 0){
         const casesPage = response.data.response;
@@ -131,10 +135,10 @@ export const useCasesStore = create((set, get) => ({
         set({ status: 'success' });
       }
     } catch (error) {
-      console.log(error);
+      console.error('Error fetching cases:', error);
       set({ status: 'error' });
     }
-  },
+  },  
   
   nextPage: () => {
     if (get().currentPage < get().totalPages - 1) {

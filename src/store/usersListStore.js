@@ -9,20 +9,27 @@ export const useUsersListStore = create((set,get) => ({
     setStatus: (status) => set({status: status}),
   
     fetchUsers: async () => {
-        try {
-          set({ status: 'loading' });
-          const response = await axios.get(`${API_URL}/users`);
-          const mappedUsers = response.data.response.map(user => ({
-            id: user.id,
-            username: user.username,
-            roles: user.roles,
-            isBlocked: user.isblocked 
-          }));
-          set({ users: mappedUsers, status: 'success' });
-        } catch (error) {
-          set({ status: 'error' });
-        }
-      },
+      try {
+        set({ status: 'loading' });
+        const response = await axios.get(`${API_URL}/users`, {
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${localStorage.getItem('token')}`
+          }
+        });
+        const mappedUsers = response.data.response.map(user => ({
+          id: user.id,
+          username: user.username,
+          roles: user.roles,
+          isBlocked: user.isblocked 
+        }));
+        set({ users: mappedUsers, status: 'success' });
+      } catch (error) {
+        console.error('Error fetching users:', error);
+        set({ status: 'error' });
+      }
+    },
+    
 
       deleteUser: async (userId) => {
         try {
