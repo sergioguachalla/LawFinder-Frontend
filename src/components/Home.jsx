@@ -151,8 +151,8 @@ import { useEffect } from "react";
           </div>
         )}
         {roles.includes("CREATE_CASE") && 
-          <button className="floating-button-right" onClick={() => navigate('/RegisterCase')}>
-            +
+          <button className="register-case-button" onClick={() => navigate('/RegisterCase')}>
+            Registrar caso +
           </button>
   }
         {/*isLawyer === true &&  ()*/}

@@ -185,3 +185,29 @@ body {
   background-color: #f2f2f2;
   width: 1225px;
 }
+
+
+.register-case-button {
+  position: fixed;
+  bottom: 100px;
+  right: 50px;
+  width: 120px; /* Aumenta el ancho del botón */
+  height: 120px; /* Aumenta la altura del botón */
+  background-color: #333;
+  color: white;
+  border: none;
+  border-radius: 50%; /* Mantiene el botón redondo */
+  cursor: pointer;
+  box-shadow: 0px 1px 5px rgba(0, 0, 0, 0.1);
+  transition: background-color 0.3s ease-in-out;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 10px; /* Ajusta el padding para el texto */
+  font-size: 14px; /* Ajusta el tamaño de la fuente */
+}
+
+.register-case-button:hover {
+  background-color: #555;
+}
