@@ -68,7 +68,7 @@ const AudienceCalendar = () => {
   return (
     <>
       <Navbar/>
-      <h1 className='Calendar-title'>Calendario de audiencias</h1>
+      <h1 className='Calendar-title'>Agenda de audiencias</h1>
       <div style={{ height: 500 }}>
         <Calendar
           localizer={localizer}

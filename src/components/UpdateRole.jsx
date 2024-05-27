@@ -1,72 +1,48 @@
-import React, { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import React, { useEffect } from "react";
+import { useParams, useNavigate } from "react-router-dom";
 import { useUpdateRoleStore } from "../store/updateRoleStore";
 import Navbar from "./Navbar";
-import '../styles/Home.css';
-
-
+import '../styles/RegisterRoles.css';
 
 const UpdateRoles = () => {
+  const navigate = useNavigate();
   const { id } = useParams();
-  const { privileges, getRoleDetails, updateRole, setRoleId,setPrivilegeStatus } = useUpdateRoleStore();
-  const [updatedRole, setUpdatedRole] = useState({ roleName: '', privileges: [] });
+  const { privileges, getRoleDetails, updateRole, setRoleId, setPrivilegeStatus } = useUpdateRoleStore();
 
   useEffect(() => {
     setRoleId(id);
     getRoleDetails(id);
-    
   }, [getRoleDetails, setRoleId, id]);
-
-
 
   const handleRoleUpdate = async (e) => {
     e.preventDefault();
-    try {
-      await updateRole();
-    } catch (error) {
-      console.error("Error updating role:", error);
+    const confirmUpdate = window.confirm("¿Estás seguro de que quieres actualizar este rol?");
+    if (confirmUpdate) {
+      try {
+        await updateRole();
+        navigate("/RolesAdmin");
+      } catch (error) {
+        console.error("Error updating role:", error);
+      }
     }
   };
 
   const handlePrivilegeStatusChange = (e) => {
     const { checked } = e.target;
-  
     const privilegeId = parseInt(e.target.id.split('_')[1]);
-    
     setPrivilegeStatus(privilegeId, checked);
-  }
-
-  /*
-  const handlePrivilegeChange = (e) => {
-    const { value, checked } = e.target;
-    if (checked) {
-      setUpdatedRole(prevState => ({
-        ...prevState,
-        privileges: [...prevState.privileges, value]
-      }));
-    } else {
-      setUpdatedRole(prevState => ({
-        ...prevState,
-        privileges: prevState.privileges.filter(privilege => privilege !== value)
-      }));
-    }
   };
-*/
+
+  const handleCancel = () => {
+    navigate("/RolesAdmin");
+  };
+
   return (
     <>
       <Navbar />
-      <div className="update-role-container">
-        <h1>Actualizar Rol</h1>
-        <form onSubmit={handleRoleUpdate}>
-          <div className="form-group">
-            <label htmlFor="roleName">Nombre del Rol:</label>
-            <input
-              type="text"
-              id="roleName"
-              value={updatedRole.roleName}
-              onChange={(e) => setUpdatedRole({ ...updatedRole, roleName: e.target.value })}
-            />
-          </div>
+      <div className="roles-container">
+        <h1 className="Audience-title">Actualizar Rol</h1>
+        <form onSubmit={handleRoleUpdate} className="form-container">
           <div className="form-group">
             <label>Privilegios:</label>
             {privileges.map(privilege => (
@@ -74,7 +50,6 @@ const UpdateRoles = () => {
                 <input
                   type="checkbox"
                   id={`privilege_${privilege.privilegeId}`}
-                  value={privilege.privilege}
                   checked={privilege.status}
                   onChange={handlePrivilegeStatusChange}
                 />
@@ -82,7 +57,10 @@ const UpdateRoles = () => {
               </div>
             ))}
           </div>
+          <br />
           <button type="submit">Actualizar Rol</button>
+          <br />
+          <button type="button" onClick={handleCancel}>Cancelar</button>
         </form>
       </div>
     </>

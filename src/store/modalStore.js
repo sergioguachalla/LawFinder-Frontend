@@ -30,19 +30,31 @@ export const useModalStore = create((set,get) => ({
    },
 
    updateRequest: async (caseId) => {
-      const response = await axios.post(`${API_URL}/legalcase/${caseId}/instance`,{
-         "instanceId": get().instanceId,
-         "startDate": get().startDate,
-         "endDate": get().endDate,
-      });
-      
-      if(response.data.response != null || response.data.code == '0000'){
-         console.log(response.data);
+      try {
+        const response = await axios.post(`${API_URL}/legalcase/${caseId}/instance`, 
+          {
+            instanceId: get().instanceId,
+            startDate: get().startDate,
+            endDate: get().endDate,
+          },
+          {
+            headers: {
+              'Content-Type': 'application/json',
+              'Authorization': `Bearer ${localStorage.getItem('token')}`
+            }
+          }
+        );
+    
+        if(response.data.response != null || response.data.code === '0000'){
+          console.log(response.data);
+        } else {
+          console.log(response.data);
+        }
+      } catch (error) {
+        console.error('Error updating request:', error);
       }
-      else{
-         console.log(response.data);
-      }
-   },
+    },
+    
 
 
 }));

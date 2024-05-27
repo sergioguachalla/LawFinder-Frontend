@@ -54,31 +54,49 @@ export const useEditUserStore = create((set,get) => ({
         username,
         secret: password 
       };
-
-      await axios.put(`${API_URL}/users/${userId}/update`, userData);
+  
+      await axios.put(`${API_URL}/users/${userId}/update`, userData, {
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${localStorage.getItem('token')}`
+        }
+      });
       console.log('Usuario actualizado con éxito');
       console.log('Datos del usuario actualizado:', userData);
     } catch (error) {
       console.error('Error al actualizar el usuario:', error);
     }
   },
+  
 
   DeleteRole: async (userId, roleId) => {
     try {
-      await axios.put(`${API_URL}/roles/users/${userId}/role/${roleId}/delete`);
+      await axios.put(`${API_URL}/roles/users/${userId}/role/${roleId}/delete`, {}, {
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${localStorage.getItem('token')}`
+        }
+      });
       console.log('Rol eliminado del usuario con éxito');
     } catch (error) {
       console.error('Error al eliminar rol del usuario:', error);
     }
   },
   
+  
 
   addRoleToUser: async (userId, roleId) => {
     try {
-      await axios.put(`${API_URL}/roles/users/${userId}/role/${roleId}/add`);
+      await axios.put(`${API_URL}/roles/users/${userId}/role/${roleId}/add`, {}, {
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${localStorage.getItem('token')}`
+        }
+      });
       console.log('Rol añadido al usuario con éxito');
     } catch (error) {
       console.error('Error al añadir rol al usuario:', error);
     }
   }
+  
 }));

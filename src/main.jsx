@@ -31,6 +31,8 @@ import Forbidden from "./components/403";
 import RolesAdmin from "./components/RolesAdmin";
 import ResetPassword from "./components/PasswordReset";
 import ForgotPassword from "./components/ForgotPassword";
+import ApplicationLogs from "./components/ApplicationLogs";
+import SecurityLogs from "./components/SecurityLogs";
 
 const router = createBrowserRouter([
   {
@@ -121,7 +123,17 @@ const router = createBrowserRouter([
   {
     path: "ForgotPassword",
     element: <ForgotPassword/>  
+  },
+  {
+    path: "ApplicationLogs",
+    element: <ApplicationLogs/>,
+  },
+  {
+    path: "SecurityLogs",
+    element: <SecurityLogs/>,
   }
+
+
 
 
 ]);

@@ -32,7 +32,7 @@ const RegisterAudience = () => {
       return () => clearTimeout(timeoutId);
     }
     const roles = getRoleFromToken();
-    if(!roles.includes("CREATE_AUDIENCE")  ) {
+    if(!roles.includes("REGISTER_AUDIENCE")  ) {
       navigate('/Unauthorized');
   }
   }, [navigate, status]);

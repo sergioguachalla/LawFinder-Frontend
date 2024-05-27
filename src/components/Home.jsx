@@ -53,7 +53,7 @@ import { useEffect } from "react";
       {(status === 'loading' || status === 'init') && <LoadingSpinner/>}
       <Navbar />
       <div className="cases-container">
-        <h1>Casos</h1>
+        <h1>Casos Legales del Usuario</h1>
 
         <div className="filter-container">
           <div className="search-container">

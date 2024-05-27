@@ -62,7 +62,7 @@ const RolesAdmin = () => {
               <div key={role.roleId} className="card-item">
                 <h2>{role.roleName}</h2>
                 <p>Privilegios: {role.privileges.join(', ')}</p>
-                <button onClick={() => handleRoleClick(role.roleId)}>Ver Más</button>
+                <button onClick={() => handleRoleClick(role.roleId)}>Editar Rol</button>
                 <button onClick={() => handleDeleteRole(role.roleId)}>Eliminar</button>
               </div>
             ))}

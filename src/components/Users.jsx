@@ -89,23 +89,36 @@ const Users = () => {
                       <td>
                         <div className="users-icons">
                         {hasRole(["EDIT_USER"]) && 
+                          <div>
                           <Link to={`/EditUser/${user.id}`}>
                             <Button variant="light" size="sm" className="users-button">
-                              <FontAwesomeIcon icon={faEdit} />
+                              <FontAwesomeIcon icon={faEdit} style={{ marginRight: '5px' }} />
+                              Editar Usuario 
                             </Button>
+
                           </Link>
+                          </div>
                         }
                         {hasRole(["DELETE_USER"]) && 
-                          <Button variant="danger" size="sm" className="users-button" onClick={() => confirmDelete(user.id)}>
-                            <FontAwesomeIcon icon={faTrashAlt} />
-                          </Button>
+                          <div>
+
+                            <Button variant="danger" size="sm" className="users-button" onClick={() => confirmDelete(user.id)}>
+                              <FontAwesomeIcon icon={faTrashAlt} style={{ marginRight: '5px' }}/> 
+                              
+                              Eliminar Usuario
+                            </Button>
+                          </div>
                         } 
                         {hasRole(["BLOCK_USER","UNLOCK_USER"]) && 
-                          <Button variant="info" size="sm" className="users-button" onClick={() => confirmLock(user.id)}>
-                            <FontAwesomeIcon icon={faKey} />
-                          </Button>
+                          <div>
+                            <Button variant="info" size="sm" className="users-button" onClick={() => confirmLock(user.id)}>
+                              <FontAwesomeIcon icon={faKey} style={{ marginRight: '5px' }} />
+                              {user.isBlocked ? "Desbloquear Usuario" : "Bloquear Usuario"}
+                            </Button>
+                            </div>
         }
                         </div>
+                        
                       </td>
                     </tr>
                   ))}
