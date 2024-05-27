@@ -65,7 +65,7 @@ const ApplicationLogs = () => {
               value={toDate}
               onChange={(e) => setToDate(e.target.value)}
               min={fromDate}
-              max={currentDate}
+             
             />
 
             <button className="log-app-clear-button" onClick={clearFilters}>Borrar Filtros</button>
