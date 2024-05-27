@@ -1,0 +1,101 @@
+/* ApplicationLogs.css */
+.log-app-body {
+    background-color: #fff;
+    color: #333;
+    font-family: 'Raleway', sans-serif;
+    margin: 0;
+    padding: 0;
+  }
+  
+  .log-app-container {
+    padding: 20px;
+  }
+  
+  .log-app-title {
+    font-family: 'Oswald', sans-serif;
+    font-size: 2.5em;
+    color: #333;
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  
+  .log-app-filter-container {
+    background-color: #333;
+    padding: 20px;
+    border-radius: 10px;
+    color: #fff;
+    margin-bottom: 20px;
+  }
+  
+  .log-app-filter-container label {
+    margin-right: 10px;
+  }
+  
+  .log-app-filter-container select,
+  .log-app-filter-container input[type="date"] {
+    margin-right: 10px;
+    padding: 5px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+  }
+  
+  .log-app-clear-button {
+    border-radius: 10px;
+    padding: 10px 20px;
+    font-size: 16px;
+    background-color: #008CBA;
+    color: white;
+    border: none;
+    cursor: pointer;
+  }
+  
+  .log-app-clear-button:hover {
+    background-color: #005f7f;
+  }
+  
+  .log-app-logs-container {
+    margin-top: 20px;
+  }
+  
+  .log-app-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+  }
+  
+  .log-app-table th,
+  .log-app-table td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+  }
+  
+  .log-app-table th {
+    background-color: #f2f2f2;
+  }
+  
+  .log-app-pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+  }
+  
+  .log-app-pagination button {
+    background: none;
+    border: none;
+    color: #333;
+    cursor: pointer;
+    font-size: 1.2em;
+    margin: 0 20px;
+    transition: color 0.3s ease-in-out;
+  }
+  
+  .log-app-pagination button:hover {
+    color: #555;
+  }
+  
+  .log-app-pagination button:disabled {
+    color: #ccc;
+  }
+  
