@@ -33,6 +33,7 @@ import ResetPassword from "./components/PasswordReset";
 import ForgotPassword from "./components/ForgotPassword";
 import ApplicationLogs from "./components/ApplicationLogs";
 import SecurityLogs from "./components/SecurityLogs";
+import AssetClassification from "./components/AssetClassification";
 
 const router = createBrowserRouter([
   {
@@ -131,6 +132,10 @@ const router = createBrowserRouter([
   {
     path: "SecurityLogs",
     element: <SecurityLogs/>,
+  },
+  {
+    path: "AssetClassification",
+    element: <AssetClassification/>,
   }
 
 

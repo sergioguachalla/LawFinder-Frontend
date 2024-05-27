@@ -114,10 +114,10 @@ const Navbar = () => {
                           </li>
                           }
 
-                        {roles.includes("VIEW_ACTIVES") &&
+                        {roles.includes("VIEW_SECURITY_LOGS") &&
 
                           <li className="sub-menu-item">
-                            <Link to="/Clasificación de Activos" className="sub-menu-link">
+                            <Link to="/AssetClassification" className="sub-menu-link">
                                 Clasificación de Activos
                             </Link>
                           </li>

@@ -1,0 +1,101 @@
+/* AssetClassification.css */
+.asset-classification-body {
+    background-color: #fff;
+    color: #333;
+    font-family: 'Raleway', sans-serif;
+    margin: 0;
+    padding: 0;
+  }
+  
+  .asset-classification-container {
+    padding: 20px;
+  }
+  
+  .asset-classification-title {
+    font-family: 'Oswald', sans-serif;
+    font-size: 2.5em;
+    color: #333;
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  
+  .asset-classification-filter-container {
+    background-color: #333;
+    padding: 20px;
+    border-radius: 10px;
+    color: #fff;
+    margin-bottom: 20px;
+  }
+  
+  .asset-classification-filter-container label {
+    margin-right: 10px;
+  }
+  
+  .asset-classification-filter-container select,
+  .asset-classification-filter-container input[type="date"] {
+    margin-right: 10px;
+    padding: 5px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+  }
+  
+  .asset-classification-clear-button {
+    border-radius: 10px;
+    padding: 10px 20px;
+    font-size: 16px;
+    background-color: #008CBA;
+    color: white;
+    border: none;
+    cursor: pointer;
+  }
+  
+  .asset-classification-clear-button:hover {
+    background-color: #005f7f;
+  }
+  
+  .asset-classification-assets-container {
+    margin-top: 20px;
+  }
+  
+  .asset-classification-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+  }
+  
+  .asset-classification-table th,
+  .asset-classification-table td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+  }
+  
+  .asset-classification-table th {
+    background-color: #f2f2f2;
+  }
+  
+  .asset-classification-pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+  }
+  
+  .asset-classification-pagination button {
+    background: none;
+    border: none;
+    color: #333;
+    cursor: pointer;
+    font-size: 1.2em;
+    margin: 0 20px;
+    transition: color 0.3s ease-in-out;
+  }
+  
+  .asset-classification-pagination button:hover {
+    color: #555;
+  }
+  
+  .asset-classification-pagination button:disabled {
+    color: #ccc;
+  }
+  
