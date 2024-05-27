@@ -61,7 +61,27 @@ const AssetClassification = () => {
                       <td>{asset.caseDescription}</td>
                       <td>{asset.crime}</td>
                       <td>{format(new Date(asset.startDate), 'dd/MM/yyyy')}</td>
-                      <td>{asset.confidentiality}</td>
+                      <td>
+                      {asset.confidentiality === "Publica" && (
+                        <div className="classification-info">
+                            <div className="green-circle"></div>
+                            <span>Publica</span>
+                        </div>
+                       )}
+                       {asset.confidentiality === "Uso Interno o Privada" && (
+                        <div className="classification-info">
+                            <div className="orange-circle"></div>
+                            <span>Uso Interno o Privada</span>
+                        </div>
+                       )}
+                       {asset.confidentiality === "Confidencial" && (
+                        <div className="classification-info">
+                            <div className="red-circle"></div>
+                            <span>Confidencial</span>
+                        </div>
+                       )}
+                    </td>
+
                     </tr>
                   ))}
                 </tbody>

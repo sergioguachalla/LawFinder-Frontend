@@ -98,4 +98,31 @@
   .asset-classification-pagination button:disabled {
     color: #ccc;
   }
+  .green-circle {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background-color: green;
+  }
   
+  .orange-circle {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background-color: orange;
+  }
+  
+  .red-circle {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background-color: red;
+  }
+  .classification-info {
+    display: flex;
+    align-items: center;
+  }
+  
+  .green-circle, .orange-circle, .red-circle {
+    margin-right: 5px; /* Ajusta este margen según sea necesario */
+  }
