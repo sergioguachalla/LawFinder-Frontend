@@ -122,7 +122,7 @@ const EditUser = () => {
           </div>
             </div>
             <div className='edituser form-row'>
-              <h1>CAMBIAR ROLES</h1>
+              <h1>Editar Roles</h1>
 
               <Dropdown>
                 <Dropdown.Toggle variant="success" id="dropdown-basic">
@@ -136,7 +136,7 @@ const EditUser = () => {
                   ))}
                 </Dropdown.Menu>
               </Dropdown>
-              <Button variant='primary' onClick={handleAddRole}>Añadir</Button>
+              <Button variant='primary' onClick={handleAddRole}>Añadir Rol</Button>
             </div>
             <div className='edituser form-row'>
               <table className='edituser users-table'> 

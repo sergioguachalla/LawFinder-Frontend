@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useRegisterRolesStore } from "../store/RegisterRoles";
+import { useRegisterRolesStore } from "../store/registerRoles";
 import { useNavigate } from "react-router-dom";
 import Navbar from "./Navbar";
 import '../styles/RegisterRoles.css';
