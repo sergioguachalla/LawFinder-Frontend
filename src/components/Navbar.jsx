@@ -1,9 +1,9 @@
-import React, { useEffect } from 'react';
+import React, { useEffect,useState } from 'react';
 import { Link } from 'react-router-dom';
 import '../styles/Navbar.css';
 import { useNavbarStore } from '../store/navbarStore';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faUserAlt,faHome, faBriefcase, faEnvelopeOpenText, faSignOutAlt, faUser, faArchive, faCalendarAlt } from '@fortawesome/free-solid-svg-icons';
+import { faUserAlt,faHome, faBriefcase, faEnvelopeOpenText, faSignOutAlt, faUser, faArchive, faCalendarAlt ,faChartLine} from '@fortawesome/free-solid-svg-icons';
 import useAuthStore from '../store/authStore';
 import { useLoginUserStore } from '../store/userLoginStore';
 import { getRoleFromToken } from "../utils/getIdFromToken"; 
@@ -15,6 +15,8 @@ const Navbar = () => {
    const {setStatus} = useLoginUserStore();
    const {logout} = useAuthStore();
    const roles = getRoleFromToken();
+   const [reportsOpen, setReportsOpen] = useState(false);
+
 
    
    useEffect(() => {
@@ -25,6 +27,10 @@ const Navbar = () => {
     setStatus('init');
     logout();
   }
+
+  const toggleReportsMenu = () => {
+    setReportsOpen(!reportsOpen);
+  };
 
   const hasRole = (requiredRoles) => {
     return requiredRoles.some(role => roles.includes(role));
@@ -62,11 +68,7 @@ const Navbar = () => {
               <FontAwesomeIcon icon={faArchive} /> Casos Archivados
             </Link>
           </li>
-          <li className="navbar-item">
-            <Link to="/" className="navbar-link" onClick={handleLogout}>
-              <FontAwesomeIcon icon={faSignOutAlt} /> Salir
-            </Link>
-          </li>
+          
           {roles.includes("CREATE_PRIVILEGE") && 
             <li className="navbar-item">
               <Link to="/RolesAdmin" className="navbar-link">
@@ -74,6 +76,41 @@ const Navbar = () => {
               </Link>
             </li>
           }
+
+
+          <li className="navbar-item reports-item">
+            <div className="navbar-link" onClick={toggleReportsMenu}>
+              <FontAwesomeIcon icon={faChartLine} /> Reportes
+            </div>
+            {reportsOpen && (
+              <ul className="sub-menu">
+                <li className="sub-menu-item">
+                  <Link to="/ApplicationLogs" className="sub-menu-link">
+                    Logs de Aplicación
+                  </Link>
+                </li>
+                <li className="sub-menu-item">
+                  <Link to="/SecurityLogs" className="sub-menu-link">
+                    Logs de Seguridad
+                  </Link>
+                </li>
+                <li className="sub-menu-item">
+                  <Link to="/Clasificación de Activos" className="sub-menu-link">
+                    Clasificación de Activos
+                  </Link>
+                </li>
+              </ul>
+            )}
+          </li>
+
+
+
+
+          <li className="navbar-item">
+            <Link to="/" className="navbar-link" onClick={handleLogout}>
+              <FontAwesomeIcon icon={faSignOutAlt} /> Salir
+            </Link>
+          </li>
         </ul>
       </div>
       <div className="username">
