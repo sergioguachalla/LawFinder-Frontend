@@ -20,6 +20,7 @@ const RegisterUser = () => {
     errorMessage,
     confirmSecret,
     confirmSecretMessage,
+    passwordMessage,
   } = useRegisterUserStore();
   
 
@@ -128,8 +129,11 @@ const RegisterUser = () => {
             </div>
 
           </div>
-          {!goodPassword && <p className='error-message'>{errorMessage}</p>}
+          {!goodPassword && <p className='error-message'>{errorMessage}</p>
+          }
           {!confirmSecret && <p className='error-message'>{confirmSecretMessage}</p>}
+          {!goodPassword && <p className='error-message'>
+            {passwordMessage}</p>}
           <div className='button-row'>
             <button type='button' onClick={() => navigate('/')}>Cancelar</button>
             <button type='submit' className='register-button'>Registrar</button>
