@@ -26,7 +26,7 @@ const AssetClassification = () => {
 
         <div className="asset-classification-filter-container">
           <div>
-            <label htmlFor="confidentialityId">Nivel de Confidencialidad: </label>
+            <label htmlFor="confidentialityId">Clasificación: </label>
             <select id="confidentialityId" value={confidentialityId} onChange={(e) => setConfidentialityId(e.target.value)}>
               <option value="">Todos</option>
               {confidentialityLevels && confidentialityLevels.map(level => (
@@ -50,7 +50,7 @@ const AssetClassification = () => {
                     <th>Descripción</th>
                     <th>Crimen</th>
                     <th>Fecha de Inicio</th>
-                    <th>Confidencialidad</th>
+                    <th>Clasificación</th>
                   </tr>
                 </thead>
                 <tbody>
