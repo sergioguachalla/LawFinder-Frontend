@@ -1,6 +1,8 @@
 import { create } from 'zustand';
 import axios from 'axios';
 import {owasp, traducirErrores} from '../utils/passwordStrengthTestEs';
+
+import {isPasswordInDictionary} from '../utils/passwordUtils';
 const API_URL = import.meta.env.VITE_API_URL;
 
 export const useRegisterUserStore = create((set, get) => ({
@@ -24,6 +26,7 @@ export const useRegisterUserStore = create((set, get) => ({
   errorMessage: '',
   confirmSecret: true,
   confirmSecretMessage: '',
+  passwordMessage: '',
   getgoodPassword: () => get().goodPassword,
   getSecret: () => get().secret,
   setErrorMessage: (value) => set({errorMessage: value}),
@@ -44,11 +47,16 @@ export const useRegisterUserStore = create((set, get) => ({
       set({errorMessage: errors});
       if(!result.strong){
         set({ goodPassword: false });
-    }
-    else{
-      
-      set({ goodPassword: true });
-    }
+      }
+      else{
+        
+        set({ goodPassword: true });
+      }
+      if(isPasswordInDictionary(value)){
+        console.log('La contraseña no puede ser una contraseña común');
+        set({ goodPassword: false });
+        set({ passwordMessage: 'La contraseña no puede ser una contraseña común' });
+      }
     }
     if(fieldName === 'secretConfirm'){
       if(value !== get().secret){
@@ -137,7 +145,7 @@ export const useRegisterUserStore = create((set, get) => ({
       return;
     }
 
-    if(get().goodPassword === false){
+    if(goodPassword === false){
       alert('La contraseña debe tener al menos 10 caracteres, una letra mayúscula, una letra minúscula, un número y un caracter especial');
       return;
     }
@@ -147,6 +155,10 @@ export const useRegisterUserStore = create((set, get) => ({
     }
     if (!correoRegex.test(formData.correo)) {
       alert('El correo electrónico no tiene un formato válido');
+      return;
+    }
+    if(isPasswordInDictionary(formData.secret)){
+      alert('La contraseña no puede ser una contraseña común');
       return;
     }
     //if (!passwordRegex.test(formData.secret)) {

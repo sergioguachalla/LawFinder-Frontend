@@ -1,233 +1,161 @@
-import { create } from 'zustand';
-import axios from 'axios';
-import {owasp, traducirErrores} from '../utils/passwordStrengthTestEs';
+import { useEffect } from 'react';
+import { useRegisterUserStore } from '../store/userRegistrationStore';
+import '../styles/RegisterUser.css';
+import { useNavigate } from 'react-router-dom';
+import { Eye, EyeSlash } from 'react-bootstrap-icons';
 
-import {isPasswordInDictionary} from '../utils/passwordUtils';
-const API_URL = import.meta.env.VITE_API_URL;
+const RegisterUser = () => {
+  const navigate = useNavigate();
+  const {
+    handleChange,
+    handleSubmit,
+    generateNewUUID,
+    inputType,
+    setInputText, 
+    setInputPassword,
+    userAlreadyExists,
+    emailExists,
+    status,
+    goodPassword,
+    errorMessage,
+    confirmSecret,
+    confirmSecretMessage,
+    passwordMessage,
+  } = useRegisterUserStore();
+  
 
-export const useRegisterUserStore = create((set, get) => ({
-  deviceId: localStorage.getItem('device-id') || generateUUID(),
-  nombres: '',
-  apellidos: '',
-  tipoDocumento: '',
-  documento: '',
-  complemento: '', 
-  direccion: '',
-  celular: '',
-  correo: '',
-  username: '',
-  secret: '',
-  secretConfirm: '',
-  status: 'init',
-  inputType: 'password',
-  emailExists: false,
-  userAlreadyExists: false,
-  goodPassword: true,
-  errorMessage: '',
-  confirmSecret: true,
-  confirmSecretMessage: '',
-  passwordMessage: '',
-  getgoodPassword: () => get().goodPassword,
-  getSecret: () => get().secret,
-  setErrorMessage: (value) => set({errorMessage: value}),
-  setUserAlreadyExists: (value) => set({userAlreadyExists: value}),
-  setInputText: () => set({inputType:'text'}),
-  setInputPassword: () => set({inputType:'password'}),
-  handleChange: (fieldName, event) => {
-    const { value } = event.target;
-    console.log('Cambio en el campo ' + fieldName + ' con valor ' + value);
-    set({ [fieldName]: value });
-    if(fieldName === 'secret'){
-      set({secret: value});
-      set({errorMessage: ''});
-      const result = owasp.test(value);
-      let errors = [];
-      const erroresTraducidos = traducirErrores(result.errors); 
-      erroresTraducidos.forEach(error => errors.push(error+"\n"));
-      set({errorMessage: errors});
-      if(!result.strong){
-        set({ goodPassword: false });
-      }
-      else{
-        
-        set({ goodPassword: true });
-      }
-      if(isPasswordInDictionary(value)){
-        console.log('La contraseña no puede ser una contraseña común');
-        set({ goodPassword: false });
-        set({ passwordMessage: 'La contraseña no puede ser una contraseña común' });
-      }
-    }
-    if(fieldName === 'secretConfirm'){
-      if(value !== get().secret){
-        set({confirmSecret: false});
-        set({confirmSecretMessage: 'Las contraseñas no coinciden'});
-      }
-      else{
-        set({confirmSecret: true});
-        set({confirmSecretMessage: ''});
-      }
-    }
-  },
+  useEffect(() => {
+    generateNewUUID();
+  }, [generateNewUUID]);
 
-
-  generateNewUUID: () => {
-    const newUUID = generateUUID();
-    set({ uuid: newUUID });
-    localStorage.setItem('device-id', newUUID);
-    //console.log('Nuevo UUID generado: ' + newUUID);
-  },
-
-
-  handleSubmit: (event) => {
-    const correoRegex = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i;
-    const letrasRegex = /^[a-zA-Z\s]*$/;
-    const numbersRegex = /^[0-9]*$/;
-    const apellidosRegex = /^[a-zA-Z]+ [a-zA-Z]+$/;
-    const apellidosRegex2 = /^[a-zA-Z]+ [a-zA-Z]+ [a-zA-Z]+$/;
-
+  const handleSubmitForm = async (event) => {
     event.preventDefault();
-    const usernameAux = event.target.nombres.value.split(' ');
-    const lastnameAux = event.target.apellidos.value.split(' ');
-    const primerNombre = usernameAux[0];
-    const primerApellido = lastnameAux[0];
-    //get the second last name first letter
-    const segundoApellido = lastnameAux[lastnameAux.length - 1].charAt(0);
-    const usernameFinal = `${primerNombre}_${primerApellido}${segundoApellido}`;
-    console.log(usernameFinal);
-    const formData = {
-      nombres: event.target.nombres.value,
-      apellidos: event.target.apellidos.value,
-      tipoDocumento: event.target.tipoDocumento.value,
-      documento: event.target.documento.value,
-      complemento: event.target.complemento.value,
-      direccion: event.target.direccion.value,
-      celular: event.target.celular.value,
-      correo: event.target.correo.value,
-      username: usernameFinal,
-      secret: event.target.secret.value,
-      secretConfirm: event.target.secretConfirm.value,
-    };
-    
-      set({ nombres: formData.nombres });
-      set({ apellidos: formData.apellidos });
-      set({ tipoDocumento: formData.tipoDocumento });
-      set({ documento: formData.documento });
-      set({ complemento: formData.complemento });
-      set({ direccion: formData.direccion });
-      set({ celular: formData.celular });
-      set({ correo: formData.correo });
-      set({ username: formData.username });
-      set({ secret: formData.secret });
-      set({ secretConfirm: formData.secretConfirm });
-    
-    console.log(formData.secret); 
-    //set({formData: formData});
-    localStorage.setItem('correo', formData.correo);
+    await handleSubmit(event);
+  };
 
-    if(!letrasRegex.test(formData.nombres)){
-      alert('El campo de nombres solo puede contener letras');
-      return;
+  
+  
+  const togglePasswordVisibility = () => {
+    if (inputType === 'password') {
+      setInputText('text');
+    } else {
+      setInputPassword('password');
     }
-    console.log(formData.apellidos);
-    console.log(apellidosRegex.test(formData.apellidos));
-    console.log(apellidosRegex2.test(formData.apellidos));
-    if(!apellidosRegex.test(formData.apellidos) && !apellidosRegex2.test(formData.apellidos)){
-      alert('El campo de apellidos debe tener dos apellidos y solo puede contener letras');
-      return;
-    }
-    if(!numbersRegex.test(formData.documento)){
-      alert('El campo de documento solo puede contener números');
-      return;
-    }
-    if(!numbersRegex.test(formData.celular)){
-      alert('El campo de celular solo puede contener números');
-      return;
-    }
+    console.log(inputType);
+  };
 
-    if(goodPassword === false){
-      alert('La contraseña debe tener al menos 10 caracteres, una letra mayúscula, una letra minúscula, un número y un caracter especial');
-      return;
-    }
-    if (formData.secret !== formData.secretConfirm) {
-      alert('Las contraseñas no coinciden');
-      return;
-    }
-    if (!correoRegex.test(formData.correo)) {
-      alert('El correo electrónico no tiene un formato válido');
-      return;
-    }
-    if(isPasswordInDictionary(formData.secret)){
-      alert('La contraseña no puede ser una contraseña común');
-      return;
-    }
-    //if (!passwordRegex.test(formData.secret)) {
-    //  alert('La contraseña debe tener al menos 8 caracteres, una letra mayúscula, una letra minúscula, un número y un caracter especial');
-    //  return;
-    //}
-    set({ statusState: 'loading' });
-    
-    
-    
-
-    const verificationBody = {
-      "deviceId": localStorage.getItem('device-id'),
-      "type": "email",
-      "email": formData.correo,
-    };
-    const requestVerificatioBody = {
-      "email" : formData.correo,
-    };
-
-    const userExists = async () => {
-      const response = await axios.post(`${API_URL}/verification`, requestVerificatioBody);
-      console.log(response);
-      if(response.data.response == "User Already Exists"){
-        //alert('El correo ya se encuentra registrado');
-        set({ status: 'registered' });
-        set({ formData : ''});
-        set({ nombres : ''});
-        set({ correo : ''});
-      }
-      else if(response.data.response == "User Does Not Exist"){
-        registerUser();
-        set({ status: 'loading' });
-      }
-    }
-    userExists();
-
-    //set({ nombres: '', apellidos: '', tipoDocumento: '', documento: '', complemento: '', direccion: '', celular: '', correo: '', username: '', secret: '', secretConfirm: ''});
-    const registerUser = async () => {
-      set({ status: 'loading' });
+  useEffect(() => {
+    if (status === 'success') {
       
-      const response = await axios.post(`${API_URL}/verify`, verificationBody);
-      console.log(response);
-     
-      //set({ statusState: 'success' });
-      if(response.status == 200){    
-        set({ status: 'success' });
-        
-      }
-      else if(response.status === 400){
-        set({ status: 'error' });
-      }
+      const timeoutId = setTimeout(() => {
+        navigate('/confirmation');
+      }, 1000);
 
-      
-    };
-   
-    
-  },
+      return () => clearTimeout(timeoutId);
+    } else if (status === 'registered') {
+      setTimeout(() => {
+        navigate('/RegisterUser');
+      }, 1000);
+    } else if (status === 'loading') {
+      setTimeout(() => {}, 1000);
+    }
+  }, [emailExists, navigate, status]);
 
+  return (
+    <div className='app-container'>
+      <div className='form-section'>
+        <h1>REGISTRO DE CLIENTE</h1>
+        <form className='form-container' onSubmit={(event) => handleSubmitForm(event)}>
+          <div className='form-row'>
+            <div className='input-group'>
+              <label>Nombres *</label>
+              <input name='nombres' type='text' onChange={(event) => handleChange('nombres', event)} required placeholder='Ingrese nombres' />
+            </div>
+            <div className='input-group'>
+              <label>Apellidos *</label>
+              <input name='apellidos' type='text' onChange={(event) => handleChange('apellidos', event)} required placeholder='Ingrese sus dos apellidos' />
+            </div>
+            {userAlreadyExists && <p className='error-message'>El usuario ya se encuentra registrado</p>}
+          </div>
+          <div className='form-row'>
+            <label>Tipo de documento *</label>
+            <select name='tipoDocumento' onChange={(event) => handleChange('tipoDocumento', event)} required >
+              <option value=''>Seleccione</option>
+              <option value='ci'>CI</option>
+              <option value='pasaporte'>Pasaporte</option>
+            </select>
+          </div>
+          <div className='form-row'>
+            <div className='input-group'>
+              <label>Documento*</label>
+              <input name='documento' type='text' onChange={(event) => handleChange('documento', event)} required placeholder='El campo solo acepta numeros'/>
+            </div>
+            <div className='input-group'>
+              <label>Complemento*</label>
+              <input name='complemento' type='text' onChange={(event) => handleChange('complemento', event)} placeholder='El campo solo acepta numeros'/>
+            </div>
+          </div>
+          <div className='form-row'>
+            <label>Dirección de domicilio*</label>
+            <input name='direccion' type='text'  onChange={(event) => handleChange('direccion', event)} required placeholder='Ingrese la dirección'/>
+          </div>
+          <div className='form-row'>
+            <div className='input-group'>
+              <label>Celular*</label>
+              <input name='celular' type='text' onChange={(event) => handleChange('celular', event)} required placeholder='El campo solo acepta numeros'/>
+            </div>
+            <div className='input-group'>
+              <label>Correo electrónico*</label>
+              <input name='correo' type='email' onChange={(event) => handleChange('correo', event)} required placeholder='Ingrese un correo válido'/>
+            </div>
+          </div>
+          <div className='form-row'>
+            <div className='input-group'>
+            <label>Contraseña*</label> {inputType === 'password' ? (
+            <EyeSlash onClick={()=> {togglePasswordVisibility()}} />) : (
+            inputType === 'text' &&(
+            <Eye onClick={()=> {togglePasswordVisibility()}} />     
+            ))}
+              <input name='secret' type={inputType} onChange={(event) => handleChange('secret', event)} required />
+       
+            </div>
+            <div className='input-group'>
+              <label>Confirmar contraseña*</label> {inputType === 'password' ? (
+            <EyeSlash onClick={()=> {togglePasswordVisibility()}} />) : (
+            inputType === 'text' &&(
+            <Eye onClick={()=> {togglePasswordVisibility()}} />     
+            ))}
+              <input name='secretConfirm' type={inputType} onChange={(event) => handleChange('secretConfirm', event)} required />
+            </div>
 
-  setUserName: (username) => set({ username: username }),
-}));
-function generateUUID() {
-  return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
-    var r = (Math.random() * 16) | 0,
-      v = c === 'x' ? r : (r & 0x3) | 0x8;
-    return v.toString(16);
-  });
-}
+          </div>
+          {!goodPassword && <p className='error-message'>{errorMessage}</p>
+          }
+          {!confirmSecret && <p className='error-message'>{confirmSecretMessage}</p>}
+          {!goodPassword && <p className='error-message'>
+            {passwordMessage}</p>}
+          <div className='button-row'>
+            <button type='button' onClick={() => navigate('/')}>Cancelar</button>
+            <button type='submit' className='register-button'>Registrar</button>
+          </div>
+          <div>
+            {status === 'success' && <p className='success-message'>Usuario registrado con éxito</p>}
+            {status === 'error' && <p className='error-message'>Se ha producido un error</p>}
+            {status === 'registered' && <p className='error-message'>El usuario ya se encuentra registrado</p>}
+          </div>
+        </form>
+      </div>
+      {status === 'loading' && (
+        <div className='loading-container'>
+          <div className='loading'></div>
+          </div>
+          )}
+      <div className='image-section'>
+        <img src="https://rainesinternational.com/wp-content/uploads/2018/01/Articles_EmploymentLawyer-e1550374232107.jpeg" alt="Empleo"/>
+      </div>
+    </div>
+  );
+  
+};
 
-
-export default useRegisterUserStore;
+export default RegisterUser;
