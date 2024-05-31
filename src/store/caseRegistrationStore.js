@@ -6,6 +6,29 @@ import jwt_decode from 'jwt-decode';
 const API_URL = import.meta.env.VITE_API_URL;
 
 export const useCaseStore = create((set, get) => ({
+
+  clearFormData: () => set({
+    formData: {
+      userId: '',
+      subCategoryId: '',
+      provinceId: '1',
+      crimeId: '',
+      title: '',
+      startDate: '',
+      summary: '',
+      idInstance: '',
+      startDateInstance: '',
+      endDateInstance: '',
+      lastUpdate: Format(Date.now(), 'dd-MM-yyyy'),
+      complainant: true,
+      counterpart: '',
+      lawyerEmail: '',
+      customerEmail: '',
+    },
+    status: '',
+  }),
+
+  setStatus: (status) => set({ status }),
  
   
   formData: {

@@ -20,6 +20,10 @@ export const useAssetStore = create((set, get) => ({
           page: get().currentPage,
           size: 10, // Tamaño de página
           confidentialityId: get().confidentialityId,
+        },
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${localStorage.getItem('token')}`
         }
       });
 

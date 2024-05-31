@@ -77,10 +77,11 @@ export const useCasesStore = create((set, get) => ({
     if (role.includes('CREATE_CASE') || role.includes('VIEW_CASE')) {
       set(() => ({ isLawyer: true }));
     }
+    /*
     if (role.includes('DELETE_CASE')) {
       set(() => ({ isLawyer: false }));
       set(() => ({ isClient: true }));
-    }
+    }*/
   },
 
   getIdFromToken: () => {
@@ -108,7 +109,10 @@ export const useCasesStore = create((set, get) => ({
           inProgress: get().inProgress,  
           title: get().searchTitle,
         },
-        
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${localStorage.getItem('token')}`
+        }
       });
 
       if(response.data.response.content.length > 0){

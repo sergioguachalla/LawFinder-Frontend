@@ -19,7 +19,7 @@ const RegisterCase = () => {
     loadCategorias, loadSubCategorias,
     subCategorias, crimes,
     loadCrimes, registerCase,
-    status, lawyerEmail,
+    status, lawyerEmail,setStatus, clearFormData
  } =
   useCaseStore((state) => ({
     ...state,
@@ -37,12 +37,14 @@ const RegisterCase = () => {
     loadCategorias();
     loadInstancias();
     console.log(status);
-    if(status === 'success'){
+    if (status === 'success') {
+      clearFormData(); // Agrega esta línea para limpiar el formulario
       setTimeout(() => {
-      navigate('/Home');
+        navigate('/Home');
+        setStatus(''); // Reinicia el estado
       }, 800);
-    }
-  }, [loadCategorias, loadDepartamentos, loadInstancias, navigate, status]);
+    } 
+  }, [loadCategorias, loadDepartamentos, loadInstancias, navigate, status,clearFormData, setStatus]);
 
   const handleDepartamentoChange =  (event) =>  {
     const idDepartamento = event.target.value;

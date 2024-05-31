@@ -30,6 +30,10 @@ export const useLogsStore = create((set, get) => ({
           to: get().toDate,
           levelId: get().levelId,
           categoryId: get().categoryId,
+        },
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${localStorage.getItem('token')}`
         }
       });
 

@@ -14,7 +14,9 @@ const RegisterAudience = () => {
     setMeetingLink,
     setLocation,
     registerAudience,
-    status
+    status,
+    clearFormData,
+    setStatus
   } = useRegisterAudienceStore();
 
   const handleSubmitForm = async (event) => {
@@ -24,18 +26,21 @@ const RegisterAudience = () => {
   };
 
   useEffect(() => {
+    const roles = getRoleFromToken();
+    if(!roles.includes("REGISTER_AUDIENCE")  ) {
+      navigate('/Unauthorized');
+  }
     if (status === 'success') {
+      clearFormData(); 
       const timeoutId = setTimeout(() => {
+        setStatus(''); 
         navigate('/Home');
       }, 1000);
 
       return () => clearTimeout(timeoutId);
     }
-    const roles = getRoleFromToken();
-    if(!roles.includes("REGISTER_AUDIENCE")  ) {
-      navigate('/Unauthorized');
-  }
-  }, [navigate, status]);
+    
+  }, [navigate, status,clearFormData, setStatus]);
 
   return (
     <>

@@ -145,7 +145,7 @@ export const useRegisterUserStore = create((set, get) => ({
       return;
     }
 
-    if(goodPassword === false){
+    if(get().goodPassword === false){
       alert('La contraseña debe tener al menos 10 caracteres, una letra mayúscula, una letra minúscula, un número y un caracter especial');
       return;
     }
