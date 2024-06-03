@@ -98,9 +98,12 @@ const RegisterCase = () => {
             <input name="startDate" type="date" value={formData.startDate} max={today} onChange={(event) => handleChange('startDate', event)} />
           </div>
         </div>
-        <div className="form-row-inline-rc">
+        <div className="form-row-inline-rc">      
           <label>Resumen *</label>
-          <textarea name="summary" value={formData.summary} onChange={(event) => handleChange('summary', event)} maxLength={500} />
+          {/* darle un alto maximo a summar */}
+          <textarea name="summary" value={formData.summary} onChange={(event) => handleChange('summary', event)} maxLength={500} 
+          style={{maxHeight: "200px", width: "100%"}}
+          />
         </div>
         <div className="form-row-rc">
           <div className="form-field-rc">
