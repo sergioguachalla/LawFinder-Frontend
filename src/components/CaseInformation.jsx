@@ -16,10 +16,22 @@ const CaseInformation = () => {
   const navigate = useNavigate();
   const { id } = useParams();
   let { cases, getCases, isLawyer } = useCasesStore();
-  const { getCaseDetails, caseId, setCaseId,status, getCaseInformation,caseDetails, handleUpdateCase  } = useCaseDetailsStore();
+  const { getCaseDetails, caseId, setCaseId,status, getCaseInformation,caseDetails, handleUpdateCase,sendInvitation  } = useCaseDetailsStore();
   const {comments,getCaseComments, handleComment, handleChange, totalPages, nextPage, previousPage, currentPage} = useCommentsStore();
   const {status: statusComments} = useCommentsStore();
   //const legalCase = cases.find((legalCase) => legalCase.idLegalCase == id);
+  
+  const [lawyerEmail, setLawyerEmail] = useState('');
+  const [customerEmail, setCustomerEmail] = useState('');
+
+  const handleInviteLawyer = () => {
+    sendInvitation(id, lawyerEmail, 'lawyer');
+  };
+
+  const handleInviteCustomer = () => {
+    sendInvitation(id, customerEmail, 'customer');
+  };
+
 
   const [openModal, setOpenModal] = useState(false);
   useEffect(() => {
@@ -120,6 +132,35 @@ const CaseInformation = () => {
          
           
         </div>
+        <hr />
+        <h2>Actores</h2>
+        <div className="form-row-rc">
+      <div className="form-field-invitation-rc">
+        <label>Invitar abogado *</label>
+        <input 
+          name="lawyerEmail" 
+          type="text" 
+          value={lawyerEmail} 
+          onChange={(e) => setLawyerEmail(e.target.value)} 
+        />
+        <button type="button" onClick={handleInviteLawyer}>Enviar invitación</button>
+        {status === 'lawyerNotFound' && <p>Abogado no registrado</p>}
+        {status === 'lawyerFound' && <p>Invitación enviada a {lawyerEmail} </p>}
+      </div>
+      <div className="form-field-invitation-rc">
+        <label>Invitar cliente *</label>
+        <input 
+          name="customerEmail" 
+          type="text" 
+          value={customerEmail} 
+          onChange={(e) => setCustomerEmail(e.target.value)} 
+        />
+        <button type="button" onClick={handleInviteCustomer}>Enviar invitación</button>
+        {status === 'customerNotFound' && <p>Cliente no registrado</p>}
+        {status === 'customerFound' && <p>Invitación enviada a {customerEmail} </p>}
+      </div>
+    </div>
+        <hr />
         {statusComments === 'loading' || status ==='init' && <LoadingSpinner/>}
         <CommentSection
       comments={comments}/>
