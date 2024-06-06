@@ -28,8 +28,11 @@ export const useCaseStore = create((set, get) => ({
     },
     status: '',
   }),
-
+  categoryId: 1,
+  getSubCategoryId: () => get().formData.subCategoryId,
+  getCategory: () => get().categoryId,
   setStatus: (status) => set({ status }),
+  setCategoryId: (categoryId) => set({ categoryId }),
  
   
   formData: {
@@ -47,6 +50,7 @@ export const useCaseStore = create((set, get) => ({
     complainant: true,
     counterpart: '',
   },
+  
   departmentId: '',
   status: '',
   departamentos: [],
@@ -93,7 +97,15 @@ export const useCaseStore = create((set, get) => ({
           [field]: value,
         },
       }));
-    }else {
+
+    } else if(name === 'categoryId') {
+      set((state) => ({
+        ...state,
+        categoryId: value,
+        
+      }));
+    }
+    else {
     set((state) => ({
       ...state,
       status: value,
@@ -179,7 +191,6 @@ export const useCaseStore = create((set, get) => ({
   
       // Después de cargar los departamentos, obtenemos el id del primer departamento y cargamos sus provincias
       const firstDepartmentId = response.data.response[0].idDepartment;
-      console.log(firstDepartmentId);
 
       if (firstDepartmentId) {
         get().loadProvincias(firstDepartmentId);
@@ -227,9 +238,9 @@ export const useCaseStore = create((set, get) => ({
         set((state) => ({formData: {...state.formData, categoria: response.data.response[0].idCategory}}));
       }
       const firstCategoryId = response.data.response[0].categoryId;
-      if (firstCategoryId) {
-        get().loadSubCategorias(firstCategoryId);
-      }
+      //if (firstCategoryId) {
+      //  get().loadSubCategorias(firstCategoryId);
+      //}
     } catch (error) {
       
       console.log(error);
@@ -237,6 +248,7 @@ export const useCaseStore = create((set, get) => ({
     }
   },
   loadSubCategorias: async (idCategoria) => {
+    console.log("idCategoria", idCategoria);
     try {
       const response = await axios.get(`${API_URL}/category/${idCategoria}/subcategory`,{
         headers: {
