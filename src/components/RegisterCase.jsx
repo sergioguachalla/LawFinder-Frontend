@@ -38,11 +38,11 @@ const RegisterCase = () => {
     loadInstancias();
     console.log(status);
     if (status === 'success') {
-      clearFormData(); // Agrega esta línea para limpiar el formulario
+      clearFormData(); 
       setTimeout(() => {
         navigate('/Home');
         setStatus(''); // Reinicia el estado
-      }, 800);
+      }, 1000);
     } 
   }, [loadCategorias, loadDepartamentos, loadInstancias, navigate, status,clearFormData, setStatus]);
 
@@ -102,7 +102,7 @@ const RegisterCase = () => {
           <label>Resumen *</label>
           {/* darle un alto maximo a summar */}
           <textarea name="summary" value={formData.summary} onChange={(event) => handleChange('summary', event)} maxLength={500} 
-          style={{maxHeight: "200px", width: "100%"}}
+          style={{maxHeight: "140px", width: "100%"}}
           />
         </div>
         <div className="form-row-rc">
@@ -215,6 +215,16 @@ const RegisterCase = () => {
           <button className="register-button-rc"  onClick={()=> {navigate("/Home")}}>Cancelar</button>
           <button type="submit" className="register-button">Registrar</button>  
         </div>
+
+        <div>
+          {status === 'loading' && <p>Cargando...</p>}
+          {status === 'emptyForm' && <p 
+          style={{color: 'red'}}
+          >Por favor, llene todos los campos</p>}
+          {status === 'success' && <p>Caso registrado con éxito!</p>}
+        </div>
+
+
       </form>
     </div>
 </>

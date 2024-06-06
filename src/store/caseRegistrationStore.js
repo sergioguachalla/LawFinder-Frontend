@@ -2,6 +2,7 @@ import { create } from 'zustand';
 import axios from 'axios';
 import Format from 'date-fns/format';
 import jwt_decode from 'jwt-decode';
+import { delay } from 'framer-motion';
 
 const API_URL = import.meta.env.VITE_API_URL;
 
@@ -110,16 +111,27 @@ export const useCaseStore = create((set, get) => ({
   handleSubmit: async (event) => {
     event.preventDefault();
     const formData  = get().formData;
-
+    
     try {
       const response = await axios.post('api/endpoint', formData);
+      set({ status: 'success' });
       console.log(response);
-      // Aquí puedes hacer algo con la respuesta, por ejemplo, mostrar un mensaje de éxito o redireccionar a otra página.
     } catch (error) {
-      // Aquí puedes manejar el error, mostrar un mensaje de error, etc.
+      set({ status: 'error' });
     }
   },
   registerCase: async () => { 
+   
+      if(get().formData.lawyerEmail == '' || get().formData.customerEmail == '' || get().formData.title == '' || 
+    get().formData.summary == '' || get().formData.counterpart == '' || get().formData.startDate == '' || 
+    get().formData.startDateInstance == '' || get().formData.endDateInstance == ''){
+      set({ status: 'emptyForm' });
+      return;
+    }
+  
+  
+    
+
     const token = localStorage.getItem('token');
     console.log(get().formData);
     const body = {
@@ -136,6 +148,9 @@ export const useCaseStore = create((set, get) => ({
       "complainant": true,
       "counterpartName": get().formData.counterpart,
     };
+
+
+
     try{
       const response = await axios.post(`${API_URL}/legalcase`, body,{
         headers: {
@@ -143,13 +158,10 @@ export const useCaseStore = create((set, get) => ({
           'Authorization': `Bearer ${token}` 
         }
       });
-      // if(response.data.response === 'Task created'){
         set({status: 'success'});
-      // }
      console.log(response);
     } catch (error) {
       console.log(error);
-      // Manejar el error
     }
   },
   loadDepartamentos: async () => {
