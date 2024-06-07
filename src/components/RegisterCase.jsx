@@ -46,7 +46,7 @@ const RegisterCase = () => {
         setStatus(''); // Reinicia el estado
       }, 1000);
     } 
-  }, [ loadDepartamentos, loadInstancias, navigate, status,clearFormData, setStatus, loadCategorias]);
+  }, [ loadDepartamentos, loadInstancias, navigate, status,clearFormData, setStatus, loadCategorias, loadSubCategorias]);
 
   const handleDepartamentoChange =  (event) =>  {
     const idDepartamento = event.target.value;
@@ -68,7 +68,7 @@ const RegisterCase = () => {
 
   const handleSubCategoriaChange = (event) => {
     const idSubCategoria = event.target.value;
-    handleChange('subCategoryId', event);
+    setCategoryId(idSubCategoria);
     loadCrimes(idSubCategoria);
   };
   const handleSubmitForm = async (event) => {
