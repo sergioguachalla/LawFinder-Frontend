@@ -7,7 +7,7 @@ import { delay } from 'framer-motion';
 const API_URL = import.meta.env.VITE_API_URL;
 
 export const useCaseStore = create((set, get) => ({
-
+  subCategoryId: 1,
   clearFormData: () => set({
     formData: {
       userId: '',
@@ -28,9 +28,12 @@ export const useCaseStore = create((set, get) => ({
     },
     status: '',
   }),
-
+  categoryId: 1,
+  getSubCategoryId: () => get().subCategoryId,
+  getCategory: () => get().categoryId,
   setStatus: (status) => set({ status }),
- 
+  setCategoryId: (categoryId) => set({ categoryId }),
+  setSubCategoryId: (subCategoryId) => set({ subCategoryId }),
   
   formData: {
     userId: '',
@@ -47,6 +50,7 @@ export const useCaseStore = create((set, get) => ({
     complainant: true,
     counterpart: '',
   },
+  
   departmentId: '',
   status: '',
   departamentos: [],
@@ -93,7 +97,26 @@ export const useCaseStore = create((set, get) => ({
           [field]: value,
         },
       }));
-    }else {
+
+    } else if(name === 'categoryId') {
+      set((state) => ({
+        ...state,
+        categoryId: value,
+        
+      }));
+    }
+    else if(name === 'subCategoryId') {
+      set((state) => ({
+        ...state,
+        subCategoryId: value,
+        formData: {
+          ...state.formData,
+          [field]: value,
+        },
+      }));
+    }
+
+    else {
     set((state) => ({
       ...state,
       status: value,
@@ -107,6 +130,7 @@ export const useCaseStore = create((set, get) => ({
 
   console.log(get().formData);
 },
+
   
   handleSubmit: async (event) => {
     event.preventDefault();
@@ -179,7 +203,6 @@ export const useCaseStore = create((set, get) => ({
   
       // Después de cargar los departamentos, obtenemos el id del primer departamento y cargamos sus provincias
       const firstDepartmentId = response.data.response[0].idDepartment;
-      console.log(firstDepartmentId);
 
       if (firstDepartmentId) {
         get().loadProvincias(firstDepartmentId);
@@ -227,9 +250,7 @@ export const useCaseStore = create((set, get) => ({
         set((state) => ({formData: {...state.formData, categoria: response.data.response[0].idCategory}}));
       }
       const firstCategoryId = response.data.response[0].categoryId;
-      if (firstCategoryId) {
-        get().loadSubCategorias(firstCategoryId);
-      }
+     
     } catch (error) {
       
       console.log(error);
@@ -245,7 +266,6 @@ export const useCaseStore = create((set, get) => ({
         }
 
       });
-      console.log(response.data.response);
       set((state) => ({
         ...state,
         subCategorias: response.data.response,

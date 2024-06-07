@@ -19,7 +19,9 @@ const RegisterCase = () => {
     loadCategorias, loadSubCategorias,
     subCategorias, crimes,
     loadCrimes, registerCase,
-    status, lawyerEmail,setStatus, clearFormData
+    status, lawyerEmail,setStatus, clearFormData,
+    setCategoryId, getCategory
+    
  } =
   useCaseStore((state) => ({
     ...state,
@@ -35,8 +37,8 @@ const RegisterCase = () => {
     }
     loadDepartamentos();
     loadCategorias();
+    loadSubCategorias(getCategory());
     loadInstancias();
-    console.log(status);
     if (status === 'success') {
       clearFormData(); 
       setTimeout(() => {
@@ -44,7 +46,7 @@ const RegisterCase = () => {
         setStatus(''); // Reinicia el estado
       }, 1000);
     } 
-  }, [loadCategorias, loadDepartamentos, loadInstancias, navigate, status,clearFormData, setStatus]);
+  }, [ loadDepartamentos, loadInstancias, navigate, status,clearFormData, setStatus, loadCategorias, loadSubCategorias]);
 
   const handleDepartamentoChange =  (event) =>  {
     const idDepartamento = event.target.value;
@@ -53,14 +55,20 @@ const RegisterCase = () => {
   };
 
   const handleCategoriaChange = (event) => {
+
     const idCategoria = event.target.value;
-    handleChange("categoria", event);
+    setCategoryId(idCategoria);
+    handleChange("categoryId", event);
     loadSubCategorias(idCategoria);
+
+    console.log("idCategoria", getCategory());
+
+    
   };
 
   const handleSubCategoriaChange = (event) => {
     const idSubCategoria = event.target.value;
-    handleChange('subCategoryId', event);
+    setCategoryId(idSubCategoria);
     loadCrimes(idSubCategoria);
   };
   const handleSubmitForm = async (event) => {

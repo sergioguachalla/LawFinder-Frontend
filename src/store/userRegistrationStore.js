@@ -3,6 +3,7 @@ import axios from 'axios';
 import {owasp, traducirErrores} from '../utils/passwordStrengthTestEs';
 
 import {isPasswordInDictionary} from '../utils/passwordUtils';
+import { StepStatus } from '@chakra-ui/react';
 const API_URL = import.meta.env.VITE_API_URL;
 
 export const useRegisterUserStore = create((set, get) => ({
@@ -27,6 +28,7 @@ export const useRegisterUserStore = create((set, get) => ({
   confirmSecret: true,
   confirmSecretMessage: '',
   passwordMessage: '',
+  setStatus: (value) => set({status: value}),
   getgoodPassword: () => get().goodPassword,
   getSecret: () => get().secret,
   setErrorMessage: (value) => set({errorMessage: value}),
@@ -75,17 +77,18 @@ export const useRegisterUserStore = create((set, get) => ({
     const newUUID = generateUUID();
     set({ uuid: newUUID });
     localStorage.setItem('device-id', newUUID);
-    //console.log('Nuevo UUID generado: ' + newUUID);
   },
 
 
   handleSubmit: (event) => {
+
+    
     const correoRegex = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i;
     const letrasRegex = /^[a-zA-Z\s]*$/;
     const numbersRegex = /^[0-9]*$/;
     const apellidosRegex = /^[a-zA-Z]+ [a-zA-Z]+$/;
     const apellidosRegex2 = /^[a-zA-Z]+ [a-zA-Z]+ [a-zA-Z]+$/;
-
+    const addressRegex = /^[a-zA-Z0-9# ]+$/;
     event.preventDefault();
     const usernameAux = event.target.nombres.value.split(' ');
     const lastnameAux = event.target.apellidos.value.split(' ');
@@ -109,6 +112,7 @@ export const useRegisterUserStore = create((set, get) => ({
       secretConfirm: event.target.secretConfirm.value,
     };
     
+
       set({ nombres: formData.nombres });
       set({ apellidos: formData.apellidos });
       set({ tipoDocumento: formData.tipoDocumento });
@@ -129,9 +133,7 @@ export const useRegisterUserStore = create((set, get) => ({
       alert('El campo de nombres solo puede contener letras');
       return;
     }
-    console.log(formData.apellidos);
-    console.log(apellidosRegex.test(formData.apellidos));
-    console.log(apellidosRegex2.test(formData.apellidos));
+  
     if(!apellidosRegex.test(formData.apellidos) && !apellidosRegex2.test(formData.apellidos)){
       alert('El campo de apellidos debe tener dos apellidos y solo puede contener letras');
       return;
@@ -161,10 +163,14 @@ export const useRegisterUserStore = create((set, get) => ({
       alert('La contraseña no puede ser una contraseña común');
       return;
     }
-    //if (!passwordRegex.test(formData.secret)) {
-    //  alert('La contraseña debe tener al menos 8 caracteres, una letra mayúscula, una letra minúscula, un número y un caracter especial');
-    //  return;
-    //}
+
+    if(!addressRegex.test(formData.direccion)){
+      alert('El campo de dirección solo puede contener letras y números');
+      console.log(formData.direccion)
+      return;
+    }
+    
+    
     set({ statusState: 'loading' });
     
     
