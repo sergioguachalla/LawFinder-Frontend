@@ -49,3 +49,31 @@
   .comment-user{
     font-weight: bold;
   }
+
+  h2 {
+    font-size: 1.5em;
+    margin-bottom: 0.5em;
+  }
+  
+  .no-actors {
+    color: #ff0000;
+    font-style: italic;
+  }
+  
+  .actor-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5em;
+  }
+  
+  .actor-item {
+    padding: 0.5em;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+  
+  .actor-name {
+    margin: 0;
+    font-weight: bold;
+  }
+  
