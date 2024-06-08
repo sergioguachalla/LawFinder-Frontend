@@ -57,7 +57,7 @@ jobs:
     - name: Start web app
       run: |
         echo "Starting web app... 🚀"
-        npm run dev &
+        npm run dev 
 
     - name: Run tests
       run: |
