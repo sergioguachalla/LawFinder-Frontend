@@ -57,7 +57,31 @@ jobs:
     - name: Start web app
       run: |
         echo "Starting web app... 🚀"
-        npm run dev 
+        npm run dev &
+    - name: Wait for server to be ready
+      shell: pwsh
+      run: |
+        echo "Waiting for the server to be ready... ⏳"
+        $attempts = 0
+        $maxAttempts = 12  # Wait for up to 60 seconds (12 attempts * 5 seconds)
+        $url = 'http://localhost:5173'
+        while ($attempts -lt $maxAttempts) {
+          try {
+            $response = Invoke-WebRequest -Uri $url -UseBasicParsing -TimeoutSec 5
+            if ($response.StatusCode -eq 200) {
+              Write-Output "Server is ready!"
+              break
+            }
+          } catch {
+            Write-Output "Server not ready, retrying in 5 seconds..."
+          }
+          Start-Sleep -Seconds 5
+          $attempts++
+        }
+        if ($attempts -eq $maxAttempts) {
+          Write-Error "Server did not start in time"
+          exit 1
+        }
 
     - name: Run tests
       run: |
