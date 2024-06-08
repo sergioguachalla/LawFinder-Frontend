@@ -41,7 +41,7 @@ jobs:
       run: |
         touch .env
         echo "VITE_API_URL=$VITE_API_URL" >> .env
-        echo $VITE_API_URL
+        echo $VITE_API_URL holaa
         cat .env
 
     - name: Build App
