@@ -47,7 +47,7 @@ export const useCommentsStore = create((set,get) => ({
 
       getCaseComments : async (caseId) => {
          set({status: 'loading'});
-         console.log(caseId);
+         console.log(typeof caseId);
          localStorage.setItem('caseId', caseId);
         
          const response = await axios.get(`${API_URL}/legalcase/${caseId}/comments`,{

@@ -16,7 +16,7 @@ const CaseInformation = () => {
   const navigate = useNavigate();
   const { id } = useParams();
   let { cases, getCases, isLawyer } = useCasesStore();
-  const { getCaseDetails, caseId, setCaseId,status, getCaseInformation,caseDetails, handleUpdateCase,sendInvitation  } = useCaseDetailsStore();
+  const { getCaseDetails, caseId, setCaseId,status, getCaseInformation,caseDetails, handleUpdateCase,sendInvitation, getActorsByCase, actors } = useCaseDetailsStore();
   const {comments,getCaseComments, handleComment, handleChange, totalPages, nextPage, previousPage, currentPage} = useCommentsStore();
   const {status: statusComments} = useCommentsStore();
   //const legalCase = cases.find((legalCase) => legalCase.idLegalCase == id);
@@ -43,7 +43,10 @@ const CaseInformation = () => {
      
       setTimeout(() => {
       getCaseComments(id);
+      getActorsByCase(id);
       }, 1000);
+
+      
       
       //getCaseDetails(id);
     }else{
@@ -134,6 +137,19 @@ const CaseInformation = () => {
         </div>
         <hr />
         <h2>Actores</h2>
+        {actors.length === 0 ? (
+        <p className="no-actors">No hay actores registrados</p>
+          ) : (
+        <div className="actor-list">
+      {actors.map((actor) => (
+      <div key={actor.actorId} className="actor-item">
+        <p className="actor-name">{actor.username}</p>
+      </div>
+    ))}
+  </div>
+)}
+
+
         <div className="form-row-rc">
       <div className="form-field-invitation-rc">
         <label>Invitar abogado *</label>

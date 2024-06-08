@@ -4,6 +4,7 @@ import axios  from 'axios';
 const API_URL = import.meta.env.VITE_API_URL;
 
 export const useCaseDetailsStore = create((set,get) => ({
+   actors: [],
    caseDetails: null,
    caseFiles: null,
    caseId: localStorage.getItem('caseId') ,
@@ -74,7 +75,18 @@ export const useCaseDetailsStore = create((set,get) => ({
       } catch (error) {
         set({ status: `${type}NotFound` });
       }
-    }
+    },
+
+   getActorsByCase: async (caseId) => {
+      set({status: 'loading'});
+      const response = await axios.get(`${API_URL}/cases/${caseId}/actors`);
+      if(response.data.response != null || response.data.code == '0000'){
+         set({status: 'success'});
+         console.log(response.data.response);
+         set({actors: response.data.response});
+      }
+   
+   },
 
   
 
