@@ -26,6 +26,9 @@ jobs:
       uses: actions/setup-node@v1
       with:
         node-version: ${{ matrix.node-version }}
+    - run: echo "Installing dependencies... 📦"
     - run: npm ci
-    - run: echo "Starting tests... 🧪"
+    - run: echo "Starting web app... 🚀"
+    - run: npm run dev
+    - ru: echo "Running tests... 🧪"
     - run: npm run test:headless
