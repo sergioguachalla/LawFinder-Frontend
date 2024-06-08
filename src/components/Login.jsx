@@ -37,12 +37,14 @@ const Login = () => {
           <h1 className="title">Law Finder</h1>
           <form onSubmit={(e) => {handleLoginFormSubmit(e)}} className="login-form">
             <input
+              id="username"
               placeholder="Nombre de Usuario "
               name='username'
               onChange={(e) => handleChange('username', e)}
               className="login-input"
             />
             <input
+              id="password"
               type="password"
               placeholder="Contraseña"
               name='secret'
