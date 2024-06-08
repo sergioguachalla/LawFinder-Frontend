@@ -11,6 +11,7 @@ test('Login with invalid credentials: -admin -admin', async t => {
     .typeText('#username', 'admin')
     .typeText('#password', 'admin')
     .click(loginButton)
+    .wait(2000)
     .expect(errorMessage.innerText).eql('Usuario o contraseña incorrectos');
 
 });
