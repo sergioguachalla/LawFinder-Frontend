@@ -41,7 +41,6 @@ jobs:
       run: |
         touch .env
         echo "VITE_API_URL=$VITE_API_URL" > .env
-        echo $VITE_API_URL holaa
         cat .env
 
     - name: Build App
@@ -52,9 +51,7 @@ jobs:
     - name: Start web app
       run: |
         echo "Starting web app... 🚀"
-        npm run dev &
-      env:
-        CI: true
+        npm run dev 
 
     - name: Run tests
       run: |
