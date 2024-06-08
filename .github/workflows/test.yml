@@ -1,4 +1,4 @@
-# This workflow will do a clean install of node dependencies, build the source code and run tests across different versions of node
+# This workflow will do a clean install of node dependencies, build the source code, and run tests across different versions of Node.js.
 # For more information see: https://help.github.com/actions/language-and-framework-guides/using-nodejs-with-github-actions
 
 name: AUTOMATION - TEST - CI
@@ -16,19 +16,41 @@ jobs:
 
     strategy:
       matrix:
-        node-version:  [16.x, 20.x]
+        node-version: [16.x, 20.x]
 
     steps:
-    - uses: actions/checkout@v3
-      name: Checkout
- 
-    - name: Use Node.js ${{ matrix.node-version }}
-      uses: actions/setup-node@v1
+    - name: Checkout repository
+      uses: actions/checkout@v3
+
+    - name: Set up Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v3
       with:
         node-version: ${{ matrix.node-version }}
-    - run: echo "Installing dependencies... 📦"
-    - run: npm ci
-    - run: echo "Starting web app... 🚀"
-    - run: npm run dev
-    - ru: echo "Running tests... 🧪"
-    - run: npm run test:headless
+
+    - name: Install dependencies
+      run: |
+        echo "Installing dependencies... 📦"
+        npm ci
+
+    - name: Build project
+      run: |
+        echo "Building project... 🛠"
+        npm run build --if-present
+
+    - name: Start web app
+      run: |
+        echo "Starting web app... 🚀"
+        npm run dev &
+      env:
+        CI: true
+
+    - name: Run tests
+      run: |
+        echo "Running tests... 🧪"
+        npm run test:headless
+
+    - name: Stop web app
+      if: success() || failure()
+      run: |
+        echo "Stopping web app... 🛑"
+        pkill -f "npm run dev"
