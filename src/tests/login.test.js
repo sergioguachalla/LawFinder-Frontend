@@ -1,7 +1,7 @@
 import { Selector } from 'testcafe';
 
 fixture `Login Test`
-  .page `http://localhost:5174`;
+  .page `http://localhost:5173`;
 
 test('Login with invalid credentials', async t => {
   const errorMessage = Selector('.error-message');
