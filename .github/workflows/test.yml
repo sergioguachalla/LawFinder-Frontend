@@ -12,16 +12,22 @@ on:
 jobs:
   build:
 
-    runs-on: ubuntu-latest
-
+    runs-on: windows-latest
     strategy:
       matrix:
         node-version: [ 20.x]
 
-    env:
-      VITE_API_URL: ${{ secrets.API_URL_PROD }}
+  
 
     steps:
+
+    - shell: cmd
+      env:
+        VITE_API_URL: ${{ secrets.API_URL_PROD }}
+      run: |
+        example-command "%VITE_API_URL%"
+
+
     - name: Checkout repository
       uses: actions/checkout@v3
 
@@ -40,7 +46,7 @@ jobs:
     - name: 'Create env file'
       run: |
         touch .env
-        echo "VITE_API_URL=$VITE_API_URL" > .env
+        echo "VITE_API_URL={{ secrets.API_URL_PROD}}" > .env
         ls
 
     - name: Build App
@@ -63,3 +69,4 @@ jobs:
       run: |
         echo "Stopping web app... 🛑"
         pkill -f "npm run dev"
+
