@@ -34,7 +34,7 @@ const Login = () => {
       </div>
       <div className="login-white">
         <div className="login-content">
-          <h1 className="title">Law Finder1</h1>
+          <h1 className="title">Law Finder</h1>
           <form onSubmit={(e) => {handleLoginFormSubmit(e)}} className="login-form">
             <input
               id="username"
