@@ -3,7 +3,7 @@ import { Selector } from 'testcafe';
 fixture `Login Test`
   .page `http://localhost:5173`;
 
-test('Login with invalid credentials', async t => {
+test('Login with invalid credentials: -admin -admin', async t => {
   const errorMessage = Selector('.error-message');
   const loginButton = Selector('.login-button');
 
@@ -12,5 +12,5 @@ test('Login with invalid credentials', async t => {
     .typeText('#password', 'admin')
     .click(loginButton)
     .expect(errorMessage.innerText).eql('Usuario o contraseña incorrectos');
-});
 
+});

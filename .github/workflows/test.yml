@@ -32,10 +32,11 @@ jobs:
         echo "Installing dependencies... 📦"
         npm ci
 
-    - name: Build project
-      run: |
-        echo "Building project... 🛠"
-        npm run build --if-present
+    - name: Create .env file
+      uses: SpicyPizza/create-envfile@v2.0
+      with:
+        
+        envkey_VITE_API_URL: ${{ secrets.API_URL_PROD }}
 
     - name: Start web app
       run: |
