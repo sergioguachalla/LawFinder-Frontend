@@ -12,7 +12,7 @@ const RegisterCase = () => {
   const today = new Date().toISOString().split('T')[0];
   const 
   { formData, departamentos,
-    provincias, handleChange,
+    provincias,
     handleInvitation, loadDepartamentos,
     loadProvincias, instancias,
     loadInstancias, categorias,
@@ -20,7 +20,8 @@ const RegisterCase = () => {
     subCategorias, crimes,
     loadCrimes, registerCase,
     status, lawyerEmail,setStatus, clearFormData,
-    setCategoryId, getCategory
+    setCategoryId, getCategory,
+    handleStateChange,handleFormStateChange
     
  } =
   useCaseStore((state) => ({
@@ -46,31 +47,44 @@ const RegisterCase = () => {
         setStatus(''); // Reinicia el estado
       }, 1000);
     } 
-  }, [ loadDepartamentos, loadInstancias, navigate, status,clearFormData, setStatus, loadCategorias, loadSubCategorias]);
+  }, [ loadDepartamentos, loadInstancias, navigate, clearFormData, setStatus, loadCategorias, loadSubCategorias]);
 
-  const handleDepartamentoChange =  (event) =>  {
+
+  const handleFormStateChanges = (field, event) => {
+    handleFormStateChange(field, event);
+  };
+
+  const handleDepartmentChange =  (event) =>  {
     const idDepartamento = event.target.value;
-    handleChange('departamentId', event);
+    handleStateChange('departmentId', event);
     loadProvincias(idDepartamento);
   };
+  
+  const handleSubCategoryChange = (event) => {
+    const idSubCategoria = event.target.value;
+    handleFormStateChange('subCategoryId', event);
+    loadCrimes(idSubCategoria);
+  };
+
 
   const handleCategoriaChange = (event) => {
 
     const idCategoria = event.target.value;
     setCategoryId(idCategoria);
-    handleChange("categoryId", event);
+    handleStateChange("categoryId", event);
     loadSubCategorias(idCategoria);
 
-    console.log("idCategoria", getCategory());
 
     
   };
 
-  const handleSubCategoriaChange = (event) => {
-    const idSubCategoria = event.target.value;
-    setCategoryId(idSubCategoria);
-    loadCrimes(idSubCategoria);
+  
+
+  const handleCrimeChange = (event) => {
+    const idCrime = event.target.value;
+    console.log("idCrime", idCrime);
   };
+
   const handleSubmitForm = async (event) => {
     event.preventDefault();
     await registerCase(event);
@@ -78,13 +92,13 @@ const RegisterCase = () => {
 
   const handleLawyerEmail = (event) => {
     //const lawyerEmail = event.target.value;
-    handleChange('lawyerEmail', event);
+    handleStateChange('lawyerEmail', event);
   }
   const handleCustomerEmail = (event) => {
-    handleChange('customerEmail', event);
+    handleStateChange('customerEmail', event);
   }
   const handleIsComplainant = (event) => {
-    handleChange('complainant', event);
+    handleStateChange('complainant', event);
   }
 
  
@@ -99,24 +113,24 @@ const RegisterCase = () => {
         <div className="form-row-rc">
           <div className="form-field-rc">
             <label>Título *</label>
-            <input name="title" type="text" value={formData.title} onChange={(event) => handleChange('title', event)} />
+            <input name="title" type="text" value={formData.title} onChange={(event) => handleFormStateChanges('title', event)} />
           </div>
           <div className="form-field-rc">
             <label>Fecha de inicio *</label>
-            <input name="startDate" type="date" value={formData.startDate} max={today} onChange={(event) => handleChange('startDate', event)} />
+            <input name="startDate" type="date" value={formData.startDate} max={today} onChange={(event) => handleFormStateChanges('startDate', event)} />
           </div>
         </div>
         <div className="form-row-inline-rc">      
           <label>Resumen *</label>
           {/* darle un alto maximo a summar */}
-          <textarea name="summary" value={formData.summary} onChange={(event) => handleChange('summary', event)} maxLength={500} 
+          <textarea name="summary" value={formData.summary} onChange={(event) => handleFormStateChanges('summary', event)} maxLength={500} 
           style={{maxHeight: "140px", width: "100%"}}
           />
         </div>
         <div className="form-row-rc">
           <div className="form-field-rc">
             <label>Departamento*</label>
-            <select name="departamento" onChange={(event) => handleDepartamentoChange(event)} >
+            <select name="idDepartment" onChange={(event) => handleDepartmentChange(event)} >
               {departamentos.map((departamento) => (
                 <option key={departamento.idDepartment} value={departamento.idDepartment}>
                   {decodeURIComponent(departamento.departmentName)}
@@ -126,7 +140,7 @@ const RegisterCase = () => {
           </div>
           <div className="form-field-rc">
             <label>Provincia*</label>
-            <select name="provincia" onChange={(event) => handleIsComplainant(event)} >
+            <select name="provinceId" onChange={(event) => handleFormStateChange('provinceId',event)} >
               {provincias.map((provincia) => (
                 <option key={provincia.idProvince} value={provincia.idProvince}>
                   {decodeURIComponent(provincia.provinceName)}
@@ -149,7 +163,7 @@ const RegisterCase = () => {
           </div>
           <div className="form-field-rc">
             <label>Sub-categoría *</label>
-            <select name="subCategoria" onChange={(event) => handleSubCategoriaChange(event)} >
+            <select name="subCategoryId" onChange={(event) => handleSubCategoryChange(event)} >
               {subCategorias.map((subCategoria) => (
                   <option key={subCategoria.idSubCategory} value={subCategoria.idSubCategory}>
                     {decodeURIComponent(subCategoria.subCategoryName)}
@@ -160,7 +174,7 @@ const RegisterCase = () => {
           </div>
           <div className="form-field-rc">
             <label>Delito *</label>
-            <select name="delito" onChange={(event) => handleChange('crimeId', event)} >
+            <select name="crimeId" onChange={(event) => handleFormStateChanges("crimeId", event)} >
               {crimes.map((crime) => (
                   <option key={crime.crimeId} value={crime.crimeId}>
                     {decodeURIComponent(crime.name)}
@@ -172,7 +186,7 @@ const RegisterCase = () => {
         </div>
         <div className="form-row-inline-rc">
           <label>Demandante (Si está marcado es demandante, caso contrario es demandado)</label>
-          <input name="complainant" type="checkbox" onChange={(event) => handleChange('complainant', event)} />
+          <input name="complainant" type="checkbox" onChange={(event) => handleFormStateChanges('complainant', event)} />
         </div>
         <hr />
         <h2>Actores</h2>
@@ -195,12 +209,12 @@ const RegisterCase = () => {
         <hr />
         <div className="form-row-inline-rc">
           <label>Contraparte *</label>
-          <input name="counterpart" type="text" onChange={(event) => handleChange('counterpart', event)} />
+          <input name="counterpart" type="text" onChange={(event) => handleFormStateChanges("counterpart", event)} />
         </div>
         <h2>Etapa actual del proceso</h2>
         <div className="form-row-inline-rc">
           <label>Instancia *</label>
-          <select name="instancia" onChange={(event) => handleChange('idInstance', event)} >
+          <select name="idInstance" onChange={(event) => handleFormStateChanges('idInstance', event)} >
             {instancias.map((instancia) => (
                 <option key={instancia.instanceId} value={instancia.instanceId}>
                   {decodeURIComponent(instancia.instanceName)}
@@ -212,11 +226,12 @@ const RegisterCase = () => {
         <div className="form-row-rc">
           <div className="form-field-rc">
             <label>Fecha de inicio de la instancia *</label>
-            <input name="fechaInicioInstancia" type="date" min={today} onChange={(event) => handleChange('startDateInstance', event)} />
+            <input name="startDateInstance" type="date" min={today} onChange={(event) => handleFormStateChanges('startDateInstance', event)} />
           </div>
           <div className="form-field-rc">
             <label>Fecha final de plazo de la instancia *</label>
-            <input name="fechaFinalInstancia" type="date" min={formData.startDateInstance} onChange={(event) => handleChange('endDateInstance', event)} />
+            <input name="endDateInstance" type="date" min={formData.startDateInstance} onChange={(event) => 
+              handleFormStateChanges('endDateInstance', event)} />
           </div>
         </div>
         <div className="button-row-rc">

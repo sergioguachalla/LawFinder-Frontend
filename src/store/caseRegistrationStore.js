@@ -50,7 +50,9 @@ export const useCaseStore = create((set, get) => ({
     complainant: true,
     counterpart: '',
   },
-  
+
+  getFormData: () => get().formData,
+
   departmentId: '',
   status: '',
   departamentos: [],
@@ -66,90 +68,35 @@ export const useCaseStore = create((set, get) => ({
     const decoded = jwt_decode(token);
     return decoded.userId;
  },
- 
- handleChange: (field, event) => {
-  const { name, value } = event.target;
-  if (name === 'departmentId') {
+
+ handleFormStateChange: (field, event) => {
+  const {name, value} = event.target;
+  console.log("Cambiando estado de "+name+" a "+value);
     set((state) => ({
-      ...state,
-      departmentId: value,
       formData: {
         ...state.formData,
-        [field]: value,
-      },
-    }));}
-    else if (name === 'lawyerEmail') {
-      set((state) => ({
-        ...state,
-        lawyerEmail: value,
-        formData: {
-          ...state.formData,
-          [field]: value,
-        },
-      }));
-    }
-    else if(name === 'customerEmail'){
-      set((state) => ({
-        ...state,
-        customerEmail: value,
-        formData: {
-          ...state.formData,
-          [field]: value,
-        },
-      }));
-
-    } else if(name === 'categoryId') {
-      set((state) => ({
-        ...state,
-        categoryId: value,
-        
-      }));
-    }
-    else if(name === 'subCategoryId') {
-      set((state) => ({
-        ...state,
-        subCategoryId: value,
-        formData: {
-          ...state.formData,
-          [field]: value,
-        },
-      }));
-    }
-
-    else {
-    set((state) => ({
-      ...state,
-      status: value,
-      formData: {
-        ...state.formData,
-        [field]: value,
+        [name]: value,
       },
     }));
-  }
-
-
-  console.log(get().formData);
-},
-
-  
-  handleSubmit: async (event) => {
-    event.preventDefault();
-    const formData  = get().formData;
     
-    try {
-      const response = await axios.post('api/endpoint', formData);
-      set({ status: 'success' });
-      console.log(response);
-    } catch (error) {
-      set({ status: 'error' });
-    }
   },
+  handleStateChange:(field, event) => {
+    const {name, value} = event.target;
+    console.log("Cambiando estado de "+name+" a "+value);
+    set((state) => ({
+      state,
+      [field]: value,
+      
+    }));
+  },
+
   registerCase: async () => { 
    
       if(get().formData.lawyerEmail == '' || get().formData.customerEmail == '' || get().formData.title == '' || 
     get().formData.summary == '' || get().formData.counterpart == '' || get().formData.startDate == '' || 
     get().formData.startDateInstance == '' || get().formData.endDateInstance == ''){
       set({ status: 'emptyForm' });
+      console.log(get().formData);
       return;
     }
   
@@ -231,7 +178,6 @@ export const useCaseStore = create((set, get) => ({
     try{
       const responseInstancias = await axios.get(`${API_URL}/legalcase/instance`);
       set(() => ({ instancias: responseInstancias.data.response }));
-      console.log(responseInstancias.data.response);
       set((state) => ({formData: {...state.formData, idInstance: ''+responseInstancias.data.response[0].instanceId}}));
       //console.log(get().state.instancias + " sssdasdasasdsa");
 
