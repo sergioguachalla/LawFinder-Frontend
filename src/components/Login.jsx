@@ -52,9 +52,9 @@ const Login = () => {
               className="login-input"
             />
             
-              <button type="submit" className="login-button">Iniciar sesión {status === 'loading' && <SpinnerCircle></SpinnerCircle>    }</button>
+              <button type="submit" className="login-button" id="login-button">Iniciar sesión {status === 'loading' && <SpinnerCircle></SpinnerCircle>    }</button>
               
-              <p className="error-message">
+              <p className="error-message" id="error-message">
                 {status === 'invalid' && 'Usuario o contraseña incorrectos'}
                 {status === 'blocked' && 'Su cuenta se encuentra en estado de verificación, por favor espere'}
                 </p>
