@@ -11,57 +11,41 @@ on:
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
+    
     strategy:
       matrix:
-        node-version: [ 20.x]
-
-  
+        node-version: [20.x]
 
     steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
 
-    - shell: bash
-      env:
-        VITE_API_URL: ${{ secrets.API_URL_PROD }}
-      
+      - name: Set up Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node-version }}
+        env:
+          VITE_API_URL: ${{ secrets.API_URL_PROD }}
 
+      - name: Install dependencies
+        run: |
+          echo "Installing dependencies... 📦"
+          npm ci
 
-    - name: Checkout repository
-      uses: actions/checkout@v3
+      - name: Create env file
+        run: |
+          touch .env
+          echo "VITE_API_URL=${{ secrets.API_URL_PROD }}" > .env
+          ls
 
-    - name: Set up Node.js ${{ matrix.node-version }}
-      uses: actions/setup-node@v3
-      with:
-        node-version: ${{ matrix.node-version }}
+      - name: Start web app
+        run: |
+          echo "Starting web app... 🚀"
+          npm run dev & npm run test:headless
 
-    - name: Install dependencies
-      run: |
-        echo "Installing dependencies... 📦"
-        npm ci
-
-   
-
-    - name: 'Create env file'
-      run: |
-        touch .env
-        echo "VITE_API_URL={{ secrets.API_URL_PROD}}" > .env
-        ls
-
-    - name: Build App
-      run: |
-        echo "Building app... 🛠️"
-        npm run build
-
-    - name: Start web app
-      run: |
-        echo "Starting web app... 🚀"
-        npm run dev & npm run test:headless
-
-
-    - name: Stop web app
-      if: success() || failure()
-      run: |
-        echo "Stopping web app... 🛑"
-        pkill -f "npm run dev"
-
+      - name: Stop web app
+        if: success() || failure()
+        run: |
+          echo "Stopping web app... 🛑"
+          pkill -f "npm run dev"
