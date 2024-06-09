@@ -74,7 +74,7 @@ jobs:
           token: ${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }}
           images: '[
               {
-                "name": "law-finder-frontend",
+                "name": "lawfinder",
                 "image":{
                   "registry_type": "DOCKER_HUB",
                   "registry": "docker.io",
