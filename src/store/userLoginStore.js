@@ -25,7 +25,7 @@ export const useLoginUserStore = create((set,get) => ({
          "password": formData.secret,
       };
       setTimeout(() => {
-      axios.post(`http:209.97.144.146:8080/api/v1/auth/login`, requestBody)
+      axios.post(`http://209.97.144.146:8080/api/v1/auth/login`, requestBody)
          .then((response) => {
             console.log(response);
             set({username: formData.username});     

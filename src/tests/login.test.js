@@ -5,10 +5,9 @@ fixture `Login Test`
 
 test('Login with invalid credentials: -admin -admin', async t => {
   const errorMessage = Selector('#error-message');
-  const loginButton = Selector('#login-button');
+  const loginButton =  Selector('#login-button');
 
   await t
-    .maximizeWindow()
     .typeText('#username', 'admin')
     .typeText('#password', 'admin')
     .click('#login-button')
