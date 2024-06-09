@@ -67,19 +67,9 @@ jobs:
     runs-on: ubuntu-latest
     needs: docker
     steps:
-      - name: Deploy to DigitalOcean
-        uses: digitalocean/app_action@v1.1.6
+      - name: DigitalOcean App Deployment Action
+        uses: rdarida/digitalocean-app-deployment-action@v1.0.2
         with:
-          app_name: "law-finder-frontend"
-          token: ${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }}
-          images: '[
-              {
-                "name": "clownfish-app",
-                "image":{
-                  "registry_type": "DOCKER_HUB",
-                  "registry": "docker.io",
-                  "repository": "guachallasergio/law-finder-frontend",
-                  "tag": "latest"
-                },
-            ]'
+          token: ${{ secrets.DIGITALOCEAN_TOKEN }}
+          appId: ${{ secrets.DIGITALOCEAN_APPID }}
       
