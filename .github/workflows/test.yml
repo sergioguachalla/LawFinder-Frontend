@@ -77,8 +77,8 @@ jobs:
                 "name": "law-finder-frontend",
                 "image":{
                   "registry_type": "DOCKER_HUB",
-                  "registry": "guachallasergio",
-                  "repository": "law-finder-frontend",
+                  "registry": "docker.io",
+                  "repository": "guachallasergio/law-finder-frontend",
                   "tag": "latest"
                 },
             ]'
