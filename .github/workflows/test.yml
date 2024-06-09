@@ -29,7 +29,7 @@ jobs:
       - name: Create .env file
 
         run: |
-          export VITE_API_URL=${{ secrets.VITE_API_URL }}
+          export VITE_API_URL="${{ secrets.VITE_API_URL }}"
           echo "Creating .env file... 🔑"
           echo "VITE_API_URL=$VITE_API_URL" > .env
           
