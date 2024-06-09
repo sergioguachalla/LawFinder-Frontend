@@ -32,8 +32,7 @@ jobs:
           export VITE_API_URL=${{ secrets.VITE_API_URL }}
           echo "Creating .env file... 🔑"
           echo "VITE_API_URL=$VITE_API_URL" > .env
-          echo .env
-
+          
       - name: Install dependencies
         run: |
           echo "Installing dependencies... 📦"
