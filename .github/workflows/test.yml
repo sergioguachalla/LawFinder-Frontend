@@ -25,13 +25,20 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: ${{ matrix.node-version }}
-        env:
-          VITE_API_URL: ${{ secrets.API_URL_PROD }}
+      
+      - name: Create .env file
+        env: 
+          VITE_API_URL: ${{ secrets.VITE_API_URL }}
+  
+        run: |
+          echo "Creating .env file... 🔑"
+          echo "VITE_API_URL=$VITE_API_URL" > .env
+          echo .env
 
       - name: Install dependencies
         run: |
           echo "Installing dependencies... 📦"
-          npm install --no-audit 
+          npm install --no-audit --no-fund
 
       - name: Start web app
         run: |
