@@ -69,17 +69,17 @@ const RegisterUser = () => {
           <div className='form-row'>
             <div className='input-group'>
               <label>Nombres *</label>
-              <input name='nombres' type='text' onChange={(event) => handleChange('nombres', event)} required placeholder='Ingrese nombres' />
+              <input name='nombres' type='text' id="name" onChange={(event) => handleChange('nombres', event)} required placeholder='Ingrese nombres' />
             </div>
             <div className='input-group'>
               <label>Apellidos *</label>
-              <input name='apellidos' type='text' onChange={(event) => handleChange('apellidos', event)} required placeholder='Ingrese sus dos apellidos' />
+              <input name='apellidos' type='text' id="lastname" onChange={(event) => handleChange('apellidos', event)} required placeholder='Ingrese sus dos apellidos' />
             </div>
             {userAlreadyExists && <p className='error-message'>El usuario ya se encuentra registrado</p>}
           </div>
           <div className='form-row'>
             <label>Tipo de documento *</label>
-            <select name='tipoDocumento' onChange={(event) => handleChange('tipoDocumento', event)} required >
+            <select name='tipoDocumento'  id="document-type" onChange={(event) => handleChange('tipoDocumento', event)} required >
               <option value=''>Seleccione</option>
               <option value='ci'>CI</option>
               <option value='pasaporte'>Pasaporte</option>
@@ -88,7 +88,7 @@ const RegisterUser = () => {
           <div className='form-row'>
             <div className='input-group'>
               <label>Documento*</label>
-              <input name='documento' type='text' onChange={(event) => handleChange('documento', event)} required placeholder='El campo solo acepta numeros'/>
+              <input name='documento' type='text' id="document-number" onChange={(event) => handleChange('documento', event)} required placeholder='El campo solo acepta numeros'/>
             </div>
             <div className='input-group'>
               <label>Complemento*</label>
@@ -97,16 +97,16 @@ const RegisterUser = () => {
           </div>
           <div className='form-row'>
             <label>Dirección de domicilio*</label>
-            <input name='direccion' type='text'  onChange={(event) => handleChange('direccion', event)} required placeholder='Ingrese la dirección'/>
+            <input name='direccion' type='text' id="address" onChange={(event) => handleChange('direccion', event)} required placeholder='Ingrese la dirección'/>
           </div>
           <div className='form-row'>
             <div className='input-group'>
               <label>Celular*</label>
-              <input name='celular' type='text' onChange={(event) => handleChange('celular', event)} required placeholder='El campo solo acepta numeros'/>
+              <input name='celular' type='text' id="cellphone" onChange={(event) => handleChange('celular', event)} required placeholder='El campo solo acepta numeros'/>
             </div>
             <div className='input-group'>
               <label>Correo electrónico*</label>
-              <input name='correo' type='email' onChange={(event) => handleChange('correo', event)} required placeholder='Ingrese un correo válido'/>
+              <input name='correo' type='email' id="email" onChange={(event) => handleChange('correo', event)} required placeholder='Ingrese un correo válido'/>
             </div>
           </div>
           <div className='form-row'>
@@ -116,7 +116,7 @@ const RegisterUser = () => {
             inputType === 'text' &&(
             <Eye onClick={()=> {togglePasswordVisibility()}} />     
             ))}
-              <input name='secret' type={inputType} onChange={(event) => handleChange('secret', event)} required />
+              <input name='secret' id="password" type={inputType} onChange={(event) => handleChange('secret', event)} required />
        
             </div>
             <div className='input-group'>
@@ -125,18 +125,18 @@ const RegisterUser = () => {
             inputType === 'text' &&(
             <Eye onClick={()=> {togglePasswordVisibility()}} />     
             ))}
-              <input name='secretConfirm' type={inputType} onChange={(event) => handleChange('secretConfirm', event)} required />
+              <input name='secretConfirm' id="password-confirm" type={inputType} onChange={(event) => handleChange('secretConfirm', event)} required />
             </div>
 
           </div>
           {!goodPassword && <p className='error-message'>{errorMessage}</p>
           }
-          {!confirmSecret && <p className='error-message'>{confirmSecretMessage}</p>}
+          {!confirmSecret && <p className='error-message' >{confirmSecretMessage}</p>}
           {!goodPassword && <p className='error-message'>
             {passwordMessage}</p>}
           <div className='button-row'>
             <button type='button' onClick={() => navigate('/')}>Cancelar</button>
-            <button type='submit' className='register-button'>Registrar</button>
+            <button type='submit' className='register-button' id="register-button" >Registrar</button>
           </div>
           <div>
             {status === 'success' && <p className='success-message'>Usuario registrado con éxito</p>}

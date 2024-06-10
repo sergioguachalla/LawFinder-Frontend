@@ -62,16 +62,16 @@ const LaywerRegistration = () => {
           <div className='form-row'>
             <div className='input-group'>
               <label>Nombres *</label>
-              <input name='nombres' type='text' onChange={(event) => handleChange('nombres', event)} required placeholder='Ingrese nombres' />
+              <input name='nombres' type='text'  id="name" onChange={(event) => handleChange('nombres', event)} required placeholder='Ingrese nombres' />
             </div>
             <div className='input-group'>
               <label>Apellidos *</label>
-              <input name='apellidos' type='text' onChange={(event) => handleChange('apellidos', event)} required placeholder='Ingrese dos apellidos' />
+              <input name='apellidos' type='text' id="lastname" onChange={(event) => handleChange('apellidos', event)} required placeholder='Ingrese dos apellidos' />
             </div>
           </div>
           <div className='form-row'>
             <label>Tipo de documento *</label>
-            <select name='tipoDocumento' onChange={(event) => handleChange('tipoDocumento', event)} required >
+            <select name='tipoDocumento' id="document-type"onChange={(event) => handleChange('tipoDocumento', event)} required >
               <option value=''>Seleccione</option>
               <option value='ci'>CI</option>
               <option value='pasaporte'>Pasaporte</option>

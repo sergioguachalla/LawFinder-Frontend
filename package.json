@@ -8,8 +8,8 @@
     "build": "vite build",
     "lint": "eslint src --ext js,jsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview",
-    "test": "testcafe chrome ./src/tests/login.test.js",
-    "test:headless": "testcafe chrome:headless ./src/tests/login.test.js ./src/tests/legalCase.test.js ./src/tests/legalCase.test.js"
+    "test": "testcafe chrome ./src/tests/lawyerRegistration.test.js",
+    "test:headless": "testcafe chrome:headless ./src/tests/login.test.js ./src/tests/legalCase.test.js ./src/tests/invalidCase.test.js ./src/tests/userRegistration.test.js"
   },
   "dependencies": {
     "@chakra-ui/react": "^2.7.0",
