@@ -28,7 +28,7 @@ const Invitation = () => {
   
     const acceptInvitation = (actorId) => {
       setLoading(true);
-      axios.put(`http://localhost:8080/api/v1/actor/${actorId}`)
+      axios.put(`http://209.97.144.146:8080/api/v1/actor/${actorId}`)
         .then((response) => {
           console.log(response.data);
           setInvitations(invitations.filter(invitation => invitation.actorId !== actorId));
@@ -40,6 +40,23 @@ const Invitation = () => {
           setLoading(false);
         });
     }
+
+    const rejectInvitation = (actorId) => {
+      setLoading(true);
+      axios.delete(`http://209.97.144.146:8080/api/v1/actor/${actorId}`)
+        .then((response) => {
+          console.log(response.data);
+          setInvitations(invitations.filter(invitation => invitation.actorId !== actorId));
+        })
+        .catch((error) => {
+          console.error('Error updating data: ', error);
+        })
+        .finally(() => {
+          setLoading(false);
+        }
+        );
+    }
+
   
     return (
       <>
@@ -57,6 +74,10 @@ const Invitation = () => {
               <button onClick={() => acceptInvitation(invitation.actorId)} disabled={loading}>
                 {loading ? 'Procesando...' : 'Aceptar invitación'}
               </button>
+              <button style={{ backgroundColor: 'red' }} 
+              onClick={() => rejectInvitation(invitation.actorId)}
+              disabled={loading}
+              >Rechazar invitación</button>
             </div>
           ))}
         </div>

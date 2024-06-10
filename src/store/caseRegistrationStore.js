@@ -245,15 +245,22 @@ export const useCaseStore = create((set, get) => ({
 
 
   handleInvitation: async (param) => {
+    const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
+
     try{
       let email = "";
       if(param == "lawyer"){
-        email = get().formData.lawyerEmail;
+        email = get().lawyerEmail;
       }
       else{
-        email = get().formData.customerEmail;
+        email = get().customerEmail;
       }
-      console.log(email);
+      if(emailRegex.test(email) == false){
+        set(() => ({status : "invalidEmail"}));
+        return;
+      }
+
+      console.log(get().lawyerEmail);
       const response = await axios.post(`${API_URL}/userverification`,{"email":email});
       console.log(response);
       if(response.data.response == "User Does Not Exist"){
