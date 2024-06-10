@@ -241,7 +241,7 @@ const RegisterCase = () => {
 
         <div>
           {status === 'loading' && <p>Cargando...</p>}
-          {status === 'emptyForm' && <p 
+          {status === 'emptyForm' && <p id="error-message-form"
           style={{color: 'red'}}
           >Por favor, llene todos los campos</p>}
           {status === 'success' && <p id="success-message">Caso registrado con éxito!</p>}

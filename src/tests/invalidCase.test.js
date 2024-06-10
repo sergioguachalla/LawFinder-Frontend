@@ -1,10 +1,10 @@
 import { Selector } from 'testcafe';
 
 
-fixture `Create a legal case test`
+fixture `Create a invalid test case`
   .page `http://localhost:5173`;
 
-test('Login as a lawyer then creating a legal case:', async t => {
+test('Login as a lawyer then creating an invalid legal case:', async t => {
   const errorMessage = Selector('#error-message');
   const homeH1 = Selector('#legalCases');
   const registerCase = Selector('#register-case-button');
@@ -17,7 +17,7 @@ test('Login as a lawyer then creating a legal case:', async t => {
   const startDateInstance = Selector('#startDateInstace');
   const endDateInstance = Selector('#endDateInstace');
   const registerButton = Selector('#register-button');
-  const successMessage = Selector('#success-message');
+  const errorMessageForm = Selector('#error-message-form');
   
   const currentDate = new Date();
 
@@ -29,12 +29,9 @@ test('Login as a lawyer then creating a legal case:', async t => {
     .click(registerCase)
     .typeText(titleRegistrationForm, 'Test Case')
     .click(startDateRegistrationForm)
-    .typeText(startDateRegistrationForm, currentDate.toISOString().split('T')[0]) 
     .typeText(summaryRegistrationForm, 'This is a test case')
     .typeText(counterpartRegistrationForm, 'Test counterpart')
-    .typeText(startDateInstance, '2024-06-10')  
-    .typeText(endDateInstance, '2024-06-11')
     .click(registerButton)
     .wait(1000)
-    .expect(successMessage.innerText).eql('Caso registrado con éxito!');
+    .expect(errorMessageForm.innerText).eql('Por favor, llene todos los campos');
 });
