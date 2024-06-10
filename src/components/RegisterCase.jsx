@@ -107,23 +107,23 @@ const RegisterCase = () => {
     <>
     
       <Navbar />
-      <h1 className='centered-apple-font-rc'>REGISTRO DE CASO</h1>
+      <h1 className='centered-apple-font-rc' id="centered-apple-font-rc">REGISTRO DE CASO</h1>
     <div className="main-container-rc">
       <form className="form-container-rc" onSubmit={handleSubmitForm}>
         <div className="form-row-rc">
           <div className="form-field-rc">
             <label>Título *</label>
-            <input name="title" type="text" value={formData.title} onChange={(event) => handleFormStateChanges('title', event)} />
+            <input name="title" type="text" id="title" value={formData.title} onChange={(event) => handleFormStateChanges('title', event)} />
           </div>
           <div className="form-field-rc">
             <label>Fecha de inicio *</label>
-            <input name="startDate" type="date" value={formData.startDate} max={today} onChange={(event) => handleFormStateChanges('startDate', event)} />
+            <input name="startDate" type="date" id="startDate" value={formData.startDate} max={today} onChange={(event) => handleFormStateChanges('startDate', event)} />
           </div>
         </div>
         <div className="form-row-inline-rc">      
           <label>Resumen *</label>
           {/* darle un alto maximo a summar */}
-          <textarea name="summary" value={formData.summary} onChange={(event) => handleFormStateChanges('summary', event)} maxLength={500} 
+          <textarea name="summary"  id="summary" value={formData.summary} onChange={(event) => handleFormStateChanges('summary', event)} maxLength={500} 
           style={{maxHeight: "140px", width: "100%"}}
           />
         </div>
@@ -209,7 +209,7 @@ const RegisterCase = () => {
         <hr />
         <div className="form-row-inline-rc">
           <label>Contraparte *</label>
-          <input name="counterpart" type="text" onChange={(event) => handleFormStateChanges("counterpart", event)} />
+          <input name="counterpart" type="text" id="counterpart" onChange={(event) => handleFormStateChanges("counterpart", event)} />
         </div>
         <h2>Etapa actual del proceso</h2>
         <div className="form-row-inline-rc">
@@ -226,17 +226,17 @@ const RegisterCase = () => {
         <div className="form-row-rc">
           <div className="form-field-rc">
             <label>Fecha de inicio de la instancia *</label>
-            <input name="startDateInstance" type="date" min={today} onChange={(event) => handleFormStateChanges('startDateInstance', event)} />
+            <input name="startDateInstance" id="startDateInstace" type="date" min={today} onChange={(event) => handleFormStateChanges('startDateInstance', event)} />
           </div>
           <div className="form-field-rc">
             <label>Fecha final de plazo de la instancia *</label>
-            <input name="endDateInstance" type="date" min={formData.startDateInstance} onChange={(event) => 
+            <input name="endDateInstance" id="endDateInstace" type="date" min={formData.startDateInstance} onChange={(event) => 
               handleFormStateChanges('endDateInstance', event)} />
           </div>
         </div>
         <div className="button-row-rc">
           <button className="register-button-rc"  onClick={()=> {navigate("/Home")}}>Cancelar</button>
-          <button type="submit" className="register-button">Registrar</button>  
+          <button type="submit" className="register-button" id="register-button">Registrar</button>  
         </div>
 
         <div>
@@ -244,7 +244,7 @@ const RegisterCase = () => {
           {status === 'emptyForm' && <p 
           style={{color: 'red'}}
           >Por favor, llene todos los campos</p>}
-          {status === 'success' && <p>Caso registrado con éxito!</p>}
+          {status === 'success' && <p id="success-message">Caso registrado con éxito!</p>}
         </div>
 
 

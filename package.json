@@ -9,7 +9,7 @@
     "lint": "eslint src --ext js,jsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview",
     "test": "testcafe chrome ./src/tests/login.test.js",
-    "test:headless": "testcafe chrome:headless ./src/tests/login.test.js"
+    "test:headless": "testcafe chrome ./src/tests/legalCase.test.js"
   },
   "dependencies": {
     "@chakra-ui/react": "^2.7.0",

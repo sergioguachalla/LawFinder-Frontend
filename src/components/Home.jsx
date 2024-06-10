@@ -53,7 +53,7 @@ import { useEffect } from "react";
       {(status === 'loading' || status === 'init') && <LoadingSpinner/>}
       <Navbar />
       <div className="cases-container">
-        <h1>Casos Legales del Usuario</h1>
+        <h1 id="legalCases">Casos Legales del Usuario</h1>
 
         <div className="filter-container">
           <div className="search-container">
@@ -151,7 +151,7 @@ import { useEffect } from "react";
           </div>
         )}
         {roles.includes("CREATE_CASE") && 
-          <button className="register-case-button" onClick={() => navigate('/RegisterCase')}>
+          <button className="register-case-button" id="register-case-button" onClick={() => navigate('/RegisterCase')}>
             Registrar caso +
           </button>
   }
