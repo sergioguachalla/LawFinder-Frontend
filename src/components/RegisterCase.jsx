@@ -21,7 +21,8 @@ const RegisterCase = () => {
     loadCrimes, registerCase,
     status, lawyerEmail,setStatus, clearFormData,
     setCategoryId, getCategory,
-    handleStateChange,handleFormStateChange
+    handleStateChange,handleFormStateChange,
+    getEmail
     
  } =
   useCaseStore((state) => ({
@@ -196,7 +197,7 @@ const RegisterCase = () => {
             <input name="laywerEmail" type="text" onChange={(event) => handleLawyerEmail(event)}/>
             <button type="button" onClick={() => handleInvitation("lawyer")}>Enviar invitación</button>
             {status === 'lawyerNotFound' && <p>Abogado no registrado</p>}
-            {status === 'lawyerFound' && <p>Invitación enviada a {formData.lawyerEmail} </p>}
+            {status === 'lawyerFound' && <p>Invitación enviada exitosamente </p>}
             {status === 'invalidEmail' && <p>Correo inválido</p>}
           </div>
           <div className="form-field-invitation-rc">
@@ -204,7 +205,7 @@ const RegisterCase = () => {
             <input name="customerEmail" type="text" onChange={(event) => handleCustomerEmail(event)} />
             <button type="button" onClick={() => {handleInvitation("customer")}}>Enviar invitación</button>
             {status === 'customerNotFound' && <p>Cliente no registrado</p>}
-            {status === 'customerFound' && <p>Invitación enviada a {formData.customerEmail} </p>}
+            {status === 'customerFound' && <p>Invitación enviada exitosamente </p>}
           </div>
         </div>
         <hr />

@@ -34,6 +34,7 @@ export const useCaseStore = create((set, get) => ({
   setStatus: (status) => set({ status }),
   setCategoryId: (categoryId) => set({ categoryId }),
   setSubCategoryId: (subCategoryId) => set({ subCategoryId }),
+  getEmail: () => get().email,
   
   formData: {
     userId: '',
