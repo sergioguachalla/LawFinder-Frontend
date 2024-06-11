@@ -35,6 +35,6 @@ test('Login as a lawyer then creating a legal case:', async t => {
     .typeText(startDateInstance, '2024-06-10')  
     .typeText(endDateInstance, '2024-06-11')
     .click(registerButton)
-    .wait(1000)
+    .wait(2000)
     .expect(successMessage.innerText).eql('Caso registrado con éxito!');
 });
